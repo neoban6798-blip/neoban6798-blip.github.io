@@ -71,12 +71,43 @@
   /* ── 콘텐츠 영역 ── */
   .wrap { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
 
-  /* ── 히어로 ── */
+  /* ── 히어로 (비대칭 + 오른쪽 페이드아웃 이미지) ── */
   .hero {
-    padding: 100px 0 80px;
-    border-bottom: 1px solid var(--line);
+    position: relative;
+    height: 540px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
     background: var(--paper);
   }
+
+  /* 오른쪽 이미지 */
+  .hero-bg {
+    position: absolute;
+    right: 0; top: 0;
+    width: 55%;
+    height: 100%;
+    background: url('image/main.jpg') center/cover no-repeat;
+  }
+
+  /* 왼쪽으로 페이드아웃 */
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 55%;
+    height: 100%;
+    background: linear-gradient(to left, transparent, var(--paper));
+  }
+
+  /* 텍스트 영역 */
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    width: 45%;
+    padding-left: 40px;
+  }
+
   .hero-label {
     display: inline-block; font-size: 11px; font-weight: 700;
     letter-spacing: .1em; text-transform: uppercase;
@@ -224,6 +255,7 @@
   .footer-nav a { font-size: 13px; color: var(--ink-4); text-decoration: none; }
   .footer-nav a:hover { color: var(--ink); }
 
+  /* ── 반응형 ── */
   @media (max-width: 1000px) {
     .card-grid { grid-template-columns: repeat(2, 1fr); }
     .card-grid.col3 { grid-template-columns: repeat(2, 1fr); }
@@ -231,10 +263,27 @@
   @media (max-width: 640px) {
     .topbar-inner { padding: 0 20px; }
     .wrap { padding: 0 20px; }
-    .hero { padding: 64px 0 56px; }
     .card-grid, .card-grid.col3, .card-grid.col2 { grid-template-columns: 1fr; }
     .hero-stats { gap: 28px; }
     .mainnav a { padding: 6px 10px; font-size: 12.5px; }
+
+    /* 히어로 모바일 */
+    .hero {
+      height: auto;
+      flex-direction: column;
+    }
+    .hero-bg {
+      position: relative;
+      width: 100%;
+      height: 220px;
+    }
+    .hero-bg::after {
+      background: linear-gradient(to bottom, transparent, var(--paper));
+    }
+    .hero-content {
+      width: 100%;
+      padding: 32px 20px 48px;
+    }
   }
 </style>
 </head>
@@ -256,9 +305,10 @@
   </div>
 </header>
 
-<!-- ── 히어로 ── -->
+<!-- ── 히어로 (오른쪽 페이드아웃 이미지) ── -->
 <section class="hero">
-  <div class="wrap">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
     <div class="hero-label">Investment Research Platform</div>
     <h1>한국 산업의<br><b>구조를 읽는다</b></h1>
     <p class="hero-sub">
@@ -330,7 +380,7 @@
 
         <!-- ═══════════════════════════════════════════════ -->
         <!-- 📌 카드 템플릿 (새 보고서를 맨 위에 복사)        -->
-        <!-- 형식: 기업명 / KRX코드 / 섹터 / 블로그URL       -->
+        <!-- 형식: KRX코드 / 기업명 / 섹터 / 블로그URL       -->
         <!-- ═══════════════════════════════════════════════ -->
 
         <!-- 🔹 GST -->
@@ -374,7 +424,7 @@
           <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
           <div class="card-eyebrow">KRX035420</div>
           <div class="card-title">네이버</div>
-          <div class="card-desc">IT/플랫폼</div>
+          <div class="card-desc">플랫폼</div>
           <div class="card-link">보고서 읽기 →</div>
         </a>
 
@@ -489,10 +539,9 @@ sections.forEach(id => {
   const track = document.querySelector('#analysis .card-track');
   if (!track) return;
 
-  // 원본 카드들을 한 번 더 복제해서 뒤에 붙임
   const cards = track.querySelectorAll('.card');
   cards.forEach(card => {
-    const clone = card.cloneNode(true);  // 깊은 복사
+    const clone = card.cloneNode(true);
     clone.setAttribute('aria-hidden', 'true');
     track.appendChild(clone);
   });
@@ -521,7 +570,6 @@ sections.forEach(id => {
       }
     });
 
-    // 모든 카드에서 highlight 클래스 제거 후, 가장 가까운 카드에만 추가
     cards.forEach(card => card.classList.remove('highlight'));
     if (closestCard) {
       closestCard.classList.add('highlight');
