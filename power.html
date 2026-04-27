@@ -1,0 +1,899 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>전력 인프라 산업지도 · AI·피지컬AI·EV 3중 수요</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css">
+<style>/* 공통 베이스 — 산업지도 2종(반도체·방산) 공유 */
+:root {
+  --ink: #121418;
+  --ink-2: #2b3038;
+  --ink-3: #5a6470;
+  --ink-4: #8b95a2;
+  --line: #dee2e8;
+  --line-soft: #eceff3;
+  --paper: #ffffff;
+  --bg: #f6f7fa;
+  --accent: oklch(58% 0.14 250);
+  --accent-2: oklch(62% 0.14 180);
+  --accent-3: oklch(60% 0.14 140);
+  --hi: #fff3c4;
+  --shadow-sm: 0 1px 2px rgba(18,20,24,.04), 0 1px 0 rgba(18,20,24,.02);
+  --shadow-md: 0 6px 24px rgba(18,20,24,.06), 0 2px 6px rgba(18,20,24,.04);
+  --radius: 10px;
+  --radius-lg: 16px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: "Pretendard", "Pretendard Variable", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  letter-spacing: -0.003em;
+}
+a { color: inherit; text-decoration: none; }
+
+.wrap { max-width: 1400px; margin: 0 auto; padding: 0 32px; }
+.wrap-wide { max-width: 1640px; margin: 0 auto; padding: 0 40px; }
+
+/* ——— Top bar ——— */
+.topbar {
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+  position: sticky; top: 0; z-index: 50;
+  backdrop-filter: saturate(140%) blur(8px);
+}
+.topbar-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 56px; gap: 8px;
+}
+.topnav { display: flex; gap: 2px; flex-shrink: 0; flex-wrap: nowrap; }
+.topnav a {
+  padding: 6px 9px; border-radius: 999px; font-size: 12px; color: var(--ink-3);
+  font-weight: 500; transition: all .15s ease; white-space: nowrap; flex-shrink: 0;
+}
+.brand {
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 700; letter-spacing: -.01em;
+  white-space: nowrap; flex-shrink: 0;
+}
+.brand span:last-child {
+  font-size: 13px;
+}
+.brand-mark {
+  width: 26px; height: 26px; border-radius: 6px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+  display: grid; place-items: center; color: white; font-weight: 800; font-size: 12px;
+  box-shadow: var(--shadow-sm); flex-shrink: 0;
+}
+.topnav a:hover { background: var(--line-soft); color: var(--ink); }
+.topnav a.active { background: var(--ink); color: white; }
+
+/* ——— Hero ——— */
+.hero { padding: 80px 0 56px; border-bottom: 1px solid var(--line); background: var(--paper); }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--accent); padding: 6px 12px; border: 1px solid currentColor;
+  border-radius: 999px; opacity: .85;
+}
+.hero h1 {
+  font-size: clamp(40px, 5vw, 68px); line-height: 1.05; font-weight: 800;
+  letter-spacing: -.03em; margin: 20px 0 16px; max-width: 22ch;
+}
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero-lead {
+  font-size: 18px; line-height: 1.6; color: var(--ink-3); max-width: 58ch;
+  margin: 0;
+}
+.hero-meta {
+  display: flex; flex-wrap: wrap; gap: 24px; margin-top: 32px;
+  padding-top: 24px; border-top: 1px dashed var(--line);
+  font-size: 13px; color: var(--ink-4);
+}
+.hero-meta b { color: var(--ink-2); font-weight: 600; }
+
+/* ——— Section headers ——— */
+.section { padding: 72px 0; }
+.section-head { margin-bottom: 40px; max-width: 68ch; }
+.section-kicker {
+  font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 12px;
+}
+.section h2 {
+  font-size: clamp(28px, 3vw, 40px); font-weight: 800; letter-spacing: -.02em;
+  line-height: 1.15; margin: 0 0 14px;
+}
+.section-sub { font-size: 16px; color: var(--ink-3); margin: 0; line-height: 1.6; }
+
+/* ——— Layer card ——— */
+.layer {
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-lg);
+  margin-bottom: 28px; overflow: hidden; box-shadow: var(--shadow-sm);
+}
+.layer-head {
+  padding: 24px 28px; border-bottom: 1px solid var(--line-soft);
+  display: flex; align-items: flex-start; gap: 20px;
+  background: linear-gradient(180deg, var(--tint, #fafbfd) 0%, transparent 100%);
+}
+.layer-id {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px; font-weight: 700; letter-spacing: .1em;
+  padding: 6px 10px; border-radius: 6px;
+  background: var(--ink); color: white;
+  flex-shrink: 0;
+}
+.layer-title h3 {
+  font-size: 22px; font-weight: 700; letter-spacing: -.015em;
+  margin: 0 0 4px;
+}
+.layer-subtitle { font-size: 13px; color: var(--accent); font-weight: 600; letter-spacing: .02em; margin-bottom: 8px; }
+.layer-note { font-size: 14px; color: var(--ink-3); margin: 0; max-width: 78ch; }
+
+/* ——— Sector group ——— */
+.sector {
+  padding: 24px 28px;
+  border-top: 1px solid var(--line-soft);
+}
+.sector:first-of-type { border-top: none; }
+.sector-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 16px; margin-bottom: 16px; flex-wrap: wrap;
+}
+.sector-title {
+  display: flex; align-items: baseline; gap: 12px;
+}
+.sector-id {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px; color: var(--ink-4); letter-spacing: .05em;
+}
+.sector-name {
+  font-size: 16px; font-weight: 700; letter-spacing: -.01em;
+}
+.sector-badge {
+  font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--accent); padding: 3px 8px; border-radius: 4px;
+  background: color-mix(in oklch, var(--accent) 10%, transparent);
+}
+.sector-desc { font-size: 13.5px; color: var(--ink-3); }
+
+/* ——— Company grid ——— */
+.co-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 14px;
+}
+.co {
+  border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 18px 20px; background: var(--paper);
+  display: flex; flex-direction: column; gap: 10px;
+  transition: all .18s ease;
+  position: relative;
+}
+.co:hover { border-color: var(--ink-4); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.co.highlight { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), var(--shadow-sm); }
+.co.highlight::before {
+  content: "★"; position: absolute; top: 14px; right: 14px;
+  color: var(--accent); font-size: 12px;
+}
+.co.dim { opacity: .65; }
+
+.co-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.co-name {
+  font-size: 16px; font-weight: 700; letter-spacing: -.01em; line-height: 1.2;
+}
+.co-code {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px; color: var(--ink-4); letter-spacing: .03em;
+}
+.co-role {
+  font-size: 12px; font-weight: 600; color: var(--ink-3);
+  display: inline-block;
+}
+.co-tag {
+  font-size: 11.5px; font-weight: 600;
+  color: var(--accent); padding: 3px 8px; border-radius: 4px;
+  background: color-mix(in oklch, var(--accent) 9%, transparent);
+  display: inline-block; width: fit-content;
+}
+.co-field {
+  display: grid; grid-template-columns: 68px 1fr; gap: 10px;
+  font-size: 13px; line-height: 1.5;
+  padding-top: 8px; border-top: 1px dashed var(--line);
+}
+.co-field + .co-field { padding-top: 0; border-top: none; }
+.co-label {
+  font-size: 11px; font-weight: 700; color: var(--ink-4);
+  letter-spacing: .04em; text-transform: uppercase;
+}
+.co-val { color: var(--ink-2); }
+
+/* ——— Stage / Path / Ladder boards ——— */
+.board {
+  display: grid; gap: 12px; margin: 0 0 32px;
+}
+.stage-grid { grid-template-columns: repeat(5, 1fr); }
+.stage {
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--paper); padding: 18px; position: relative;
+  transition: all .15s ease;
+}
+.stage:hover { border-color: var(--accent); }
+.stage-num {
+  position: absolute; top: -10px; left: 16px;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--ink); color: white;
+  display: grid; place-items: center;
+  font-size: 11px; font-weight: 700;
+}
+.stage-name { font-size: 14px; font-weight: 700; margin: 6px 0 6px; letter-spacing: -.01em; }
+.stage-desc { font-size: 12.5px; color: var(--ink-3); line-height: 1.45; margin-bottom: 10px; }
+.stage-status {
+  font-size: 11px; color: var(--accent); font-weight: 600; letter-spacing: .02em;
+  padding-top: 10px; border-top: 1px dashed var(--line);
+}
+
+.paths { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.path {
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--paper); padding: 22px;
+}
+.path-name { font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 10px; letter-spacing: .02em; }
+.path-flow {
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px;
+  margin-bottom: 12px;
+}
+.path-node {
+  padding: 10px 14px; border: 1px solid var(--line);
+  border-radius: 8px; font-size: 13px; font-weight: 600;
+}
+.path-node.to { border-color: var(--accent); color: var(--accent); }
+.path-arrow { color: var(--ink-4); font-size: 18px; }
+.path-desc { font-size: 13px; color: var(--ink-3); line-height: 1.5; margin: 0; }
+
+.thesis-grid { grid-template-columns: repeat(3, 1fr); }
+.thesis {
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--paper); padding: 22px;
+}
+.thesis-id {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: .1em;
+}
+.thesis-title { font-size: 16px; font-weight: 700; margin: 6px 0 10px; letter-spacing: -.01em; }
+.thesis-desc { font-size: 13.5px; color: var(--ink-2); line-height: 1.6; margin: 0 0 12px; }
+.thesis-weight {
+  font-size: 11.5px; color: var(--ink-4); font-weight: 600;
+  padding-top: 10px; border-top: 1px dashed var(--line);
+}
+
+.ladder {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+  border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+  background: var(--paper);
+}
+.ladder-step {
+  padding: 22px; border-right: 1px solid var(--line-soft);
+  position: relative;
+}
+.ladder-step:last-child { border-right: none; }
+.ladder-step.current { background: linear-gradient(180deg, var(--tint-1, #fafbfd), transparent); }
+.ladder-step.growth { background: linear-gradient(180deg, var(--tint-2, #f5f9f5), transparent); }
+.ladder-step.alpha { background: linear-gradient(180deg, var(--tint-3, #fbf5f1), transparent); }
+.ladder-phase {
+  font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink-4); margin-bottom: 8px;
+}
+.ladder-weapon { font-size: 20px; font-weight: 800; letter-spacing: -.015em; margin-bottom: 4px; }
+.ladder-market { font-size: 13px; color: var(--ink-3); margin-bottom: 10px; }
+.ladder-status {
+  font-size: 12px; color: var(--accent); font-weight: 600;
+  padding-top: 10px; border-top: 1px dashed var(--line);
+}
+
+/* ——— Footer ——— */
+.foot {
+  border-top: 1px solid var(--line); padding: 48px 0; background: var(--paper);
+  font-size: 13px; color: var(--ink-4);
+}
+.foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 32px; }
+.foot b { color: var(--ink-2); font-weight: 600; }
+.foot-disc { font-size: 11.5px; line-height: 1.6; color: var(--ink-4); margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--line-soft); }
+
+@media (max-width: 900px) {
+  .stage-grid { grid-template-columns: repeat(2, 1fr); }
+  .thesis-grid, .ladder { grid-template-columns: 1fr; }
+  .paths { grid-template-columns: 1fr; }
+  .foot-grid { grid-template-columns: 1fr; }
+  .co-grid { grid-template-columns: 1fr; }
+}
+</style>
+<style>
+  :root {
+    --accent: oklch(55% 0.16 65);
+    --accent-2: oklch(58% 0.14 95);
+    --accent-3: oklch(52% 0.12 200);
+    --bg: #f6f4ef;
+    --tint: #f7f0e4;
+    --tint-1: #f7f0e4;
+    --tint-2: #f3efe8;
+    --tint-3: #ebf3ed;
+  }
+  body { background: var(--bg); }
+  .brand-mark { background: linear-gradient(135deg, var(--accent), oklch(45% 0.12 80)); }
+
+  /* 크로스오버 테이블 */
+  .xover-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-top: 28px;
+  }
+  .xover {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); padding: 18px;
+    border-top: 3px solid var(--accent);
+  }
+  .xover-name { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .xover-layers {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px; font-weight: 700; color: var(--accent);
+    letter-spacing: .05em; margin-bottom: 8px;
+  }
+  .xover-note { font-size: 12.5px; color: var(--ink-3); line-height: 1.5; }
+
+  @media (max-width: 1100px) {
+    .xover-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 700px) {
+    .xover-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap-wide topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">K</span>
+      <span>Korea Industry Map</span>
+    </a>
+        <nav class="topnav" style="display:flex;gap:2px;flex-shrink:0;flex-wrap:nowrap;">
+      <a style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;color:#6b7280;" href="index.html">Overview</a>
+      <a style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;color:#6b7280;" href="semiconductor.html">반도체</a>
+      <a style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;color:#6b7280;" href="defense.html">방산</a>
+      <a style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;color:#6b7280;" href="kculture.html">K컬처</a>
+      <a style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;background:#111418;color:#fff;" href="power.html">전력인프라</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap-wide">
+    <span class="hero-eyebrow">● Power Infrastructure · AI Grid</span>
+    <h1>AI·로봇·전기차가<br><em>강제하는</em> 전력망 교체</h1>
+    <p class="hero-lead">
+      세 개의 독립적 트리거가 동시에 기존 그리드의 물리적 한계를 초과한다.
+      시장이 '제조업'으로 분류한 한국 기업들이 서방 진영의 전력 인프라 공급망을 독점하는 구조를
+      수요처 기준 3레이어로 정리한 산업지도.
+    </p>
+    <div class="hero-meta">
+      <div><b>핵심 Thesis</b> · AI DC + 피지컬AI + EV — 3중 독립 트리거</div>
+      <div><b>알파 원천</b> · 분류 오류 (제조업으로 저평가된 AI 인프라 기업)</div>
+      <div><b>한국 우위</b> · 지정학 필터 — 서방 유일 대안</div>
+      <div><b>업데이트</b> · 2026.04 기준</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap-wide">
+    <div class="section-head">
+      <div class="section-kicker">Framework · 01</div>
+      <h2>투자 테제 세 가지</h2>
+      <p class="section-sub">
+        전력 인프라 지도를 반도체·방산과 구분 짓는 핵심 논리 —
+        강제성 · 분류 오류 · 지정학 필터.
+      </p>
+    </div>
+    <div class="board thesis-grid" id="thesis"></div>
+  </div>
+</section>
+
+<section class="section" style="background: var(--paper); border-block: 1px solid var(--line);">
+  <div class="wrap-wide">
+    <div class="section-head">
+      <div class="section-kicker">Framework · 02</div>
+      <h2>★ 크로스오버 — 이 지도의 심장</h2>
+      <p class="section-sub">
+        시장이 한 수요처만 보고 있는데 실제로는 두 레이어에 걸쳐 있는 기업들.
+        이 갭이 밸류에이션 오류의 근거다.
+      </p>
+    </div>
+    <div class="xover-grid" id="crossover"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap-wide">
+    <div class="section-head">
+      <div class="section-kicker">Map · 수요처 기준 3레이어</div>
+      <h2>L1 AI 데이터센터 → L2 그리드 현대화 → L3 신규 아키텍처</h2>
+      <p class="section-sub">
+        전기의 물리적 흐름(발전→송전→배전)이 아닌 수요처 기준으로 자른 레이어.
+        시장이 잘못 분류한 기업들이 L2에 숨어 있다.
+      </p>
+    </div>
+    <div id="layers"></div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap-wide">
+    <div class="foot-grid">
+      <div>
+        <b>Korea Industry Map — Power Infrastructure</b><br>
+        AI·피지컬AI·EV 3중 수요 트리거 × 수요처 기준 3레이어 전력 인프라 산업지도.
+      </div>
+      <div>
+        <b>Related</b><br>
+        <a href="semiconductor.html">반도체 산업지도 →</a><br>
+        <a href="defense.html">방산 산업지도 →</a><br>
+        <a href="kculture.html">K컬처 밸류체인 →</a><br>
+        <a href="index.html">전체 허브 →</a>
+      </div>
+      <div>
+        <b>Structure</b><br>
+        L1 · AI 데이터센터 전력 수요<br>
+        L2 · 그리드 현대화 / 산업·모빌리티<br>
+        L3 · 신규 전력 아키텍처
+      </div>
+    </div>
+    <p class="foot-disc">
+      본 자료는 산업 구조 이해를 돕기 위한 교육·분석 목적의 시각화이며,
+      특정 종목에 대한 투자자문 또는 매수·매도 권유가 아닙니다.
+    </p>
+  </div>
+</footer>
+
+<script>// 전력 인프라 산업지도 — AI·피지컬AI·EV 3중 수요 트리거 × L1-L3
+window.POWER_DATA = {
+  theme: {
+    accent: "oklch(55% 0.16 65)",
+    accent2: "oklch(58% 0.14 95)",
+    accent3: "oklch(52% 0.12 200)",
+    bg: "#f6f4ef",
+    tint: "#f7f0e4",
+    tint1: "#f7f0e4",
+    tint2: "#f3efe8",
+    tint3: "#ebf3ed",
+  },
+  thesis: [
+    {
+      id: "T1",
+      title: "강제적 인프라 교체 사이클",
+      desc: "AI DC + 피지컬AI(로봇) + 전기차. 세 트리거는 독립적 — 하나가 꺾여도 나머지가 Thesis를 지탱한다. 미국 버지니아·아일랜드·싱가포르에서 DC 인허가 사실상 중단. 전력 병목은 이미 현실.",
+      weight: "10~20년 인프라 교체 주기 · 반도체보다 긴 복리"
+    },
+    {
+      id: "T2",
+      title: "분류 오류 알파",
+      desc: "시장은 이 기업들을 아직 '제조업'으로 분류. AI 인프라 기업과의 밸류에이션 갭이 투자 기회의 원천. '자동차 부품주' '산업기계주'로 분류된 전력 인프라 기업이 L2에 숨어 있다.",
+      weight: "★ L2가 핵심 알파 집중 구역"
+    },
+    {
+      id: "T3",
+      title: "지정학 필터 — 한국 독점",
+      desc: "중국 공급망 배제 → 서방 진영의 대안 = 한국. 반도체 공급망과 동일 메커니즘. 기술력 + 원가 경쟁력 + 적기 납기의 3박자.",
+      weight: "한국 기업 = 유일한 비중국계 대안"
+    },
+  ],
+  crossover: [
+    { name: "이구산업", layers: "L1-C + L2-A", note: "변압기 소재 → 모터·EV 구동계" },
+    { name: "대한전선", layers: "L2-A + L3-A", note: "배전 케이블 → HVDC 500kV 인증" },
+    { name: "HD현대일렉트릭", layers: "L1-A + L3-A", note: "초고압 변압기 → HVDC 변환장치" },
+    { name: "효성중공업", layers: "L1-A + L2-C", note: "변압기 + BESS EPC 통합" },
+    { name: "에스에너지", layers: "L2-C + L3-B", note: "ESS 시스템 + 태양광 통합" },
+  ],
+  layers: [
+    {
+      id: "L1",
+      title: "AI 데이터센터 전력 수요",
+      subtitle: "The Grid Anchor — 기준점",
+      note: "시장이 일부 발견한 영역. 완성품(변압기·케이블)은 '기준점'이지 알파 타겟이 아니다. 알파는 L1-C 부품·소재에 있다.",
+      sectors: [
+        {
+          id: "L1-A",
+          name: "초대형 완성품 (기준점)",
+          desc: "시장이 이미 인식한 BIG 4. 수주잔고·OPM 지표의 기준선.",
+          companies: [
+            {
+              name: "HD현대일렉트릭", code: "267260", role: "크로스오버 Top-pick",
+              tag: "OPM 24.4% · 해외 75%", highlight: true,
+              moat: "765kV 초고압 변압기 · 북미 독점 납품 · 매출 75% 수출",
+              thesis: "미국 BAB 수혜 유일 한국계 현지 생산 거점. 2028까지 CAPA 50% 확대 중.",
+              risk: "건설 부문 할인 · 대미 반덤핑 관세"
+            },
+            {
+              name: "효성중공업", code: "298040", role: "크로스오버",
+              tag: "수주잔고 12조 · OPM 12.5%",
+              moat: "멤피스 초고압 변압기 현지공장 · BESS EPC 통합 솔루션",
+              thesis: "바이 아메리칸 정책 독점 수혜. ESS EPC로 L2-C와 연결되는 통합 공급자.",
+              risk: "건설 부문 리스크 · 무역장벽"
+            },
+            {
+              name: "LS Electric", code: "010120", role: "배전·자동화",
+              tag: "북미 수출 확대",
+              moat: "차단기·배전반·EMS 통합 포트폴리오",
+              thesis: "스마트 그리드 자동화 핵심 기기 공급자.",
+              risk: "경쟁사 대비 규모 열위"
+            },
+          ],
+        },
+        {
+          id: "L1-B",
+          name: "중형 완성품",
+          desc: "시장이 분류는 했지만 완전히 발견하지 못한 포지션. 특수 틈새 시장 장악.",
+          companies: [
+            {
+              name: "산일전기", code: "062040", role: "ESS·신재생 특수변압기",
+              tag: "중소 특수변압기 최대 매출",
+              moat: "ESS·신재생에너지 전용 특수변압기 — 대형사 집중하지 않는 틈새 독점",
+              thesis: "신재생 확산 → ESS 연동 변압기 수요 폭증. 대형사가 안 건드리는 단가·규격 구간.",
+              risk: "소형사 규모 리스크"
+            },
+            {
+              name: "제룡전기", code: "033100", role: "배전 변압기 수출",
+              tag: "수출 비중 80%+",
+              moat: "배전 변압기 전문 · 미국 직공급",
+              thesis: "수출 비중 80%+ · 노후 배전망 교체 직접 수혜.",
+              risk: "환율 민감도"
+            },
+          ],
+        },
+        {
+          id: "L1-C",
+          name: "부품·소재 — 핵심 알파",
+          desc: "변압기 생산비용 55~70%를 차지. 완성품 수요가 폭발하면 부품 병목이 먼저 온다. 아직 '전력 인프라 수혜주'로 미분류.",
+          badge: "★ 미발견",
+          companies: [
+            {
+              name: "티씨머티리얼즈", code: "028470", role: "CTC 권선 소재 1위",
+              tag: "CTC 국내 시장점유율 1위", highlight: true,
+              moat: "대형 변압기용 연속전위권선(CTC) 독점 · 해저케이블 소재 확장",
+              thesis: "북미 변압기 수출 호조로 CTC 수요 정비례 확대. 초고압 케이블 소재로 영역 확장 중.",
+              risk: "상장 초기 오버행 · 구리 가격 마진 영향"
+            },
+            {
+              name: "이구산업", code: "025820", role: "크로스오버 ★L2-A",
+              tag: "구리 권선 소재 · 이익 레버리지",
+              moat: "변압기·케이블 핵심 도체 Copper Strip · 구리 가격 전가력",
+              thesis: "전방 업황 + 구리 상승 시 이익 레버리지 극대화. PBR 0.6배 극저평가.",
+              risk: "구리 급락 시 래깅 효과 · 환율"
+            },
+            {
+              name: "미창석유공업", code: "003650", role: "절연유 독점",
+              tag: "PER 3~5배 극저평가", highlight: true,
+              moat: "전기절연유(MICTRANS) 한전 등록 1964년~ · 무차입 이익잉여금 4,700억",
+              thesis: "변압기의 '면도날' — 설치 후 지속 교체 소모품. 전력망 가동 시간 = 절연유 소비량.",
+              risk: "국제 유가 · 환율"
+            },
+            {
+              name: "피앤씨테크", code: "237750", role: "배전자동화 단말",
+              tag: "스마트 그리드 SCADA",
+              moat: "배전자동화 단말(FRTU) · 디지털 보호계전기 국내 과점",
+              thesis: "한전 스마트 그리드 고도화 필수 기기 공급.",
+              risk: "지배구조 리스크 · 2025년 어닝쇼크"
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: "L2",
+      title: "그리드 현대화 / 산업·모빌리티",
+      subtitle: "★ 핵심 알파 집중 구역",
+      note: "시장 분류가 가장 혼재된 구간. '자동차 부품주' '산업기계주'로 분류된 전력 인프라 기업이 숨어 있다. 이 분류 오류가 알파의 원천.",
+      sectors: [
+        {
+          id: "L2-A",
+          name: "배전·전력 케이블",
+          desc: "데이터센터 직공급~공장 배선. HVDC 인증 보유사는 L3와 크로스오버.",
+          companies: [
+            {
+              name: "대한전선", code: "001440", role: "크로스오버 ★L3-A",
+              tag: "수주잔고 3.6조 · HVDC 500kV 인증", highlight: true,
+              moat: "500kV HVDC 국제인증(전압형·전류형 동시) · 해저케이블 풀턴키 EPC",
+              thesis: "HVDC+해저케이블 기술로 AI DC 전력의 '물리적 혈관'. 2027 HVDC 전용 2공장 준공.",
+              risk: "대형 프로젝트 발주 지연 · 구리·환율"
+            },
+            {
+              name: "가온전선", code: "000500", role: "내수+북미",
+              tag: "LS그룹 계열 · 전력·통신 케이블",
+              moat: "LS그룹 계열 안정성 · 내수 기반 + 북미 확장",
+              thesis: "그리드 업그레이드 수혜 안정형.",
+              risk: "대형 경쟁사 대비 프리미엄 제한"
+            },
+          ],
+        },
+        {
+          id: "L2-B",
+          name: "EMS·SCADA·전력 소프트웨어",
+          desc: "가장 미발견된 섹터. 전기업도 IT업도 아닌 분류 사각지대 → 밸류에이션 할인 최대.",
+          badge: "★ 최대 미발견",
+          companies: [
+            {
+              name: "누리플렉스", code: "040160", role: "AMI + EMS 통합",
+              tag: "50개국+ 레퍼런스 · 무차입", highlight: true,
+              moat: "스마트미터(HW) + EMS 플랫폼(SW) 통합 · 마이크로그리드 솔루션",
+              thesis: "전력망 '수요 반응(DR)'과 분산전원 관리 AI의 뇌. PER 7~9배 동종 대비 절반 이하.",
+              risk: "한전 의존도 · 대형 프로젝트 수주 공백"
+            },
+            {
+              name: "피에스텍", code: "002230", role: "AMI 국내 1위",
+              tag: "OPM 5.5%↑ 개선 중",
+              moat: "국내 전력량계 한전·민간 압도적 점유 · AMIGO 보안미터 교체 주기",
+              thesis: "그리드 말단 '스마트 미터' 지배자. 나주 신공장 개폐기 사업 가세.",
+              risk: "건설 경기 연동 · 원가 부담"
+            },
+            {
+              name: "옴니시스템", code: "057540", role: "원격검침 + EV충전",
+              tag: "AMSYS 통합 솔루션",
+              moat: "원격검침 통합 소프트웨어(AMSYS) · EV 충전 인프라 연계",
+              thesis: "디지털 계량기 → EV 충전 통합 솔루션으로 확장.",
+              risk: "건설 경기 리스크 · 2025년 수익성 악화"
+            },
+          ],
+        },
+        {
+          id: "L2-C",
+          name: "ESS · 전력 변환",
+          desc: "발전-송전-저장 EPC 통합 패키지화. ESS용 변압기·보호장치 시장 확대.",
+          companies: [
+            {
+              name: "비츠로셀", code: "082920", role: "스마트 그리드 전원",
+              tag: "OPM 28.5% · 창사 최대 실적", highlight: true,
+              moat: "스마트미터용 10년 수명 리튬 일차전지 국내 1위 · 군수·시추 특수전지",
+              thesis: "전력망 지능화의 '말단 기기 독립 전원'. 북미 셰일가스 + 그리드 확산으로 이중 수혜.",
+              risk: "리튬 가격 폭등 · 중국 EVE 저가 경쟁"
+            },
+            {
+              name: "에스에너지", code: "095910", role: "ESS+태양광 Watchlist",
+              tag: "Watchlist — 실적 회복 선결", dim: true,
+              moat: "ESS+태양광 통합 EPC · 에스퓨얼셀 수소 옵션",
+              thesis: "태양광 업황 정상화 + ESS EPC 수주 재개 시 재평가.",
+              risk: "영업적자 지속 · 중국발 공급과잉"
+            },
+          ],
+        },
+        {
+          id: "L2-D",
+          name: "피지컬 AI 인프라",
+          desc: "로봇·스마트팩토리가 구동되는 현장의 전력 정밀 제어. 가장 미발견된 신설 섹터.",
+          badge: "★ 신설",
+          companies: [
+            {
+              name: "알에스오토메이션", code: "140670", role: "모션+에너지 제어 통합",
+              tag: "삼성·로크웰 혈통 · 2025 턴어라운드", highlight: true,
+              moat: "로봇 모션 제어 + 전력 안정화(PCS·인버터) 통합 솔루션",
+              thesis: "로봇 기종 무관한 '전력 환경 제어' 인프라. NVIDIA 옴니버스 디지털트윈 연동.",
+              risk: "글로벌 경기 둔화 시 설비투자 지연"
+            },
+            {
+              name: "이삭엔지니어링", code: "299910", role: "지멘스 파트너 · 예방진단",
+              tag: "OPM 6%↑ 계단식 개선",
+              moat: "지멘스 공식 파트너 · 스마트팩토리 전력 제어반 + 예방진단 SW",
+              thesis: "공장 신경계 설계 · 예방진단 SaaS로 구독형 매출 구조 확보.",
+              risk: "인건비 상승 · 전방 투자 지연"
+            },
+            {
+              name: "SKC (반도체 크로스오버)", code: "011790", role: "수요 측 해결사",
+              tag: "글라스기판 = 전력효율 40%↑", dim: true,
+              moat: "글라스기판이 칩 레벨에서 IR Drop 50%↓ → 데이터센터 PUE 개선",
+              thesis: "그리드 공급 부족의 '수요 측 해결책'. 반도체+전력 이중 크로스오버.",
+              risk: "연속 적자 · 양산 수율 불확실"
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: "L3",
+      title: "신규 전력 아키텍처",
+      subtitle: "The New Standard — 텐배거 vs 카테고리 리스크",
+      note: "HVDC · 마이크로그리드 · 직류 배전. 카테고리 자체 형성 중. 기술 표준 선점 여부와 국책사업 연동이 핵심.",
+      sectors: [
+        {
+          id: "L3-A",
+          name: "HVDC · 직류 송전",
+          desc: "재생에너지 → 수도권 '에너지 고속도로'. 서해안 HVDC 프로젝트 진행 중.",
+          badge: "★ 국책연동",
+          companies: [
+            {
+              name: "대한전선", code: "001440", role: "크로스오버 ★L2-A",
+              tag: "500kV HVDC 전압형·전류형 국제인증",
+              moat: "HVDC 국제인증 동시 보유 유일 · 해저케이블 2공장 2027 준공",
+              thesis: "국가 간 그리드 통합의 혈관 독점. 수주잔고 역대 최대.",
+              risk: "대형 프로젝트 지연"
+            },
+            {
+              name: "HD현대일렉트릭", code: "267260", role: "크로스오버 ★L1-A",
+              tag: "HVDC 변환장치 + 초고압 변압기",
+              moat: "HVDC 변환장치(컨버터) + 초고압 변압기 원스톱",
+              thesis: "송전 전체 솔루션 통합 제공자로 리레이팅.",
+              risk: "수주 집중도"
+            },
+            {
+              name: "LS전선 (비상장)", role: "HVDC 케이블 최대",
+              tag: "국내 최초 HVDC 착공", dim: true,
+              moat: "국내 최초 HVDC 해저케이블 사업 착공",
+              thesis: "LS 산하 비상장 — LS그룹 상장사 통해 간접 노출.",
+              risk: "비상장 직접 투자 불가"
+            },
+          ],
+        },
+        {
+          id: "L3-B",
+          name: "마이크로그리드 · 분산전원",
+          desc: "독립형·계통연계형 마이크로그리드. 섬·도서 지역, 데이터센터 전용 전력망.",
+          companies: [
+            {
+              name: "누리플렉스", code: "040160", role: "크로스오버 ★L2-B",
+              tag: "마이크로그리드 EMS + 50개국 레퍼런스",
+              moat: "신흥국 독립전원망 + 민간 마이크로그리드 확산 속도",
+              thesis: "그리드 경계선이 허물어질수록 분산 관제 플랫폼의 가치 상승.",
+              risk: "대형 프로젝트 수주 변동성"
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+</script>
+<script>window.INDUSTRY_DATA = window.POWER_DATA;</script>
+<script>// 공통 렌더러 — window.INDUSTRY_DATA 를 기반으로 레이어·섹터·회사 카드 주입
+(function () {
+  const data = window.INDUSTRY_DATA;
+  if (!data) return;
+
+  const root = document.getElementById("layers");
+  if (!root) return;
+
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  }[c]));
+
+  function coCard(c) {
+    const cls = ["co"];
+    if (c.highlight) cls.push("highlight");
+    if (c.dim) cls.push("dim");
+    const code = c.code ? `<span class="co-code">${esc(c.code)}</span>` : "";
+    const tag = c.tag ? `<span class="co-tag">${esc(c.tag)}</span>` : "";
+    const role = c.role ? `<div class="co-role">${esc(c.role)}</div>` : "";
+
+    const fields = [];
+    if (c.moat) fields.push(`<div class="co-field"><span class="co-label">해자</span><span class="co-val">${esc(c.moat)}</span></div>`);
+    if (c.thesis) fields.push(`<div class="co-field"><span class="co-label">테제</span><span class="co-val">${esc(c.thesis)}</span></div>`);
+    if (c.risk) fields.push(`<div class="co-field"><span class="co-label">리스크</span><span class="co-val">${esc(c.risk)}</span></div>`);
+
+    return `
+      <div class="${cls.join(" ")}">
+        <div class="co-top">
+          <div>
+            <div class="co-name">${esc(c.name)}</div>
+            ${role}
+          </div>
+          ${code}
+        </div>
+        ${tag}
+        ${fields.join("")}
+      </div>`;
+  }
+
+  function sectorBlock(s) {
+    const badge = s.badge ? `<span class="sector-badge">${esc(s.badge)}</span>` : "";
+    return `
+      <div class="sector">
+        <div class="sector-head">
+          <div class="sector-title">
+            <span class="sector-id">${esc(s.id)}</span>
+            <span class="sector-name">${esc(s.name)}</span>
+            ${badge}
+          </div>
+          <div class="sector-desc">${esc(s.desc || "")}</div>
+        </div>
+        <div class="co-grid">
+          ${(s.companies || []).map(coCard).join("")}
+        </div>
+      </div>`;
+  }
+
+  function layerBlock(L) {
+    return `
+      <section class="layer" id="${esc(L.id)}">
+        <header class="layer-head">
+          <span class="layer-id">${esc(L.id)}</span>
+          <div class="layer-title">
+            <div class="layer-subtitle">${esc(L.subtitle || "")}</div>
+            <h3>${esc(L.title)}</h3>
+            <p class="layer-note">${esc(L.note || "")}</p>
+          </div>
+        </header>
+        ${(L.sectors || []).map(sectorBlock).join("")}
+      </section>`;
+  }
+
+  root.innerHTML = (data.layers || []).map(layerBlock).join("");
+
+  // Stages (반도체)
+  const stageRoot = document.getElementById("stages");
+  if (stageRoot && data.stages) {
+    stageRoot.innerHTML = data.stages.map((s) => `
+      <div class="stage">
+        <div class="stage-num">${s.id}</div>
+        <div class="stage-name">${esc(s.name)}</div>
+        <div class="stage-desc">${esc(s.desc)}</div>
+        <div class="stage-status">${esc(s.status)}</div>
+      </div>`).join("");
+  }
+
+  // Paths (반도체)
+  const pathRoot = document.getElementById("paths");
+  if (pathRoot && data.paths) {
+    pathRoot.innerHTML = data.paths.map((p) => `
+      <div class="path">
+        <div class="path-name">${esc(p.name)}</div>
+        <div class="path-flow">
+          <div class="path-node">${esc(p.from)}</div>
+          <div class="path-arrow">→</div>
+          <div class="path-node to">${esc(p.to)}</div>
+        </div>
+        <p class="path-desc">${esc(p.desc)}</p>
+      </div>`).join("");
+  }
+
+  // Thesis (방산)
+  const thesisRoot = document.getElementById("thesis");
+  if (thesisRoot && data.thesis) {
+    thesisRoot.innerHTML = data.thesis.map((t) => `
+      <div class="thesis">
+        <div class="thesis-id">${esc(t.id)}</div>
+        <div class="thesis-title">${esc(t.title)}</div>
+        <p class="thesis-desc">${esc(t.desc)}</p>
+        <div class="thesis-weight">${esc(t.weight)}</div>
+      </div>`).join("");
+  }
+
+  // Ladder (방산)
+  const ladderRoot = document.getElementById("ladder");
+  if (ladderRoot && data.ladder) {
+    const cls = ["current", "growth", "alpha"];
+    ladderRoot.innerHTML = data.ladder.map((l, i) => `
+      <div class="ladder-step ${cls[i] || ""}">
+        <div class="ladder-phase">${esc(l.phase)}</div>
+        <div class="ladder-weapon">${esc(l.weapon)}</div>
+        <div class="ladder-market">${esc(l.market)}</div>
+        <div class="ladder-status">${esc(l.status)}</div>
+      </div>`).join("");
+  }
+})();
+</script>
+<script>
+// 크로스오버 렌더
+const D = window.POWER_DATA;
+const xroot = document.getElementById('crossover');
+if (xroot && D.crossover) {
+  xroot.innerHTML = D.crossover.map(x => `
+    <div class="xover">
+      <div class="xover-name">${x.name}</div>
+      <div class="xover-layers">${x.layers}</div>
+      <div class="xover-note">${x.note}</div>
+    </div>`).join('');
+}
+</script>
+</body>
+</html>
