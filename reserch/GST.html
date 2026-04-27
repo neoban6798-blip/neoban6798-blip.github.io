@@ -1,1 +1,283 @@
+<p data-ke-size="size16">&nbsp;</p>
+<div>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; font-size: 15px; line-height: 1.85; color: #1a1a1a; background: #fff; }
+  .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.2rem 4rem; }
 
+  /* 면책 */
+  .disclaimer-top {
+    background: #f7f7f7;
+    border-left: 3px solid #aaa;
+    border-radius: 6px;
+    padding: 0.9rem 1.1rem;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.75;
+    margin-bottom: 2.2rem;
+  }
+
+  /* 시리즈 태그 */
+  .series-tag {
+    display: inline-block;
+    font-size: 12px;
+    padding: 3px 11px;
+    border-radius: 20px;
+    background: #eef4ff;
+    color: #3366cc;
+    margin-bottom: 0.8rem;
+    font-weight: 500;
+  }
+
+  /* 제목 */
+  h1.post-title {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 0.4rem;
+    color: #111;
+  }
+  .post-meta { font-size: 13px; color: #888; margin-bottom: 2rem; }
+
+  /* 리드 */
+  .lead {
+    border-left: 3px solid #3366cc;
+    padding: 0.75rem 1rem;
+    background: #f8faff;
+    border-radius: 0 6px 6px 0;
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 2.2rem;
+    line-height: 1.9;
+  }
+
+  /* 섹션 제목 */
+  h2.section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111;
+    margin: 2.2rem 0 0.9rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e8e8e8;
+  }
+  h3.sub-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #222;
+    margin: 1.4rem 0 0.5rem;
+  }
+
+  /* 본문 */
+  p.body { margin-bottom: 1.1rem; color: #222; }
+
+  /* 트리거 카드 */
+  .trigger-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin: 0.8rem 0;
+  }
+  .trigger-label { font-size: 11px; font-weight: 700; color: #3366cc; margin-bottom: 0.3rem; letter-spacing: 0.05em; }
+  .trigger-title { font-size: 14px; font-weight: 700; margin-bottom: 0.35rem; color: #111; }
+  .trigger-body { font-size: 13px; color: #444; line-height: 1.75; }
+
+  /* 데이터 그리드 */
+  .data-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 1.2rem 0; }
+  .data-card { background: #f7f9fc; border-radius: 8px; padding: 0.9rem 1rem; text-align: center; border: 1px solid #e8edf5; }
+  .data-label { font-size: 11px; color: #777; margin-bottom: 5px; }
+  .data-value { font-size: 17px; font-weight: 700; color: #1a1a1a; }
+  .data-note { font-size: 11px; color: #3366cc; margin-top: 4px; }
+
+  /* 테이블 */
+  table.data-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 1rem 0; }
+  table.data-table th { background: #f2f4f8; padding: 9px 12px; text-align: left; font-weight: 700; border-bottom: 1px solid #dde; color: #333; }
+  table.data-table td { padding: 9px 12px; border-bottom: 1px solid #eee; color: #444; }
+  table.data-table td:first-child { font-weight: 600; color: #222; }
+
+  /* EPS 박스 */
+  .eps-box { background: #f7f9fc; border-radius: 8px; padding: 1.2rem 1.4rem; margin: 1.2rem 0; border: 1px solid #dde5f5; }
+  .eps-box-title { font-size: 13px; font-weight: 700; color: #555; margin-bottom: 0.9rem; }
+  .eps-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid #e8edf5; font-size: 14px; }
+  .eps-row:last-child { border-bottom: none; }
+  .eps-key { color: #444; }
+  .eps-val { font-weight: 700; }
+  .eps-val.red { color: #cc2200; }
+
+  /* 목표주가 밴드 */
+  .price-band { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 1.2rem 0; }
+  .band-item { border-radius: 8px; padding: 1rem; text-align: center; border: 1px solid #ddd; }
+  .band-label { font-size: 11px; color: #777; margin-bottom: 5px; }
+  .band-value { font-size: 18px; font-weight: 700; }
+  .band-sub { font-size: 11px; margin-top: 4px; }
+  .band-item.strong { border-color: #ffcccc; background: #fff7f7; }
+  .band-item.strong .band-value { color: #cc2200; }
+  .band-item.strong .band-sub { color: #cc2200; }
+  .band-item.hold { border-color: #ffe0aa; background: #fffbf2; }
+  .band-item.hold .band-value { color: #cc7700; }
+  .band-item.target { border-color: #bbddcc; background: #f4fdf8; }
+  .band-item.target .band-value { color: #117744; }
+
+  /* 신호 박스 */
+  .signal-box { border: 1px solid #e0e0e0; border-radius: 8px; padding: 1rem 1.2rem; margin: 1rem 0; }
+  .signal-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 0.6rem; font-size: 14px; color: #333; }
+  .signal-row:last-child { margin-bottom: 0; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+  .dot-red { background: #cc2200; }
+  .dot-amber { background: #cc7700; }
+
+  /* 산업지도 캡션 */
+  .img-caption { font-size: 12px; color: #888; text-align: center; margin-top: 0.4rem; margin-bottom: 1.2rem; }
+
+  /* 구분선 */
+  hr.divider { border: none; border-top: 1px solid #eee; margin: 2rem 0; }
+
+  /* 하단 면책 */
+  .disclaimer-bottom { font-size: 12px; color: #888; border-top: 1px solid #e8e8e8; padding-top: 1.2rem; margin-top: 2.5rem; line-height: 1.9; }
+
+  /* 태그 */
+  .tags { margin-top: 1.8rem; }
+  .tag { display: inline-block; font-size: 12px; background: #f0f0f0; color: #555; border-radius: 4px; padding: 3px 8px; margin: 3px 2px; }
+</style>
+</div>
+<div class="container"><!-- 면책 상단 -->
+<div class="disclaimer-top">이 포스팅은 제가 개인 투자 목적으로 진행한 기업 분석의 기록입니다. 모든 수치와 판단은 저의 개인적 견해이며, 투자 권유&middot;추천&middot;상담이 아닙니다. 제가 추정한 EPS와 목표주가는 공개된 자료를 바탕으로 한 개인 추정치로, 실제 결과와 다를 수 있습니다. 이 글을 참고한 어떠한 투자 결정과 그 결과에 대해서도 저는 일절 책임지지 않습니다.</div>
+<!-- 시리즈 + 제목 --> <span class="series-tag">인공지능과 함께하는 종목분석</span>
+<h1 class="post-title">GST(083450) 기업분석 &mdash; 반도체 소부장 스크러버&middot;칠러, EPS 추정과 목표주가 산출</h1>
+<div class="post-meta">2026년 4월 16일 &middot; 반도체 소재&middot;부품&middot;장비 &middot; ss-code v3.2</div>
+<!-- 리드 -->
+<div class="lead">공시자료와 증권사 리포트를 직접 분석해 EPS를 추정하고, 자체 개발한 주식 분석 코드로 목표주가를 산출하는 과정을 기록합니다. 시장 컨센서스를 그대로 따르지 않고 독립적인 분석 프로토콜을 적용한 개인 분석입니다.</div>
+<!-- 1. 투자 아이디어 -->
+<h2 class="section-title" data-ke-size="size26">GST를 분석한 이유 &mdash; 투자 아이디어</h2>
+<p class="body" data-ke-size="size16">GST는 반도체 밸류체인에 속한 소부장(소재&middot;부품&middot;장비) 기업입니다. 반도체 제조 공정에서 발생하는 유해가스를 정화하는 스크러버(Scrubber)와 공정 온도를 안정적으로 유지하는 칠러(Chiller)가 핵심 제품입니다.</p>
+[##_Image|kage@c0aNGR/dJMcaf0BCdr/AAAAAAAAAAAAAAAAAAAAAKktM4oySh5FT-jrSy9Yu2Q0fxSd34lVwU7EEy7FwHkJ/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&amp;expires=1777561199&amp;allow_ip=&amp;allow_referer=&amp;signature=QJmo54eluW47A4gk2%2FjQ97jShVY%3D|CDM|1.3|{"originWidth":1325,"originHeight":518,"style":"alignCenter","filename":"화면 캡처 2026-04-21 222445.png"}_##]<!-- 산업지도 이미지 자리 -->
+<p style="text-align: center; color: #aaa; font-size: 13px; padding: 1.5rem; border: 1px dashed #ddd; border-radius: 8px; margin: 1rem 0;" data-ke-size="size16">📌 [이미지] 한국 반도체 산업지도 캡처</p>
+<div class="img-caption">한국 반도체 산업지도 &mdash; GST는 반도체 밸류체인 공정 인프라 장비 영역에 위치합니다. (2025년 분석 기준)</div>
+<p class="body" data-ke-size="size16">삼성전자, SK하이닉스, TSMC, 마이크론 등 글로벌 주요 반도체 기업이 모두 고객사입니다. 이 사업의 핵심 경쟁력은 <b>락인(Lock-in) 구조</b>입니다. 반도체 공장에 한 번 납품이 되면 공정 호환성과 인증 문제로 교체가 매우 어렵습니다. 안정적인 수주 기반이 구조적으로 만들어지는 이유입니다.</p>
+<p class="body" data-ke-size="size16">여기에 성장 모멘텀이 더해집니다. AI 데이터센터의 발열 문제가 심화되면서 서버 냉각 수요가 빠르게 증가하고 있습니다. GST는 액침냉각(Immersion Cooling) 시장으로의 진출을 준비 중이며, 현재 파일럿 검증 단계에 있습니다. 반도체 팹 장비 기업이 AI 인프라 냉각 전문기업으로 진화하는 과정입니다.</p>
+<hr class="divider" data-ke-style="style1" /><!-- 2. 핵심 트리거 -->
+<h2 class="section-title" data-ke-size="size26">핵심 모니터링 포인트 3가지</h2>
+<div class="trigger-card">
+<div class="trigger-label">TRIGGER 01</div>
+<div class="trigger-title">글로벌 팹 동반 진출 &mdash; 삼성 P4&middot;SK하이닉스 용인&middot;마이크론 보이시</div>
+<div class="trigger-body">삼성전자 평택 P4 Phase 3, SK하이닉스 용인 클러스터 등 신규 팹 건설 일정과 연동된 스크러버&middot;칠러 수주 물량 확인이 핵심입니다. 마이크론 보이시 팹과 중화권 고객사 설비 투자 확대도 수혜 가능성이 있습니다.</div>
+</div>
+<div class="trigger-card">
+<div class="trigger-label">TRIGGER 02</div>
+<div class="trigger-title">TSMC 전기식 칠러 퀄 테스트 통과 여부</div>
+<div class="trigger-body">글로벌 파운드리 1위 TSMC향 전기식 칠러 공급 승인 여부가 중요한 분기점입니다. 통과 시 고객사 다변화와 밸류에이션 리레이팅의 핵심 트리거가 될 수 있습니다.</div>
+</div>
+<div class="trigger-card">
+<div class="trigger-label">TRIGGER 03</div>
+<div class="trigger-title">액침냉각 장비 양산 채택 시점</div>
+<div class="trigger-body">현재 PoC 단계인 액침냉각 장비가 글로벌 데이터센터 고객사의 양산 라인에 정식 채택되는 시점이 새로운 성장 모멘텀이 됩니다.</div>
+</div>
+<hr class="divider" data-ke-style="style1" /><!-- 3. 실적 -->
+<h2 class="section-title" data-ke-size="size26">실적 분석 &mdash; 2025년 확정 및 2026년 전망</h2>
+<div class="data-grid">
+<div class="data-card">
+<div class="data-label">2025년 매출</div>
+<div class="data-value">3,124억</div>
+<div class="data-note">확정 실적</div>
+</div>
+<div class="data-card">
+<div class="data-label">2026년 예상 매출</div>
+<div class="data-value">4,253억</div>
+<div class="data-note">YoY +22.5%</div>
+</div>
+<div class="data-card">
+<div class="data-label">2026년 예상 영업이익</div>
+<div class="data-value">745억</div>
+<div class="data-note">사상 최대 전망</div>
+</div>
+</div>
+<p class="body" data-ke-size="size16">2025년 영업이익률(OPM)은 18.0%였습니다. 선단 공정과 친환경 장비 비중이 늘어나면서 2026년에도 18% 내외의 수익성이 유지될 것으로 전망됩니다.</p>
+<h3 class="sub-title" data-ke-size="size23">제품별 매출 구조 (2025년 기준)</h3>
+<table class="data-table" data-ke-align="alignLeft">
+<tbody>
+<tr>
+<th>제품군</th>
+<th>매출액</th>
+<th>비중</th>
+<th>특징</th>
+</tr>
+<tr>
+<td>스크러버</td>
+<td>1,634억</td>
+<td>52.3%</td>
+<td>Plasma-wet 방식, 환경 규제 수혜</td>
+</tr>
+<tr>
+<td>칠러</td>
+<td>774억</td>
+<td>24.8%</td>
+<td>초저온 칠러 신성장, 해외 확장</td>
+</tr>
+<tr>
+<td>유지보수/용역</td>
+<td>716억</td>
+<td>22.9%</td>
+<td>안정적 현금흐름, 경기 방어적</td>
+</tr>
+</tbody>
+</table>
+<p class="body" data-ke-size="size16">유지보수&middot;용역 매출이 전체의 23%에 달한다는 점이 중요합니다. 장비 판매가 줄어드는 시기에도 일정 매출이 유지되는 구조입니다.</p>
+<hr class="divider" data-ke-style="style1" /><!-- 4. EPS 추정 -->
+<h2 class="section-title" data-ke-size="size26">12개월 Forward EPS 추정 과정</h2>
+<p class="body" data-ke-size="size16">목표주가 산출의 출발점은 EPS(주당순이익) 추정입니다. 시장 컨센서스를 참고하되, 2025~2026년 사업보고서와 최근 3개월 이내 증권사 리포트 3종, 주식매수선택권 공시자료를 직접 검토해 자체 프로토콜로 수치를 산출했습니다.</p>
+<p class="body" data-ke-size="size16">&nbsp;</p>
+[##_Image|kage@bKgCGa/dJMcahYrq8m/AAAAAAAAAAAAAAAAAAAAAF0nvdyOjtf4sja8k_Z-D1TwfwMxSuuUw7usVEbpt6vm/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&amp;expires=1777561199&amp;allow_ip=&amp;allow_referer=&amp;signature=qvXOtf2arfIJBuHtmFVAfOkT5oA%3D|CDM|1.3|{"originWidth":1200,"originHeight":698,"style":"alignCenter"}_##]
+<p class="body" data-ke-size="size16">&nbsp;</p>
+<!-- EPS 대화 캡처 이미지 자리 -->
+<p style="text-align: center; color: #aaa; font-size: 13px; padding: 1.5rem; border: 1px dashed #ddd; border-radius: 8px; margin: 1rem 0;" data-ke-size="size16">📌 [이미지] AI와 함께 EPS 추정하는 대화 캡처</p>
+<div class="img-caption">AI와 함께 공시자료를 분석하며 EPS를 추정하는 과정입니다.</div>
+<p class="body" data-ke-size="size16">세부 추정 로직은 제 투자 시스템의 핵심 프로토콜로 공개하지 않습니다. 산출 결과는 다음과 같습니다.</p>
+<div class="eps-box">
+<div class="eps-box-title">EPS 추정 결과 (12M Forward)</div>
+<div class="eps-row"><span class="eps-key">2026년 예상 영업이익</span><span class="eps-val">745억 원</span></div>
+<div class="eps-row"><span class="eps-key">적용 순이익률</span><span class="eps-val">약 80%</span></div>
+<div class="eps-row"><span class="eps-key">예상 당기순이익</span><span class="eps-val">약 596억 원</span></div>
+<div class="eps-row"><span class="eps-key">적용 주식 수 (희석 반영)</span><span class="eps-val">9,449,000주</span></div>
+<div class="eps-row"><span class="eps-key">추정 EPS (e1)</span><span class="eps-val red">5,500원</span></div>
+</div>
+<hr class="divider" data-ke-style="style1" /><!-- 5. 목표주가 -->
+<h2 class="section-title" data-ke-size="size26">목표주가 산출 &mdash; ss-code v3.2 결과</h2>
+<p class="body" data-ke-size="size16">추정된 EPS 5,500원을 직접 개발한 주식 분석 코드(ss-code v3.2)에 입력해 목표주가 밴드를 산출했습니다. ss-code는 시장 레짐, 변동성, 업종 특성을 반영해 동적으로 밴드를 계산합니다.</p>
+<p class="body" data-ke-size="size16">&nbsp;</p>
+[##_Image|kage@cdQP6O/dJMcacv5UIA/AAAAAAAAAAAAAAAAAAAAAH_5GXrnFYwlFcMb0-tizaxMApUtE1UgL0R2N11WktE9/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&amp;expires=1777561199&amp;allow_ip=&amp;allow_referer=&amp;signature=rKmWFjYn9yRVG4yP%2BLQ%2FZAvFPaY%3D|CDM|1.3|{"originWidth":740,"originHeight":390,"style":"alignCenter"}_##]<!-- ss-code 결과 캡처 이미지 자리 -->
+<p style="text-align: center; color: #aaa; font-size: 13px; padding: 1.5rem; border: 1px dashed #ddd; border-radius: 8px; margin: 1rem 0;" data-ke-size="size16">📌 [이미지] ss-code v3.2 실행 결과 캡처</p>
+<div class="img-caption">ss-code v3.2 실행 결과 &mdash; GST(083450) 분석</div>
+<div class="price-band">
+<div class="band-item strong">
+<div class="band-label">보수적 지지선</div>
+<div class="band-value">93,604원</div>
+<div class="band-sub">Strong Buy 구간</div>
+</div>
+<div class="band-item hold">
+<div class="band-label">시장 적정가</div>
+<div class="band-value">120,181원</div>
+<div class="band-sub">Hold 기준</div>
+</div>
+<div class="band-item target">
+<div class="band-label">낙관적 목표가</div>
+<div class="band-value">135,662원</div>
+<div class="band-sub">상방 시나리오</div>
+</div>
+</div>
+<div class="signal-box">
+<div class="signal-row">
+<div class="dot dot-amber">&nbsp;</div>
+<span>시장 레짐 BULL &mdash; 단, 하방 밴드 -22.1% / 상방 +12.9%로 변동성 구간입니다.</span></div>
+<div class="signal-row">
+<div class="dot dot-red">&nbsp;</div>
+<span>ss-code 기준 현재 시장은 변동성 확대 구간으로 판단됩니다. 신규 진입보다 기존 보유 유지가 적절한 시점입니다.</span></div>
+</div>
+<hr class="divider" data-ke-style="style1" /><!-- 6. 리스크 -->
+<h2 class="section-title" data-ke-size="size26">리스크 요인</h2>
+<p class="body" data-ke-size="size16">전방 반도체 기업들의 CAPEX 집행 속도가 조절될 경우 수주 물량이 예상보다 늦어질 수 있습니다. 유니셈 등 국내외 경쟁사와의 점유율 경쟁도 지속적으로 체크해야 할 변수입니다. TSMC 퀄 테스트와 액침냉각 전환이 지연될 경우 멀티플 리레이팅 시점도 후퇴할 수 있습니다.</p>
+<hr class="divider" data-ke-style="style1" />
+<p class="body" data-ke-size="size16">이번 포스팅은 '인공지능과 함께하는 종목분석' 시리즈의 첫 번째 글입니다. AI와 함께 공시자료를 정리하고 자체 분석 프로토콜로 EPS를 산출한 뒤 ss-code로 목표주가를 뽑는 과정을 앞으로 계속 공유할 예정입니다.</p>
+<!-- 태그 -->
+<div class="tags"><span class="tag">#GST</span> <span class="tag">#083450</span> <span class="tag">#스크러버</span> <span class="tag">#칠러</span> <span class="tag">#반도체장비</span> <span class="tag">#반도체소부장</span> <span class="tag">#액침냉각</span> <span class="tag">#종목분석</span> <span class="tag">#EPS추정</span> <span class="tag">#목표주가</span> <span class="tag">#개인투자</span> <span class="tag">#인공지능종목분석</span> <span class="tag">#AI투자분석</span> <span class="tag">#ss코드</span> <span class="tag">#전업투자자10년플랜</span></div>
+<!-- 면책 하단 -->
+<div class="disclaimer-bottom">※ 본 포스팅은 개인 투자 목적의 기업 분석 기록이며, 투자 권유&middot;추천&middot;상담이 아닙니다.<br />※ 모든 수치는 공개 자료 기반의 개인 추정치로 실제 결과를 보장하지 않습니다.<br />※ 이 글을 참고한 투자 결정과 그 결과에 대해 저는 일절 책임지지 않습니다.<br />※ 모든 투자 판단과 책임은 전적으로 본인에게 있습니다.</div>
+</div>
