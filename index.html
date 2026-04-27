@@ -88,7 +88,7 @@
     width: 55%;
     height: 100%;
     background: url('image/main.jpg') center/cover no-repeat;
-    opacity: 0.55;          /* ← 이 줄만 추가 */
+    opacity: 0.55; filter: blur(3px);          /* ← 이 줄만 추가 */
   }
 
   /* 왼쪽으로 페이드아웃 */
@@ -103,11 +103,18 @@
 
   /* 텍스트 영역 */
   .hero-content {
-    position: relative;
-    z-index: 2;
-    width: 45%;
+  position: relative;
+  z-index: 2;
+  width: 45%;
+  /* 아래 섹션 .wrap 과 왼쪽 정렬 맞추기 */
+  padding-left: calc((100% - 1280px) / 2 + 40px);
+}
+
+@media (max-width: 1280px) {
+  .hero-content {
     padding-left: 40px;
   }
+}
 
   .hero-label {
     display: inline-block; font-size: 11px; font-weight: 700;
