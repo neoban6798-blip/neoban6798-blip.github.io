@@ -7,19 +7,81 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
+  /* ========== 공통 베이스 ========== */
+  .wrap-wide { max-width: 1640px; margin: 0 auto; padding: 0 40px; }
+
+  .topbar {
+    border-bottom: 1px solid var(--line);
+    background: var(--paper, #fff);
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: saturate(140%) blur(8px);
+  }
+  .topbar-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px; gap: 8px;
+  }
+  .topnav { display: flex; gap: 2px; flex-shrink: 0; flex-wrap: nowrap; }
+  .topnav a {
+    padding: 6px 9px; border-radius: 999px; font-size: 12px; color: var(--ink-3, #6b7280);
+    font-weight: 500; transition: all .15s ease; white-space: nowrap; flex-shrink: 0;
+    text-decoration: none;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 8px;
+    font-weight: 700; letter-spacing: -.01em;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .brand span:last-child { font-size: 13px; }
+  .brand-mark {
+    width: 26px; height: 26px; border-radius: 6px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+    display: grid; place-items: center; color: white; font-weight: 800; font-size: 12px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1); flex-shrink: 0;
+  }
+  .topnav a:hover { background: rgba(0,0,0,0.03); color: var(--ink); }
+  .topnav a.active { background: var(--ink); color: white; }
+
+  .hero { padding: 80px 0 56px; border-bottom: 1px solid var(--line); background: var(--paper, #fff); }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--accent); padding: 6px 12px; border: 1px solid currentColor;
+    border-radius: 999px; opacity: .85;
+  }
+  .hero h1 {
+    font-size: clamp(40px, 5vw, 68px); line-height: 1.05; font-weight: 800;
+    letter-spacing: -.03em; margin: 20px 0 16px; max-width: 22ch;
+  }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero-lead {
+    font-size: 18px; line-height: 1.6; color: var(--ink-3, #5a6470); max-width: 58ch;
+    margin: 0;
+  }
+  .hero-meta {
+    display: flex; flex-wrap: wrap; gap: 24px; margin-top: 32px;
+    padding-top: 24px; border-top: 1px dashed var(--line);
+    font-size: 13px; color: var(--ink-4, #8b95a2);
+  }
+  .hero-meta b { color: var(--ink-2); font-weight: 600; }
+
+  /* ========== K컬쳐 전용 변수 ========== */
   :root {
     --ink: #111418;
     --ink-2: #2a2f36;
+    --ink-3: #5a6470;
+    --ink-4: #8b95a2;
     --muted: #6b7280;
     --muted-2: #9aa0a6;
     --line: #e4e6ea;
     --line-2: #d4d7dc;
     --bg: #f7f6f2;
     --card: #ffffff;
-    --accent: oklch(58% 0.12 25);      /* K컬쳐 레드·코랄 */
-    --accent-2: oklch(58% 0.12 260);   /* 인프라 블루 */
-    --accent-3: oklch(58% 0.12 150);   /* 신산업 그린 */
+    --paper: #ffffff;
+    --accent: oklch(58% 0.12 25);
+    --accent-2: oklch(58% 0.12 260);
+    --accent-3: oklch(58% 0.12 150);
     --highlight-bg: #fff8ee;
     --chip-bg: #f1efe9;
   }
@@ -30,15 +92,7 @@
   }
   .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; letter-spacing: 0.01em; }
 
-  /* --- shell --- */
   .shell { max-width: 1440px; margin: 0 auto; padding: 40px 64px 120px; }
-  .top { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--line); padding-bottom: 22px; margin-bottom: 48px; }
-  .top h1 { font-size: 26px; font-weight: 600; margin: 0 0 6px; letter-spacing: -0.01em; }
-  .top .sub { color: var(--muted); font-size: 13px; }
-  .top .meta { text-align: right; font-size: 11px; color: var(--muted); }
-  .top .meta .mono { display: block; font-size: 10px; margin-top: 4px; color: var(--muted-2); }
-
-  /* --- tabs --- */
   .tabs { display: flex; gap: 2px; margin-bottom: 36px; border-bottom: 1px solid var(--line); }
   .tab { background: transparent; border: 0; padding: 14px 22px; font-family: inherit; font-size: 13px; color: var(--muted);
     cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all .15s; font-weight: 500; }
@@ -50,17 +104,10 @@
   .view { display: none; }
   .view.active { display: block; }
 
-  /* --- common section header --- */
   .section-title { font-size: 18px; font-weight: 600; margin: 0 0 4px; }
   .section-sub { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
 
-  /* ============== VIEW A: 수평 밸류체인 ============== */
-  .viewA .intro { display: grid; grid-template-columns: 1.2fr 2fr; gap: 48px; margin-bottom: 48px; padding-bottom: 36px; border-bottom: 1px dashed var(--line-2); }
-  .viewA .intro h2 { font-size: 22px; font-weight: 600; margin: 0 0 14px; letter-spacing: -0.01em; }
-  .viewA .intro p { font-size: 14px; color: var(--ink-2); line-height: 1.7; margin: 0 0 10px; }
-  .viewA .intro .kicker { font-family: "IBM Plex Mono"; font-size: 10px; color: var(--accent); margin-bottom: 10px; letter-spacing: 0.1em; }
-
-  /* 5단계 프레임 */
+  /* VIEW A */
   .stages { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; border: 1px solid var(--line); background: var(--card); margin-bottom: 48px; }
   .stage { padding: 22px 20px; border-right: 1px solid var(--line); position: relative; }
   .stage:last-child { border-right: 0; }
@@ -71,20 +118,11 @@
   .stage.current { background: var(--highlight-bg); }
   .stage.current .n { color: var(--accent); }
   .stage.future { opacity: 0.55; }
-  .stages-arrow { position: absolute; right: -6px; top: 30px; z-index: 2;
-    width: 11px; height: 11px; border-top: 1px solid var(--line-2); border-right: 1px solid var(--line-2); transform: rotate(45deg); background: var(--card); }
+  .stages-arrow { position: absolute; right: -6px; top: 30px; z-index: 2; width: 11px; height: 11px; border-top: 1px solid var(--line-2); border-right: 1px solid var(--line-2); transform: rotate(45deg); background: var(--card); }
   .stage:last-child .stages-arrow { display: none; }
 
-  /* 레이어 그리드 */
   .layers { display: flex; flex-direction: column; gap: 28px; }
-  .layer {
-    display: grid;
-    grid-template-columns: 220px 1fr;
-    gap: 28px;
-    padding: 28px;
-    background: var(--card);
-    border: 1px solid var(--line);
-  }
+  .layer { display: grid; grid-template-columns: 220px 1fr; gap: 28px; padding: 28px; background: var(--card); border: 1px solid var(--line); }
   .layer-head { border-right: 1px solid var(--line); padding-right: 28px; }
   .layer-head .lid { font-family: "IBM Plex Mono"; font-size: 11px; letter-spacing: 0.12em; color: var(--muted-2); }
   .layer-head .ltitle { font-size: 20px; font-weight: 600; margin: 8px 0 8px; letter-spacing: -0.01em; }
@@ -117,7 +155,6 @@
   .company[data-detail] { cursor: pointer; }
   .company[data-detail]:hover { outline: 1px solid var(--ink); }
 
-  /* Detail modal */
   .modal-bg { display: none; position: fixed; inset: 0; background: rgba(20,22,26,0.4); z-index: 200; align-items: center; justify-content: center; }
   .modal-bg.on { display: flex; }
   .modal { background: var(--card); border: 1px solid var(--line); max-width: 520px; width: 90%; padding: 32px; position: relative; }
@@ -133,17 +170,10 @@
   .data-off .stage .status { display: none; }
   .data-off .stage .desc { min-height: 0; }
 
-  /* ============== VIEW B: 수직 계층 스택 ============== */
+  /* VIEW B */
   .viewB { padding-top: 10px; }
   .viewB .layer-stack { position: relative; max-width: 1100px; margin: 0 auto; }
-  .viewB .lblock {
-    position: relative;
-    padding: 32px 40px 36px;
-    border: 1px solid var(--line);
-    background: var(--card);
-    margin-bottom: 0;
-    border-bottom: 0;
-  }
+  .viewB .lblock { position: relative; padding: 32px 40px 36px; border: 1px solid var(--line); background: var(--card); margin-bottom: 0; border-bottom: 0; }
   .viewB .lblock:last-child { border-bottom: 1px solid var(--line); }
   .viewB .lblock[data-id="L1"] { background: #fdf7f3; }
   .viewB .lblock[data-id="L2"] { background: #f3f6fd; }
@@ -155,14 +185,10 @@
   .viewB .lsectors { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
   .viewB .lblock[data-id="L3"] .lsectors { grid-template-columns: repeat(4, 1fr); }
   .viewB .sector { background: var(--card); }
-  .viewB .arrow-down {
-    text-align: center; position: relative; background: var(--bg);
-    padding: 14px 0; font-family: "IBM Plex Mono"; font-size: 10px;
-    color: var(--muted-2); letter-spacing: 0.2em;
-  }
+  .viewB .arrow-down { text-align: center; position: relative; background: var(--bg); padding: 14px 0; font-family: "IBM Plex Mono"; font-size: 10px; color: var(--muted-2); letter-spacing: 0.2em; }
   .viewB .arrow-down::before { content: ""; position: absolute; left: 50%; top: -1px; width: 1px; height: 14px; background: var(--line-2); }
 
-  /* ============== VIEW C: 동심원 확산 ============== */
+  /* VIEW C */
   .viewC .orbit-wrap { display: grid; grid-template-columns: 1fr 340px; gap: 40px; align-items: start; }
   .viewC .orbit { position: relative; aspect-ratio: 1; background: var(--card); border: 1px solid var(--line); padding: 20px; }
   .viewC .orbit svg { width: 100%; height: 100%; display: block; }
@@ -175,15 +201,9 @@
   .viewC .legend .lrow .lt { font-size: 13px; font-weight: 600; margin: 4px 0 4px; }
   .viewC .legend .lrow .ls { font-size: 11px; color: var(--muted); line-height: 1.55; }
 
-  /* --- footer --- */
   .footer { margin-top: 60px; padding-top: 22px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; font-size: 10.5px; color: var(--muted-2); font-family: "IBM Plex Mono"; letter-spacing: 0.05em; }
 
-  /* --- tweaks panel --- */
-  .tweaks {
-    position: fixed; right: 24px; bottom: 24px; width: 260px; background: var(--card);
-    border: 1px solid var(--line); padding: 18px; box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-    display: none; z-index: 100; font-size: 12px;
-  }
+  .tweaks { position: fixed; right: 24px; bottom: 24px; width: 260px; background: var(--card); border: 1px solid var(--line); padding: 18px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); display: none; z-index: 100; font-size: 12px; }
   .tweaks.on { display: block; }
   .tweaks h4 { font-size: 11px; font-weight: 600; margin: 0 0 14px; letter-spacing: 0.1em; color: var(--muted); }
   .tweaks .row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-top: 1px dashed var(--line-2); }
@@ -197,28 +217,26 @@
 </head>
 <body>
 
-<!-- 통합 탑바 (산업지도 허브 연결) -->
-<header style="position:sticky;top:0;z-index:150;background:rgba(255,255,255,0.92);backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid var(--line);">
-  <div style="max-width:1440px;margin:0 auto;padding:0 64px;height:52px;display:flex;align-items:center;justify-content:space-between;">
-    <a href="index.html" style="display:flex;align-items:center;gap:10px;font-weight:600;color:var(--ink);text-decoration:none;white-space:nowrap;letter-spacing:-0.01em;">
-      <span style="width:26px;height:26px;border-radius:6px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:grid;place-items:center;color:#fff;font-weight:700;font-size:12px;">K</span>
-      <span style="font-size:14px;">Korea Industry Map</span>
-    </a>
-    <nav style="display:flex;gap:2px;">
-    <nav style="display:flex;gap:2px;flex-shrink:0;flex-wrap:nowrap;">
-      <a href="../index.html" style="white-space:nowrap;padding:6px 14px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;background:#111418;color:#fff;">Investment Research (홈)</a>
-      <a href="index.html" style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;color:#6b7280;">Overview</a>
-      <a href="semiconductor.html" style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;color:#6b7280;">반도체</a>
-      <a href="defense.html" style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;color:#6b7280;">방산</a>
-      <a href="kculture.html" style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;background:#111418;color:#fff;">K컬처</a>
-      <a href="power.html" style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;color:#6b7280;">전력인프라</a>
-    </nav>
+<!-- ========== 통일된 탑바 ========== -->
+<header class="topbar">
+  <div class="wrap-wide topbar-inner">
+    <span class="brand">
+      <span class="brand-mark">K</span>
+      <span>Korea Industry Map</span>
+    </span>
+    <nav class="topnav" style="display:flex;gap:2px;flex-shrink:0;flex-wrap:nowrap;">
+      <a style="white-space:nowrap;padding:6px 14px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;background:#111418;color:#fff;" href="../index.html">Investment Research (홈)</a>
+      <a style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;color:#6b7280;" href="index.html">Overview</a>
+      <a style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;color:#6b7280;" href="semiconductor.html">반도체</a>
+      <a style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;color:#6b7280;" href="defense.html">방산</a>
+      <a style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;background:#111418;color:#fff;" href="kculture.html">K컬처</a>
+      <a style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;color:#6b7280;" href="power.html">전력인프라</a>
     </nav>
   </div>
 </header>
 
-<div class="shell" id="root">
-  <section class="hero">
+<!-- ========== 통일된 히어로 (A+B 합침) ========== -->
+<section class="hero">
   <div class="wrap-wide">
     <span class="hero-eyebrow">● K-Culture · 5-Stage Expansion</span>
     <h1>문화 확산이 곧<br><em>산업 생태계</em>다</h1>
@@ -235,18 +253,17 @@
   </div>
 </section>
 
+<!-- ========== 메인 콘텐츠 ========== -->
+<div class="shell" id="root">
   <nav class="tabs">
     <button class="tab active" data-view="A"><span class="num">MAIN</span>수평 밸류체인</button>
     <button class="tab" data-view="B"><span class="num">ALT</span>레이어드 스택</button>
     <button class="tab" data-view="C"><span class="num">ALT</span>동심원 확산</button>
   </nav>
 
-  <!-- =========== VIEW A =========== -->
+  <!-- VIEW A -->
   <section class="view viewA active" data-view="A">
-    
     <div id="stages"></div>
-
-    
 
     <div style="margin: 48px 0 20px;">
       <div class="section-title">3개 레이어 구조</div>
@@ -256,7 +273,7 @@
     <div class="layers" id="layers-a"></div>
   </section>
 
-  <!-- =========== VIEW B =========== -->
+  <!-- VIEW B -->
   <section class="view viewB" data-view="B">
     <div style="max-width:1100px;margin:0 auto 32px;">
       <div class="section-title">레이어드 스택 · 자본의 흐름</div>
@@ -265,7 +282,7 @@
     <div class="layer-stack" id="stack-b"></div>
   </section>
 
-  <!-- =========== VIEW C =========== -->
+  <!-- VIEW C -->
   <section class="view viewC" data-view="C">
     <div style="margin-bottom: 32px;">
       <div class="section-title">동심원 · 문화에서 산업으로의 확산</div>
@@ -429,25 +446,9 @@ window.KCULTURE_DATA = {
 (function(){
   const D = window.KCULTURE_DATA;
   const root = document.getElementById('root');
-  const currentStage = 3; // 3→4 전환 구간
+  const currentStage = 3;
 
-  // --- Render portfolio ---
-  const pfList = document.getElementById('portfolio-list');
-  const owned = [];
-  D.layers.forEach(L => L.sectors.forEach(sec => sec.companies.forEach(c => { if (c.owned) owned.push({c, sec, L}); })));
-  owned.forEach(({c, sec, L}) => {
-    const el = document.createElement('div');
-    el.style.cssText = 'padding:14px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.04);cursor:pointer;';
-    el.dataset.detail = encodeURIComponent(JSON.stringify({name:c.name,owned:true,detail:c.detail,tag:c.tag}));
-    el.innerHTML = `
-      <div style="font-family:'IBM Plex Mono';font-size:9px;letter-spacing:0.12em;opacity:0.55;">${L.id} · ${sec.id}</div>
-      <div style="font-size:15px;font-weight:600;margin:6px 0 4px;">${c.name}</div>
-      <div style="font-size:10.5px;opacity:0.7;font-family:'IBM Plex Mono';line-height:1.5;">${c.tag}</div>
-    `;
-    pfList.appendChild(el);
-  });
-
-  // --- Render stages (View A) ---
+  // --- Render stages ---
   const stagesEl = document.getElementById('stages');
   stagesEl.className = 'stages';
   D.stages.forEach(s => {
@@ -538,15 +539,13 @@ window.KCULTURE_DATA = {
     }
   });
 
-  // --- Render orbit (View C) — Radial tree SVG ---
+  // --- Render orbit (View C) ---
   const orbitEl = document.getElementById('orbit');
   const colors = { L1: 'oklch(58% 0.12 25)', L2: 'oklch(58% 0.12 260)', L3: 'oklch(58% 0.12 150)' };
-  // Viewbox is 1200 wide to give room for side labels; center shifted
   const VB_W = 1200, VB_H = 1000;
   const cx = 600, cy = 500;
   const rCore = 95;
-  const rMid = 250;        // sector anchor ring
-  const rOuter = 370;      // company ring
+  const rMid = 250;
   let svg = `<svg viewBox="0 0 ${VB_W} ${VB_H}" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <style>
@@ -556,12 +555,10 @@ window.KCULTURE_DATA = {
       </style>
     </defs>`;
 
-  // Flatten sectors in order L1..L3 and place them around the circle
   const allSectors = [];
-  D.layers.forEach((L, li) => L.sectors.forEach(sec => allSectors.push({ sec, li, layerId: L.id, color: colors[L.id] })));
+  D.layers.forEach((L) => L.sectors.forEach(sec => allSectors.push({ sec, layerId: L.id, color: colors[L.id] })));
   const N = allSectors.length;
 
-  // Background arcs for each layer (visual indicator of grouping)
   function polar(r, a) { return [cx + Math.cos(a)*r, cy + Math.sin(a)*r]; }
   function arcPath(r, a0, a1) {
     const [x0,y0] = polar(r, a0);
@@ -570,11 +567,9 @@ window.KCULTURE_DATA = {
     return `M${x0} ${y0} A${r} ${r} 0 ${large} 1 ${x1} ${y1}`;
   }
 
-  // Angle per sector — full 360, evenly spaced, starting at top
   const angleStep = (Math.PI * 2) / N;
   const startAng = -Math.PI/2 - angleStep/2;
 
-  // Layer arc ranges (group consecutive same-layer)
   const layerRanges = [];
   let curLayer = null, curStart = 0;
   allSectors.forEach((s, i) => {
@@ -585,26 +580,22 @@ window.KCULTURE_DATA = {
   });
   layerRanges.push({ id: curLayer, start: curStart, end: N-1 });
 
-  // Draw layer background arcs (thick)
   layerRanges.forEach(lr => {
     const a0 = startAng + lr.start*angleStep - angleStep*0.4;
     const a1 = startAng + lr.end*angleStep + angleStep*0.4;
     const arcR = (rCore + rMid)/2 + 20;
     const color = colors[lr.id];
     svg += `<path d="${arcPath(arcR, a0, a1)}" fill="none" stroke="${color}" stroke-width="6" stroke-linecap="round" opacity="0.85"/>`;
-    // Layer label at midpoint, placed just outside arc
     const mid = (a0 + a1) / 2;
     const [lx, ly] = polar(arcR - 20, mid);
     svg += `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" style="font-family:'IBM Plex Mono';font-size:10px;fill:${color};font-weight:600;letter-spacing:0.15em;">${lr.id}</text>`;
   });
 
-  // Center circle
   svg += `<circle cx="${cx}" cy="${cy}" r="${rCore}" fill="#111418"/>
     <text x="${cx}" y="${cy-8}" text-anchor="middle" style="fill:#fff;font-family:'IBM Plex Sans KR';font-size:17px;font-weight:600;">K컬처</text>
     <text x="${cx}" y="${cy+14}" text-anchor="middle" style="fill:#fff;font-family:'IBM Plex Sans KR';font-size:13px;opacity:0.8;">소비자</text>
     <text x="${cx}" y="${cy+34}" text-anchor="middle" style="fill:#fff;font-family:'IBM Plex Mono';font-size:9px;opacity:0.55;letter-spacing:0.15em;">5-STAGE FRAME</text>`;
 
-  // For each sector: spoke line, node, title, company list
   allSectors.forEach((s, i) => {
     const ang = startAng + i*angleStep;
     const [sx, sy] = polar(rCore + 4, ang);
@@ -612,8 +603,7 @@ window.KCULTURE_DATA = {
     svg += `<line x1="${sx}" y1="${sy}" x2="${mx}" y2="${my}" stroke="${s.color}" stroke-width="1.5" opacity="0.6"/>`;
     svg += `<circle cx="${mx}" cy="${my}" r="7" fill="${s.color}" stroke="#fff" stroke-width="2"/>`;
 
-    // Text placement
-    const cosA = Math.cos(ang), sinA = Math.sin(ang);
+    const cosA = Math.cos(ang);
     const textR = rMid + 22;
     const [tx, ty] = polar(textR, ang);
     const side = cosA > 0.08 ? 'start' : (cosA < -0.08 ? 'end' : 'middle');
@@ -622,7 +612,6 @@ window.KCULTURE_DATA = {
     svg += `<text x="${tx+dx}" y="${ty-6}" text-anchor="${side}" class="sid">${s.sec.id}${s.sec.badge ? ' · ★' : ''}</text>`;
     svg += `<text x="${tx+dx}" y="${ty+10}" text-anchor="${side}" class="stxt">${s.sec.name}</text>`;
 
-    // companies: up to 3 non-dim
     const top = s.sec.companies.filter(c => !c.dim).slice(0, 3);
     top.forEach((c, ci) => {
       svg += `<text x="${tx+dx}" y="${ty + 28 + ci*15}" text-anchor="${side}" class="ctxt" style="font-size:11.5px;opacity:0.8;">· ${c.name}</text>`;
@@ -632,7 +621,6 @@ window.KCULTURE_DATA = {
   svg += `</svg>`;
   orbitEl.innerHTML = svg;
 
-  // Legend C
   const legendC = document.getElementById('legend-c');
   D.layers.forEach(L => {
     const el = document.createElement('div');
@@ -664,7 +652,7 @@ window.KCULTURE_DATA = {
   updateCounter(savedView || 'A');
 
   // --- Tweaks ---
-  const tweakState = /*EDITMODE-BEGIN*/{"showData":true,"highlightOnly":false}/*EDITMODE-END*/;
+  const tweakState = {"showData":true,"highlightOnly":false};
   const applyTweaks = () => {
     root.classList.toggle('data-off', !tweakState.showData);
     root.classList.toggle('highlight-only', tweakState.highlightOnly);
@@ -687,16 +675,14 @@ window.KCULTURE_DATA = {
     tweakState.showData = !tweakState.showData;
     tgData.classList.toggle('on', tweakState.showData);
     applyTweaks();
-    window.parent.postMessage({type:'__edit_mode_set_keys', edits:{showData: tweakState.showData}}, '*');
   });
   tgHl.addEventListener('click', () => {
     tweakState.highlightOnly = !tweakState.highlightOnly;
     tgHl.classList.toggle('on', tweakState.highlightOnly);
     applyTweaks();
-    window.parent.postMessage({type:'__edit_mode_set_keys', edits:{highlightOnly: tweakState.highlightOnly}}, '*');
   });
 
-  // Detail modal
+  // --- Detail modal ---
   const modal = document.createElement('div');
   modal.className = 'modal-bg';
   modal.innerHTML = `<div class="modal"><button class="close">✕</button><div class="body"></div></div>`;
@@ -724,14 +710,6 @@ window.KCULTURE_DATA = {
     `;
     modal.classList.add('on');
   });
-
-  // edit mode
-  window.addEventListener('message', (e) => {
-    if (!e.data || !e.data.type) return;
-    if (e.data.type === '__activate_edit_mode') document.getElementById('tweaks').classList.add('on');
-    if (e.data.type === '__deactivate_edit_mode') document.getElementById('tweaks').classList.remove('on');
-  });
-  window.parent.postMessage({type:'__edit_mode_available'}, '*');
 })();
 </script>
 </body>
