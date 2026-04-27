@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>한국 반도체 산업지도 · AI 컴퓨팅의 5단계 프레임</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css">
+<style>/* 공통 베이스 — 산업지도 2종(반도체·방산) 공유 */
+:root {
+  --ink: #121418;
+  --ink-2: #2b3038;
+  --ink-3: #5a6470;
+  --ink-4: #8b95a2;
+  --line: #dee2e8;
+  --line-soft: #eceff3;
+  --paper: #ffffff;
+  --bg: #f6f7fa;
+  --accent: oklch(58% 0.14 250);
+  --accent-2: oklch(62% 0.14 180);
+  --accent-3: oklch(60% 0.14 140);
+  --hi: #fff3c4;
+  --shadow-sm: 0 1px 2px rgba(18,20,24,.04), 0 1px 0 rgba(18,20,24,.02);
+  --shadow-md: 0 6px 24px rgba(18,20,24,.06), 0 2px 6px rgba(18,20,24,.04);
+  --radius: 10px;
+  --radius-lg: 16px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: "Pretendard", "Pretendard Variable", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  letter-spacing: -0.003em;
+}
+a { color: inherit; text-decoration: none; }
+
+.wrap { max-width: 1400px; margin: 0 auto; padding: 0 32px; }
+.wrap-wide { max-width: 1640px; margin: 0 auto; padding: 0 40px; }
+
+/* ——— Top bar ——— */
+.topbar {
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+  position: sticky; top: 0; z-index: 50;
+  backdrop-filter: saturate(140%) blur(8px);
+}
+.topbar-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 56px; gap: 8px;
+}
+.topnav { display: flex; gap: 2px; flex-shrink: 0; flex-wrap: nowrap; }
+.topnav a {
+  padding: 6px 9px; border-radius: 999px; font-size: 12px; color: var(--ink-3);
+  font-weight: 500; transition: all .15s ease; white-space: nowrap; flex-shrink: 0;
+}
+.brand {
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 700; letter-spacing: -.01em;
+  white-space: nowrap; flex-shrink: 0;
+}
+.brand span:last-child {
+  font-size: 13px;
+}
+.brand-mark {
+  width: 26px; height: 26px; border-radius: 6px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+  display: grid; place-items: center; color: white; font-weight: 800; font-size: 12px;
+  box-shadow: var(--shadow-sm); flex-shrink: 0;
+}
+.topnav a:hover { background: var(--line-soft); color: var(--ink); }
+.topnav a.active { background: var(--ink); color: white; }
+
+/* ——— Hero ——— */
+.hero { padding: 80px 0 56px; border-bottom: 1px solid var(--line); background: var(--paper); }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--accent); padding: 6px 12px; border: 1px solid currentColor;
+  border-radius: 999px; opacity: .85;
+}
+.hero h1 {
+  font-size: clamp(40px, 5vw, 68px); line-height: 1.05; font-weight: 800;
+  letter-spacing: -.03em; margin: 20px 0 16px; max-width: 22ch;
+}
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero-lead {
+  font-size: 18px; line-height: 1.6; color: var(--ink-3); max-width: 58ch;
+  margin: 0;
+}
+.hero-meta {
+  display: flex; flex-wrap: wrap; gap: 24px; margin-top: 32px;
+  padding-top: 24px; border-top: 1px dashed var(--line);
+  font-size: 13px; color: var(--ink-4);
+}
+.hero-meta b { color: var(--ink-2); font-weight: 600; }
+
+/* ——— Section headers ——— */
+.section { padding: 72px 0; }
+.section-head { margin-bottom: 40px; max-width: 68ch; }
+.section-kicker {
+  font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 12px;
+}
+.section h2 {
+  font-size: clamp(28px, 3vw, 40px); font-weight: 800; letter-spacing: -.02em;
+  line-height: 1.15; margin: 0 0 14px;
+}
+.section-sub { font-size: 16px; color: var(--ink-3); margin: 0; line-height: 1.6; }
+
+/* ——— Layer card ——— */
+.layer {
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-lg);
+  margin-bottom: 28px; overflow: hidden; box-shadow: var(--shadow-sm);
+}
+.layer-head {
+  padding: 24px 28px; border-bottom: 1px solid var(--line-soft);
+  display: flex; align-items: flex-start; gap: 20px;
+  background: linear-gradient(180deg, var(--tint, #fafbfd) 0%, transparent 100%);
+}
+.layer-id {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px; font-weight: 700; letter-spacing: .1em;
+  padding: 6px 10px; border-radius: 6px;
+  background: var(--ink); color: white;
+  flex-shrink: 0;
+}
+.layer-title h3 {
+  font-size: 22px; font-weight: 700; letter-spacing: -.015em;
+  margin: 0 0 4px;
+}
+.layer-subtitle { font-size: 13px; color: var(--accent); font-weight: 600; letter-spacing: .02em; margin-bottom: 8px; }
+.layer-note { font-size: 14px; color: var(--ink-3); margin: 0; max-width: 78ch; }
+
+/* ——— Sector group ——— */
+.sector {
+  padding: 24px 28px;
+  border-top: 1px solid var(--line-soft);
+}
+.sector:first-of-type { border-top: none; }
+.sector-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 16px; margin-bottom: 16px; flex-wrap: wrap;
+}
+.sector-title {
+  display: flex; align-items: baseline; gap: 12px;
+}
+.sector-id {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px; color: var(--ink-4); letter-spacing: .05em;
+}
+.sector-name {
+  font-size: 16px; font-weight: 700; letter-spacing: -.01em;
+}
+.sector-badge {
+  font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--accent); padding: 3px 8px; border-radius: 4px;
+  background: color-mix(in oklch, var(--accent) 10%, transparent);
+}
+.sector-desc { font-size: 13.5px; color: var(--ink-3); }
+
+/* ——— Company grid ——— */
+.co-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 14px;
+}
+.co {
+  border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 18px 20px; background: var(--paper);
+  display: flex; flex-direction: column; gap: 10px;
+  transition: all .18s ease;
+  position: relative;
+}
+.co:hover { border-color: var(--ink-4); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.co.highlight { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), var(--shadow-sm); }
+.co.highlight::before {
+  content: "★"; position: absolute; top: 14px; right: 14px;
+  color: var(--accent); font-size: 12px;
+}
+.co.dim { opacity: .65; }
+
+.co-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.co-name {
+  font-size: 16px; font-weight: 700; letter-spacing: -.01em; line-height: 1.2;
+}
+.co-code {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px; color: var(--ink-4); letter-spacing: .03em;
+}
+.co-role {
+  font-size: 12px; font-weight: 600; color: var(--ink-3);
+  display: inline-block;
+}
+.co-tag {
+  font-size: 11.5px; font-weight: 600;
+  color: var(--accent); padding: 3px 8px; border-radius: 4px;
+  background: color-mix(in oklch, var(--accent) 9%, transparent);
+  display: inline-block; width: fit-content;
+}
+.co-field {
+  display: grid; grid-template-columns: 68px 1fr; gap: 10px;
+  font-size: 13px; line-height: 1.5;
+  padding-top: 8px; border-top: 1px dashed var(--line);
+}
+.co-field + .co-field { padding-top: 0; border-top: none; }
+.co-label {
+  font-size: 11px; font-weight: 700; color: var(--ink-4);
+  letter-spacing: .04em; text-transform: uppercase;
+}
+.co-val { color: var(--ink-2); }
+
+/* ——— Stage / Path / Ladder boards ——— */
+.board {
+  display: grid; gap: 12px; margin: 0 0 32px;
+}
+.stage-grid { grid-template-columns: repeat(5, 1fr); }
+.stage {
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--paper); padding: 18px; position: relative;
+  transition: all .15s ease;
+}
+.stage:hover { border-color: var(--accent); }
+.stage-num {
+  position: absolute; top: -10px; left: 16px;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--ink); color: white;
+  display: grid; place-items: center;
+  font-size: 11px; font-weight: 700;
+}
+.stage-name { font-size: 14px; font-weight: 700; margin: 6px 0 6px; letter-spacing: -.01em; }
+.stage-desc { font-size: 12.5px; color: var(--ink-3); line-height: 1.45; margin-bottom: 10px; }
+.stage-status {
+  font-size: 11px; color: var(--accent); font-weight: 600; letter-spacing: .02em;
+  padding-top: 10px; border-top: 1px dashed var(--line);
+}
+
+.paths { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.path {
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--paper); padding: 22px;
+}
+.path-name { font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 10px; letter-spacing: .02em; }
+.path-flow {
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px;
+  margin-bottom: 12px;
+}
+.path-node {
+  padding: 10px 14px; border: 1px solid var(--line);
+  border-radius: 8px; font-size: 13px; font-weight: 600;
+}
+.path-node.to { border-color: var(--accent); color: var(--accent); }
+.path-arrow { color: var(--ink-4); font-size: 18px; }
+.path-desc { font-size: 13px; color: var(--ink-3); line-height: 1.5; margin: 0; }
+
+.thesis-grid { grid-template-columns: repeat(3, 1fr); }
+.thesis {
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--paper); padding: 22px;
+}
+.thesis-id {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: .1em;
+}
+.thesis-title { font-size: 16px; font-weight: 700; margin: 6px 0 10px; letter-spacing: -.01em; }
+.thesis-desc { font-size: 13.5px; color: var(--ink-2); line-height: 1.6; margin: 0 0 12px; }
+.thesis-weight {
+  font-size: 11.5px; color: var(--ink-4); font-weight: 600;
+  padding-top: 10px; border-top: 1px dashed var(--line);
+}
+
+.ladder {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+  border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+  background: var(--paper);
+}
+.ladder-step {
+  padding: 22px; border-right: 1px solid var(--line-soft);
+  position: relative;
+}
+.ladder-step:last-child { border-right: none; }
+.ladder-step.current { background: linear-gradient(180deg, var(--tint-1, #fafbfd), transparent); }
+.ladder-step.growth { background: linear-gradient(180deg, var(--tint-2, #f5f9f5), transparent); }
+.ladder-step.alpha { background: linear-gradient(180deg, var(--tint-3, #fbf5f1), transparent); }
+.ladder-phase {
+  font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink-4); margin-bottom: 8px;
+}
+.ladder-weapon { font-size: 20px; font-weight: 800; letter-spacing: -.015em; margin-bottom: 4px; }
+.ladder-market { font-size: 13px; color: var(--ink-3); margin-bottom: 10px; }
+.ladder-status {
+  font-size: 12px; color: var(--accent); font-weight: 600;
+  padding-top: 10px; border-top: 1px dashed var(--line);
+}
+
+/* ——— Footer ——— */
+.foot {
+  border-top: 1px solid var(--line); padding: 48px 0; background: var(--paper);
+  font-size: 13px; color: var(--ink-4);
+}
+.foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 32px; }
+.foot b { color: var(--ink-2); font-weight: 600; }
+.foot-disc { font-size: 11.5px; line-height: 1.6; color: var(--ink-4); margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--line-soft); }
+
+@media (max-width: 900px) {
+  .stage-grid { grid-template-columns: repeat(2, 1fr); }
+  .thesis-grid, .ladder { grid-template-columns: 1fr; }
+  .paths { grid-template-columns: 1fr; }
+  .foot-grid { grid-template-columns: 1fr; }
+  .co-grid { grid-template-columns: 1fr; }
+}
+</style>
+<style>
+  :root {
+    --accent: oklch(58% 0.14 250);
+    --accent-2: oklch(62% 0.14 180);
+    --accent-3: oklch(60% 0.14 140);
+    --bg: #f6f7fa;
+    --tint: #eef2f9;
+    --tint-1: #eef2f9;
+    --tint-2: #eef7f6;
+    --tint-3: #eff7ef;
+  }
+  body { background: var(--bg); }
+  .hero-eyebrow { color: var(--accent); }
+  .hero h1 em { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap-wide topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">K</span>
+      <span>Korea Industry Map</span>
+    </a>
+        <nav class="topnav" style="display:flex;gap:2px;flex-shrink:0;flex-wrap:nowrap;">
+      <a style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;color:#6b7280;" href="index.html">Overview</a>
+      <a style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;background:#111418;color:#fff;" href="semiconductor.html">반도체</a>
+      <a style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;color:#6b7280;" href="defense.html">방산</a>
+      <a style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;color:#6b7280;" href="kculture.html">K컬처</a>
+      <a style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;color:#6b7280;" href="power.html">전력인프라</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap-wide">
+    <span class="hero-eyebrow">● Semiconductor · AI Compute</span>
+    <h1>AI 컴퓨팅의 <em>5단계</em> 진화,<br>한국은 어디서 <em>이익</em>을 만드는가</h1>
+    <p class="hero-lead">
+      공급망을 '수직적 레이어(L1→L3)'와 '수평적 진화단계(1→5)'로 교차 매핑하여,
+      한국 반도체 밸류체인에서 이익이 쌓이는 지점·표준을 쥔 기업·패러다임 전환의 수혜자를
+      한 장의 지도로 정리합니다.
+    </p>
+    <div class="hero-meta">
+      <div><b>프레임</b> · 5단계 AI 컴퓨팅 진화 × 3계층 레이어</div>
+      <div><b>범위</b> · L1 지배자 · L2 공급망 · L3 패러다임 전환</div>
+      <div><b>업데이트</b> · 2025년 분석 기준</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap-wide">
+    <div class="section-head">
+      <div class="section-kicker">Framework · 01</div>
+      <h2>수평축 · AI 컴퓨팅 진화의 5단계</h2>
+      <p class="section-sub">
+        단계마다 수요가 몰리는 공정·제품이 달라집니다. 현재는 1단계(인프라 구축)에서
+        2~3단계(효율·접점 확산)로 전이되는 구간이며, 4·5단계에서 새로운 진입 기회가 열립니다.
+      </p>
+    </div>
+    <div class="board stage-grid" id="stages"></div>
+  </div>
+</section>
+
+<section class="section" style="background: var(--paper); border-block: 1px solid var(--line);">
+  <div class="wrap-wide">
+    <div class="section-head">
+      <div class="section-kicker">Framework · 02</div>
+      <h2>Pathfinder → Fast Follower</h2>
+      <p class="section-sub">
+        선도자(Pathfinder)가 검증한 이익 극대화 경로를 추격자(Follower)가 복제·심화하는 구조.
+        HBM의 성공 공식이 어떻게 차세대 공정 표준 경쟁으로 이어지는가.
+      </p>
+    </div>
+    <div class="paths" id="paths"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap-wide">
+    <div class="section-head">
+      <div class="section-kicker">Map · 수직 레이어 구조</div>
+      <h2>L1 지배자 → L2 공급망 → L3 패러다임</h2>
+      <p class="section-sub">
+        이익이 흐르는 방향을 따라 위에서 아래로 읽습니다. L1이 표준을 정하면 L2가 물량을 받고,
+        L3는 L1/L2의 규칙을 다시 쓰는 구간입니다.
+      </p>
+    </div>
+    <div id="layers"></div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap-wide">
+    <div class="foot-grid">
+      <div>
+        <b>Korea Industry Map — Semiconductor</b><br>
+        AI 컴퓨팅 진화 5단계 × 한국 반도체 밸류체인 3계층 레이어 매핑.
+      </div>
+      <div>
+        <b>Related</b><br>
+        <a href="defense.html">방산 산업지도 →</a><br>
+        <a href="kculture.html">K컬처 밸류체인 →</a><br>
+        <a href="index.html">전체 허브 →</a>
+      </div>
+      <div>
+        <b>Structure</b><br>
+        L1 · The Standard Bearers<br>
+        L2 · The Enablers<br>
+        L3 · The Paradigm Shifters
+      </div>
+    </div>
+    <p class="foot-disc">
+      본 자료는 산업 구조 이해를 돕기 위한 교육·분석 목적의 시각화이며,
+      특정 종목에 대한 투자자문 또는 매수·매도 권유가 아닙니다.
+      모든 투자 판단과 그에 따른 결과의 책임은 투자자 본인에게 있습니다.
+    </p>
+  </div>
+</footer>
+
+<script>// 반도체 산업지도 — AI 컴퓨팅 5단계 프레임 × L1-L3 레이어 구조
+window.SEMI_DATA = {
+  theme: {
+    accent: "oklch(58% 0.14 250)",    // semi blue
+    accent2: "oklch(62% 0.14 180)",   // cyan
+    accent3: "oklch(60% 0.14 140)",   // green
+    bg: "#f6f7fa",
+    tint1: "#eef2f9",
+    tint2: "#eef7f6",
+    tint3: "#eff7ef",
+  },
+  stages: [
+    { id: 1, name: "인프라 구축", desc: "LLM 학습용 GPU/HBM 집중 투입", status: "성숙 · NVIDIA·하이닉스 임계점" },
+    { id: 2, name: "효율 최적화", desc: "OPEX·전력 병목 해결 (Inference)", status: "성장 초기 · CXL 개화" },
+    { id: 3, name: "접점 확산", desc: "스마트폰·PC 내 NPU 실시간 연산", status: "진입 · AI 하드웨어 교체기" },
+    { id: 4, name: "물리적 융합", desc: "자율주행·로봇 실시간 지능", status: "태동 · 초저지연 경쟁" },
+    { id: 5, name: "지능 주권", desc: "빅테크·국가 전용 ASIC 내재화", status: "조기 진입 · Leapfrog" },
+  ],
+  paths: [
+    { id: "P1", name: "Path 1 · 메모리 주도권", from: "SK하이닉스 (HBM3E 독점)", to: "삼성전자 (HBM4 추격)", desc: "Pathfinder가 증명한 이익 극대화 경로를 Follower가 12단·HBM4로 복제" },
+    { id: "P2", name: "Path 2 · 공정 표준화", from: "한미반도체 (TC 본더)", to: "이오테크닉스·레이저셀 (레이저 리플로우)", desc: "HBM4 이후 적층 심화·열관리 위한 차세대 본딩 장비의 표준 경쟁" },
+  ],
+  layers: [
+    {
+      id: "L1",
+      title: "전방 산업 및 공정 지배자",
+      subtitle: "The Standard Bearers",
+      note: "글로벌 공급망과 직접 맞닿은 한국 반도체의 심장 — '누가 차세대 공정의 수율과 표준을 쥐고 있는가'",
+      sectors: [
+        {
+          id: "L1-A", name: "메모리 통합 제조", desc: "DRAM/NAND 및 HBM — 공급의 발원지",
+          companies: [
+            { name: "SK하이닉스", code: "000660", role: "Pathfinder", tag: "HBM3E 독점 · OPM 62%", highlight: true,
+              moat: "NVIDIA 파트너십 · HBM4 16단 선행 · eSSD 부활", thesis: "AI 메모리 업황의 상단을 정의. PCIe 6.0 SSD 표준 선점으로 NAND OPM 30%대 수직상승.", risk: "삼성전자의 HBM4 추격 / 용인 클러스터 일정" },
+            { name: "삼성전자", code: "005930", role: "Fast Follower", tag: "HBM4 역전 트리거",
+              moat: "메모리+파운드리 수직계열화 · 3세대 GAA", thesis: "NVIDIA Vera Rubin향 HBM4E 검증 통과. 2nm SF2P 골든수율 70% 안착이 멀티플 상향의 핵심 변수.", risk: "TSMC와의 파운드리 격차 / 테일러 팹 보조금" },
+          ],
+        },
+        {
+          id: "L1-B", name: "시스템 반도체 · 디자인 솔루션", desc: "빅테크 ASIC 내재화의 가교 — 5단계(지능 주권) 수혜",
+          companies: [
+            { name: "가온칩스", code: "399720", role: "삼성 DSP", tag: "2026 흑자 전환 구간",
+              moat: "삼성 파운드리 베스트 DSP · ARM 협력 · 2nm 설계 레퍼런스", thesis: "삼성 파운드리 2nm GAA 수율 안정화 순간 가장 빠른 수혜자. NRE→양산 전환 구간.", risk: "삼성 파운드리 의존도 / 고객사 다변화 부재" },
+            { name: "에이직랜드", code: "445090", role: "TSMC VCA", tag: "국내 유일 TSMC 관문",
+              moat: "국내 유일 TSMC 공식 파트너 · 7nm/5nm 할당량 확보", thesis: "글로벌 AI 칩 수요의 국내 관문. 미국·말레이시아 거점 확장으로 고객 다변화.", risk: "TSMC 의존도 · 지정학 리스크" },
+          ],
+        },
+        {
+          id: "L1-C", name: "수율 및 공정 표준", desc: "'한국의 ASML' — 가격결정권을 쥔 독점 표준 장비·소재",
+          badge: "★ 핵심",
+          companies: [
+            { name: "HPSP", code: "403870", role: "독점 표준", tag: "OPM 51.9% · 고압수소어닐링", highlight: true,
+              moat: "전 세계 유일 고압수소어닐링(HPA) · GAA 계면결함 해결 필수", thesis: "2nm 이하 선단공정 수율 확보를 위해 TSMC·삼성·인텔이 반드시 써야 하는 갑(甲)의 위치. 목표 39,130~50,750원.", risk: "최대주주(크레센도) 오버행 / 예스티 특허분쟁" },
+            { name: "파크시스템스", code: "140860", role: "글로벌 계측 표준", tag: "산업용 AFM 1위",
+              moat: "True Non-contact AFM · GAA/HBM 3D 수직계측 유일 대안", thesis: "과천 신사옥 가동으로 산업용 캐파 2배. 인라인 장비 비중 75%→80%로 OPM 30%대 안착.", risk: "파운드리 2nm 전환 지연 / 브루커 추격" },
+            { name: "솔브레인", code: "357780", role: "공정 소재", tag: "GAA 선택적 식각액 독점",
+              moat: "3nm 이하 GAA 나노시트 가공 필수 식각액", thesis: "FinFET→GAA 전환에 따라 소재 사용량 정비례 확대. 2026 영업이익 YoY +60%.", risk: "삼성전자 의존도 / 후발주자 퀄테스트" },
+            { name: "에스앤에스텍", code: "036990", role: "후보", tag: "EUV 블랭크마스크 국산화", dim: true,
+              moat: "일본 독점 영역의 국산 표준화 도전", thesis: "EUV 펠리클 하이퍼스케일러 최종 양산 승인 시점 관찰.", risk: "양산 승인 지연" },
+          ],
+        },
+      ],
+    },
+    {
+      id: "L2",
+      title: "공정 인프라 및 공급망",
+      subtitle: "The Enablers — 실질적 수확",
+      note: "L1의 CAPEX가 집행될 때 가장 직접적으로 매출이 꽂히는 구간",
+      sectors: [
+        {
+          id: "L2-A", name: "HBM·어드밴스드 패키징 장비", desc: "TC 본더 → 레이저 리플로우 → 하이브리드 본딩",
+          badge: "★ Path 2",
+          companies: [
+            { name: "한미반도체", code: "042700", role: "TC 본더 표준", tag: "HBM 본딩 Pathfinder", highlight: true,
+              moat: "SK하이닉스향 TC 본더 독점 · HBM 표준 장비", thesis: "HBM 적층 수 확대의 가장 직접적 수혜. 차세대 하이브리드 본딩 전환 전까지 독점 지위 유지.", risk: "레이저 본딩 전환 시점 / 고객사 다변화" },
+            { name: "이오테크닉스", role: "레이저 리플로우", tag: "차세대 본딩 경로",
+              moat: "레이저 가공 기술 · HBM4+ 열관리 대안", thesis: "TC 본딩 한계점에서 레이저 본딩으로 공정 전이 시 표준 지위 경쟁의 선두.", risk: "기술 표준 경쟁" },
+            { name: "피에스케이홀딩스", role: "리플로우", tag: "후공정 장비", dim: true, moat: "리플로우 장비 포트폴리오", thesis: "전공정·후공정 장비 포트폴리오 확장.", risk: "단일 시장 집중도" },
+          ],
+        },
+        {
+          id: "L2-B", name: "핵심 소재 · 공정 소모품", desc: "면도날 비즈니스 — 가동률 상승의 직접 수혜",
+          companies: [
+            { name: "동진쎄미켐", role: "감광액", tag: "포토레지스트 국산화", moat: "EUV PR 국산화 표준", thesis: "선단공정 확대에 따른 PR 사용량 구조적 증가.", risk: "고객사 수율 이슈" },
+            { name: "원익QnC", role: "쿼츠", tag: "쿼츠 웨어", moat: "식각장비 쿼츠 소모품", thesis: "가동률 상관관계 높은 안정 현금흐름.", risk: "원재료 가격 변동" },
+            { name: "티씨케이", role: "SiC 링", tag: "SiC 포커스링", moat: "3D NAND 적층 심화의 필수 소모품", thesis: "NAND 단수 증가에 따른 교체주기 단축.", risk: "경쟁 심화" },
+            { name: "하나머티리얼즈", role: "실리콘 파츠", tag: "식각 실리콘 부품", moat: "식각장비 실리콘 파츠", thesis: "식각 공정 확대와 동행.", risk: "캐파 제약" },
+          ],
+        },
+        {
+          id: "L2-C", name: "팹 인프라 · 유틸리티", desc: "공장 건설 초기에 가장 먼저 매출 발생",
+          companies: [
+            { name: "STI", role: "화학약품 공급", tag: "CCSS", dim: true, moat: "화학약품 중앙공급 시스템", thesis: "신규 팹 착공 선행 지표.", risk: "CAPEX 사이클" },
+            { name: "한양이엔지", role: "가스·케미칼", tag: "팹 인프라 EPC", dim: true, moat: "반도체 팹 인프라 시공", thesis: "테일러·용인 팹 확대 수혜.", risk: "프로젝트 지연" },
+            { name: "워트", role: "온습도 조절", tag: "THC", dim: true, moat: "노광 공정 환경 제어", thesis: "EUV 노광환경 필수.", risk: "단일고객 집중도" },
+          ],
+        },
+      ],
+    },
+    {
+      id: "L3",
+      title: "차세대 패러다임",
+      subtitle: "The Paradigm Shifters — 10배 가능성의 진원지",
+      note: "CXL·유리기판·온디바이스 AI — 한국이 글로벌 표준을 만드는 섹터",
+      sectors: [
+        {
+          id: "L3-A", name: "CXL · 차세대 인터페이스", desc: "2028년 $16B 시장 · CAGR 100%+",
+          badge: "★ 핵심",
+          companies: [
+            { name: "네오셈", role: "CXL 테스터 1위", tag: "수주잔고 1,150억", highlight: true,
+              moat: "CXL 테스터 글로벌 1위 · HBM 장비주 멀티플 경로 추종", thesis: "Intel Xeon 6 CXL 2.0 · MS Azure 메모리 풀링 상용화로 실적 가시화.", risk: "표준 채택 속도 / 장비 리드타임" },
+            { name: "파두", role: "SSD 컨트롤러", tag: "eSSD 컨트롤러", moat: "기업용 SSD 컨트롤러 국산화", thesis: "PCIe 5.0/6.0 eSSD 확산의 직접 수혜.", risk: "고객사 검증 / 경쟁" },
+          ],
+        },
+        {
+          id: "L3-B", name: "유리 기판 (Glass Substrate)", desc: "FC-BGA 한계 돌파 · 상용화 First Mover",
+          badge: "★ Game Changer",
+          companies: [
+            { name: "SKC", code: "011790", role: "First Mover", tag: "앱솔릭스 조지아팹", highlight: true,
+              moat: "세계 최초 유리기판 전용팹 · AMAT 협력 · AMD/Intel/Amazon 퀄", thesis: "기존 대비 두께 25%↓ 전력 30%↓. CHIPS 7,500만달러+NAPMP 1억달러. 유리기판 사업가치 1.8조.", risk: "초기 수율 / 동박 본업 부진" },
+            { name: "삼성전기", code: "009150", role: "통합 지배자", tag: "세종 파일럿 · 2026 양산",
+              moat: "FC-BGA 대면적 평탄도 노하우 · 삼성그룹 패키징 허브", thesis: "MLCC 캐시카우 기반 유리기판 CAPEX 선제 투입. 2026 하반기 영업이익 질적 퀀텀점프.", risk: "앱솔릭스 선점 경쟁 / MLCC 수요" },
+            { name: "필옵틱스", code: "161580", role: "TGV 독점", tag: "앱솔릭스 독점 공급", highlight: true,
+              moat: "TGV 레이저 가공 세계 최초 양산화 · 앱솔릭스 독점 공급", thesis: "유리기판 상용화의 절대적 열쇠. 2026F EPS 1,196원(+488% YoY) · 목표 P/E 25배.", risk: "시장 개화 지연 / 경쟁 가공기술" },
+          ],
+        },
+        {
+          id: "L3-C", name: "온디바이스 AI · NPU IP", desc: "PIM·엣지 AI 핵심 설계자산",
+          companies: [
+            { name: "오픈엣지테크놀로지", code: "394280", role: "NPU+메모리 IP", tag: "AI 가속기 IP 통합",
+              moat: "NPU + DDR/LPDDR 통합 IP 솔루션", thesis: "에너지 병목 80% 절감 · 엣지 NPU 필수화 수요 폭증. 로열티 매출 성장 주목.", risk: "라이선스→로열티 전환 속도" },
+            { name: "칩스앤미디어", code: "094360", role: "비디오+AI IP", tag: "글로벌 비디오 코덱 강자",
+              moat: "온디바이스용 고성능 비디오 코덱 + AI IP", thesis: "멀티 가속기 대응 · 글로벌 팹리스 직접 라이선싱.", risk: "IP 시장 경쟁" },
+          ],
+        },
+      ],
+    },
+  ],
+};
+</script>
+<script>window.INDUSTRY_DATA = window.SEMI_DATA;</script>
+<script>// 공통 렌더러 — window.INDUSTRY_DATA 를 기반으로 레이어·섹터·회사 카드 주입
+(function () {
+  const data = window.INDUSTRY_DATA;
+  if (!data) return;
+
+  const root = document.getElementById("layers");
+  if (!root) return;
+
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  }[c]));
+
+  function coCard(c) {
+    const cls = ["co"];
+    if (c.highlight) cls.push("highlight");
+    if (c.dim) cls.push("dim");
+    const code = c.code ? `<span class="co-code">${esc(c.code)}</span>` : "";
+    const tag = c.tag ? `<span class="co-tag">${esc(c.tag)}</span>` : "";
+    const role = c.role ? `<div class="co-role">${esc(c.role)}</div>` : "";
+
+    const fields = [];
+    if (c.moat) fields.push(`<div class="co-field"><span class="co-label">해자</span><span class="co-val">${esc(c.moat)}</span></div>`);
+    if (c.thesis) fields.push(`<div class="co-field"><span class="co-label">테제</span><span class="co-val">${esc(c.thesis)}</span></div>`);
+    if (c.risk) fields.push(`<div class="co-field"><span class="co-label">리스크</span><span class="co-val">${esc(c.risk)}</span></div>`);
+
+    return `
+      <div class="${cls.join(" ")}">
+        <div class="co-top">
+          <div>
+            <div class="co-name">${esc(c.name)}</div>
+            ${role}
+          </div>
+          ${code}
+        </div>
+        ${tag}
+        ${fields.join("")}
+      </div>`;
+  }
+
+  function sectorBlock(s) {
+    const badge = s.badge ? `<span class="sector-badge">${esc(s.badge)}</span>` : "";
+    return `
+      <div class="sector">
+        <div class="sector-head">
+          <div class="sector-title">
+            <span class="sector-id">${esc(s.id)}</span>
+            <span class="sector-name">${esc(s.name)}</span>
+            ${badge}
+          </div>
+          <div class="sector-desc">${esc(s.desc || "")}</div>
+        </div>
+        <div class="co-grid">
+          ${(s.companies || []).map(coCard).join("")}
+        </div>
+      </div>`;
+  }
+
+  function layerBlock(L) {
+    return `
+      <section class="layer" id="${esc(L.id)}">
+        <header class="layer-head">
+          <span class="layer-id">${esc(L.id)}</span>
+          <div class="layer-title">
+            <div class="layer-subtitle">${esc(L.subtitle || "")}</div>
+            <h3>${esc(L.title)}</h3>
+            <p class="layer-note">${esc(L.note || "")}</p>
+          </div>
+        </header>
+        ${(L.sectors || []).map(sectorBlock).join("")}
+      </section>`;
+  }
+
+  root.innerHTML = (data.layers || []).map(layerBlock).join("");
+
+  // Stages (반도체)
+  const stageRoot = document.getElementById("stages");
+  if (stageRoot && data.stages) {
+    stageRoot.innerHTML = data.stages.map((s) => `
+      <div class="stage">
+        <div class="stage-num">${s.id}</div>
+        <div class="stage-name">${esc(s.name)}</div>
+        <div class="stage-desc">${esc(s.desc)}</div>
+        <div class="stage-status">${esc(s.status)}</div>
+      </div>`).join("");
+  }
+
+  // Paths (반도체)
+  const pathRoot = document.getElementById("paths");
+  if (pathRoot && data.paths) {
+    pathRoot.innerHTML = data.paths.map((p) => `
+      <div class="path">
+        <div class="path-name">${esc(p.name)}</div>
+        <div class="path-flow">
+          <div class="path-node">${esc(p.from)}</div>
+          <div class="path-arrow">→</div>
+          <div class="path-node to">${esc(p.to)}</div>
+        </div>
+        <p class="path-desc">${esc(p.desc)}</p>
+      </div>`).join("");
+  }
+
+  // Thesis (방산)
+  const thesisRoot = document.getElementById("thesis");
+  if (thesisRoot && data.thesis) {
+    thesisRoot.innerHTML = data.thesis.map((t) => `
+      <div class="thesis">
+        <div class="thesis-id">${esc(t.id)}</div>
+        <div class="thesis-title">${esc(t.title)}</div>
+        <p class="thesis-desc">${esc(t.desc)}</p>
+        <div class="thesis-weight">${esc(t.weight)}</div>
+      </div>`).join("");
+  }
+
+  // Ladder (방산)
+  const ladderRoot = document.getElementById("ladder");
+  if (ladderRoot && data.ladder) {
+    const cls = ["current", "growth", "alpha"];
+    ladderRoot.innerHTML = data.ladder.map((l, i) => `
+      <div class="ladder-step ${cls[i] || ""}">
+        <div class="ladder-phase">${esc(l.phase)}</div>
+        <div class="ladder-weapon">${esc(l.weapon)}</div>
+        <div class="ladder-market">${esc(l.market)}</div>
+        <div class="ladder-status">${esc(l.status)}</div>
+      </div>`).join("");
+  }
+})();
+</script>
+</body>
+</html>
