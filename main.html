@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Investment Research · 한국 산업 투자 분석</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css">
+<style>
+  :root {
+    --ink: #111418;
+    --ink-2: #2b3038;
+    --ink-3: #5a6470;
+    --ink-4: #8b95a2;
+    --line: #dee2e8;
+    --line-soft: #eceff3;
+    --paper: #ffffff;
+    --bg: #f6f7fa;
+    --accent: oklch(56% 0.14 250);
+    --shadow: 0 1px 3px rgba(18,20,24,.06);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Pretendard Variable", "Pretendard", -apple-system, sans-serif;
+    background: var(--bg); color: var(--ink);
+    font-size: 15px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── 탑바 ── */
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: saturate(150%) blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar-inner {
+    max-width: 1280px; margin: 0 auto; padding: 0 40px;
+    height: 58px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 700; font-size: 15px; letter-spacing: -.02em;
+    text-decoration: none; color: var(--ink); white-space: nowrap;
+  }
+  .logo-mark {
+    width: 28px; height: 28px; border-radius: 7px;
+    background: var(--ink);
+    display: grid; place-items: center;
+    color: white; font-size: 12px; font-weight: 800;
+  }
+  .mainnav {
+    display: flex; align-items: center; gap: 2px; flex-shrink: 0;
+  }
+  .mainnav a {
+    padding: 7px 13px; border-radius: 8px;
+    font-size: 13.5px; font-weight: 500; color: var(--ink-3);
+    text-decoration: none; white-space: nowrap;
+    transition: all .15s ease;
+  }
+  .mainnav a:hover { background: var(--line-soft); color: var(--ink); }
+  .mainnav a.active { background: var(--ink); color: white; }
+  .mainnav a .badge {
+    display: inline-block; margin-left: 6px;
+    font-size: 9px; font-weight: 700; letter-spacing: .06em;
+    padding: 2px 5px; border-radius: 3px;
+    background: var(--accent); color: white; vertical-align: middle;
+  }
+
+  /* ── 콘텐츠 영역 ── */
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+
+  /* ── 히어로 ── */
+  .hero {
+    padding: 100px 0 80px;
+    border-bottom: 1px solid var(--line);
+    background: var(--paper);
+  }
+  .hero-label {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(38px, 5vw, 72px);
+    font-weight: 800; letter-spacing: -.03em; line-height: 1.05;
+    max-width: 14ch; margin-bottom: 24px;
+  }
+  .hero h1 b { font-weight: 800; }
+  .hero-sub {
+    font-size: 17px; color: var(--ink-3); max-width: 54ch;
+    line-height: 1.65; margin-bottom: 48px;
+  }
+  .hero-stats {
+    display: flex; gap: 40px; flex-wrap: wrap;
+    padding-top: 32px; border-top: 1px dashed var(--line);
+  }
+  .hero-stat { }
+  .hero-stat .val {
+    font-size: 32px; font-weight: 800; letter-spacing: -.02em; line-height: 1;
+    margin-bottom: 4px;
+  }
+  .hero-stat .val em { font-style: normal; color: var(--accent); }
+  .hero-stat .lbl { font-size: 12px; color: var(--ink-4); font-weight: 500; }
+
+  /* ── 카테고리 섹션 ── */
+  .section { padding: 80px 0; }
+  .section + .section { border-top: 1px solid var(--line); }
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: 28px; font-weight: 800; letter-spacing: -.02em;
+    margin-bottom: 8px; line-height: 1.15;
+  }
+  .section-desc { font-size: 15px; color: var(--ink-3); max-width: 58ch; margin-bottom: 36px; }
+
+  /* 카드 그리드 */
+  .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .card-grid.col3 { grid-template-columns: repeat(3, 1fr); }
+  .card-grid.col2 { grid-template-columns: repeat(2, 1fr); }
+
+  .card {
+    border: 1px solid var(--line); border-radius: 10px;
+    background: var(--paper); padding: 24px;
+    display: flex; flex-direction: column; gap: 12px;
+    text-decoration: none; color: inherit;
+    transition: all .18s ease;
+    position: relative; overflow: hidden;
+  }
+  .card::after {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--card-color, transparent);
+  }
+  .card:hover { border-color: var(--ink-4); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(18,20,24,.07); }
+  .card-eyebrow {
+    font-size: 10.5px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--ink-4);
+  }
+  .card-title { font-size: 17px; font-weight: 700; letter-spacing: -.01em; line-height: 1.25; }
+  .card-desc { font-size: 13px; color: var(--ink-3); line-height: 1.55; flex: 1; }
+  .card-link {
+    font-size: 12.5px; font-weight: 600; color: var(--ink);
+    display: flex; align-items: center; gap: 6px;
+    padding-top: 10px; border-top: 1px dashed var(--line);
+  }
+  .card.soon { opacity: .55; cursor: default; }
+  .card.soon:hover { transform: none; box-shadow: none; border-color: var(--line); }
+  .card.soon .card-link { color: var(--ink-4); }
+
+  /* 준비중 배지 */
+  .soon-badge {
+    position: absolute; top: 14px; right: 14px;
+    font-size: 9px; font-weight: 700; letter-spacing: .08em;
+    padding: 3px 7px; border-radius: 4px;
+    background: var(--line); color: var(--ink-4);
+  }
+
+  /* ── 푸터 ── */
+  .footer {
+    border-top: 1px solid var(--line); background: var(--paper);
+    padding: 40px 0;
+  }
+  .footer-inner {
+    display: flex; justify-content: space-between; align-items: center; gap: 24px;
+    flex-wrap: wrap;
+  }
+  .footer-copy { font-size: 13px; color: var(--ink-4); }
+  .footer-nav { display: flex; gap: 20px; }
+  .footer-nav a { font-size: 13px; color: var(--ink-4); text-decoration: none; }
+  .footer-nav a:hover { color: var(--ink); }
+
+  @media (max-width: 1000px) {
+    .card-grid { grid-template-columns: repeat(2, 1fr); }
+    .card-grid.col3 { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .topbar-inner { padding: 0 20px; }
+    .wrap { padding: 0 20px; }
+    .hero { padding: 64px 0 56px; }
+    .card-grid, .card-grid.col3, .card-grid.col2 { grid-template-columns: 1fr; }
+    .hero-stats { gap: 28px; }
+    .mainnav a { padding: 6px 10px; font-size: 12.5px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── 탑바 ── -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="logo" href="main.html">
+      <span class="logo-mark">I</span>
+      <span>Investment Research</span>
+    </a>
+    <nav class="mainnav" id="mainnav">
+      <a href="#valuemap" onclick="scrollTo(event,'valuemap')">밸류체인</a>
+      <a href="#analysis" onclick="scrollTo(event,'analysis')">기업분석</a>
+      <a href="#code" onclick="scrollTo(event,'code')">투자코드개발</a>
+      <a href="#portfolio" onclick="scrollTo(event,'portfolio')">투자포트폴리오</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ── 히어로 ── -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-label">Investment Research Platform</div>
+    <h1>한국 산업의<br><b>구조를 읽는다</b></h1>
+    <p class="hero-sub">
+      반도체·방산·K컬처·전력 인프라 — 밸류체인 레이어 분석부터
+      기업 심층 분석, 투자 코드 개발까지.
+      구조적 이익이 쌓이는 곳을 먼저 발견하는 투자 리서치.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="val"><em>4</em></div>
+        <div class="lbl">산업 밸류체인 지도</div>
+      </div>
+      <div class="hero-stat">
+        <div class="val"><em>50+</em></div>
+        <div class="lbl">분석 기업</div>
+      </div>
+      <div class="hero-stat">
+        <div class="val"><em>3</em></div>
+        <div class="lbl">레이어 분석 프레임</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 밸류체인 ── -->
+<section class="section" id="valuemap" style="background: var(--paper);">
+  <div class="wrap">
+    <div class="section-label">밸류체인 산업지도</div>
+    <div class="section-title">이익이 흐르는 구조를 한 장으로</div>
+    <p class="section-desc">수요처 기준 레이어 분류 × 크로스오버 기업 발굴 × 시장 분류 오류 알파.</p>
+    <div class="card-grid">
+      <a class="card" href="semiconductor.html" style="--card-color: oklch(58% 0.14 250);">
+        <div class="card-eyebrow">Map 01 · Semiconductor</div>
+        <div class="card-title">AI 컴퓨팅 5단계 진화</div>
+        <div class="card-desc">HBM · CXL · 유리기판 · NPU IP — L1 지배자부터 L3 패러다임 전환까지.</div>
+        <div class="card-link">지도 열기 →</div>
+      </a>
+      <a class="card" href="defense.html" style="--card-color: oklch(52% 0.14 35);">
+        <div class="card-eyebrow">Map 02 · Defense</div>
+        <div class="card-title">면도기–면도날, 낙수의 시차</div>
+        <div class="card-desc">천궁·L-SAM·KF-21 · L1 리트머스 → L3 청바지 기업 낙수 전략.</div>
+        <div class="card-link">지도 열기 →</div>
+      </a>
+      <a class="card" href="kculture.html" style="--card-color: oklch(58% 0.16 15);">
+        <div class="card-eyebrow">Map 03 · K-Culture</div>
+        <div class="card-title">문화 확산 5단계 프레임</div>
+        <div class="card-desc">콘텐츠 소비 → 프리미엄 지불까지 · L1 직접수혜 / L2 인프라 / L3 신산업.</div>
+        <div class="card-link">지도 열기 →</div>
+      </a>
+      <a class="card" href="power.html" style="--card-color: oklch(55% 0.16 65);">
+        <div class="card-eyebrow">Map 04 · Power Infrastructure</div>
+        <div class="card-title">AI·로봇·EV가 강제하는 전력망</div>
+        <div class="card-desc">3중 독립 트리거 × 분류 오류 알파 · ★ 크로스오버 기업 심층 분석.</div>
+        <div class="card-link">지도 열기 →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── 기업분석 ── -->
+<section class="section" id="analysis" style="background: var(--bg);">
+  <div class="wrap">
+    <div class="section-label">기업분석</div>
+    <div class="section-title">세밀한 분석 보고서</div>
+    <p class="section-desc">밸류체인 지도에서 선별한 핵심 기업들의 심층 분석. 재무 구조 · 해자 검증 · 시나리오별 밸류에이션.</p>
+    <div class="card-grid col3">
+      <div class="card soon" style="--card-color: var(--line);">
+        <span class="soon-badge">준비중</span>
+        <div class="card-eyebrow">Semiconductor</div>
+        <div class="card-title">반도체 핵심 기업 분석</div>
+        <div class="card-desc">SK하이닉스 · HPSP · 한미반도체 · 대한전선 등 레이어별 Top-pick.</div>
+        <div class="card-link">곧 공개</div>
+      </div>
+      <div class="card soon" style="--card-color: var(--line);">
+        <span class="soon-badge">준비중</span>
+        <div class="card-eyebrow">Defense</div>
+        <div class="card-title">방산 핵심 기업 분석</div>
+        <div class="card-desc">LIG넥스원 · 아이쓰리시스템 · 한화시스템 등 청바지 전략 종목.</div>
+        <div class="card-link">곧 공개</div>
+      </div>
+      <div class="card soon" style="--card-color: var(--line);">
+        <span class="soon-badge">준비중</span>
+        <div class="card-eyebrow">Power</div>
+        <div class="card-title">전력 인프라 핵심 기업 분석</div>
+        <div class="card-desc">HD현대일렉트릭 · 미창석유공업 · 비츠로셀 등 크로스오버 종목.</div>
+        <div class="card-link">곧 공개</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 투자코드개발 ── -->
+<section class="section" id="code" style="background: var(--paper);">
+  <div class="wrap">
+    <div class="section-label">투자코드개발</div>
+    <div class="section-title">체계화된 투자 프로세스</div>
+    <p class="section-desc">산업 구조 분석에서 종목 선정까지 — 반복 가능하고 검증된 투자 방법론.</p>
+    <div class="card-grid col2">
+      <div class="card soon" style="--card-color: var(--line);">
+        <span class="soon-badge">준비중</span>
+        <div class="card-eyebrow">Framework</div>
+        <div class="card-title">레이어 분석 프레임워크</div>
+        <div class="card-desc">L1·L2·L3 수요처 기준 분류 · 크로스오버 기업 발굴 방법론 · 분류 오류 알파 포착.</div>
+        <div class="card-link">곧 공개</div>
+      </div>
+      <div class="card soon" style="--card-color: var(--line);">
+        <span class="soon-badge">준비중</span>
+        <div class="card-eyebrow">Valuation</div>
+        <div class="card-title">밸류에이션 코드</div>
+        <div class="card-desc">EPS 추정 · 멀티플 적용 · 시나리오 시뮬레이션 · ss-code 프로토콜.</div>
+        <div class="card-link">곧 공개</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 투자포트폴리오 ── -->
+<section class="section" id="portfolio" style="background: var(--bg);">
+  <div class="wrap">
+    <div class="section-label">투자포트폴리오</div>
+    <div class="section-title">실전 포트폴리오</div>
+    <p class="section-desc">분석을 기반으로 구성한 실제 포트폴리오 현황 · thesis 점검 · 업데이트 기록.</p>
+    <div class="card-grid col2">
+      <div class="card soon" style="--card-color: var(--line);">
+        <span class="soon-badge">준비중</span>
+        <div class="card-eyebrow">Direct</div>
+        <div class="card-title">직접투자 포트폴리오</div>
+        <div class="card-desc">보유 종목 · 레이어 분포 · 투자 thesis · EPS 추정.</div>
+        <div class="card-link">곧 공개</div>
+      </div>
+      <div class="card soon" style="--card-color: var(--line);">
+        <span class="soon-badge">준비중</span>
+        <div class="card-eyebrow">Monitor</div>
+        <div class="card-title">모니터링 종목</div>
+        <div class="card-desc">진입 조건 대기 중인 관심 종목 · 트리거 체크리스트.</div>
+        <div class="card-link">곧 공개</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 푸터 ── -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-copy">© 2026 Investment Research · 본 자료는 투자자문이 아닙니다.</div>
+      <nav class="footer-nav">
+        <a href="#valuemap">밸류체인</a>
+        <a href="#analysis">기업분석</a>
+        <a href="#code">투자코드개발</a>
+        <a href="#portfolio">투자포트폴리오</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script>
+// 스크롤 네비게이션
+function scrollTo(e, id) {
+  e.preventDefault();
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// 스크롤 위치에 따라 active 탭 업데이트
+const sections = ['valuemap','analysis','code','portfolio'];
+const navLinks = document.querySelectorAll('.mainnav a');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === `#${id}`);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+
+sections.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) observer.observe(el);
+});
+</script>
+
+</body>
+</html>

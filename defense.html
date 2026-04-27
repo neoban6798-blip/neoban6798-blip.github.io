@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>한국 방산 산업지도 · 면도기–면도날 모델</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css">
+<link rel="stylesheet" href="shared/base.css">
+<style>
+  :root {
+    --accent: oklch(52% 0.14 35);
+    --accent-2: oklch(45% 0.08 260);
+    --accent-3: oklch(55% 0.12 140);
+    --bg: #f6f5f1;
+    --tint: #f7f0ea;
+    --tint-1: #f7f0ea;
+    --tint-2: #eff4ec;
+    --tint-3: #fbf5f1;
+  }
+  body { background: var(--bg); }
+  .brand-mark { background: linear-gradient(135deg, var(--accent) 0%, oklch(38% 0.08 40) 100%); }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap-wide topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">K</span>
+      <span>Korea Industry Map</span>
+    </a>
+        <nav class="topnav" style="display:flex;gap:2px;flex-shrink:0;flex-wrap:nowrap;">
+      <a style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;color:#6b7280;" href="index.html">Overview</a>
+      <a style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;color:#6b7280;" href="semiconductor.html">반도체</a>
+      <a style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;background:#111418;color:#fff;" href="defense.html">방산</a>
+      <a style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;color:#6b7280;" href="K컬쳐 밸류체인.html">K컬처</a>
+      <a style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;color:#6b7280;" href="power.html">전력인프라</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap-wide">
+    <span class="hero-eyebrow">● Defense · Razor &amp; Blade</span>
+    <h1>플랫폼은 <em>면도기</em>,<br>유도무기는 <em>면도날</em></h1>
+    <p class="hero-lead">
+      30~40년 수명주기의 전투기·함정·발사대(면도기)가 한번 팔리면,
+      정밀 유도무기(면도날)와 부품·MRO가 지속 공급되는 구독형 구조.
+      수주 공시(L1) → 하부 청바지 기업(L3)으로 흐르는 낙수의 시차를 활용하는 산업지도.
+    </p>
+    <div class="hero-meta">
+      <div><b>프레임</b> · 면도기–면도날 × 신뢰의 사다리 × 리트머스 전략</div>
+      <div><b>범위</b> · L1 플랫폼 · L2 하부시스템 · L3 청바지 · L4 파이프라인</div>
+      <div><b>업데이트</b> · 2025년 분석 기준</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap-wide">
+    <div class="section-head">
+      <div class="section-kicker">Framework · 01</div>
+      <h2>투자 테제 세 가지</h2>
+      <p class="section-sub">
+        플랫폼의 생애주기, 무기의 단가 점프, 수주 공시의 시차 — 세 가지 축이
+        방산 밸류체인에서 어느 레이어가 얼마만큼의 이익을 가져가는지 결정합니다.
+      </p>
+    </div>
+    <div class="board thesis-grid" id="thesis"></div>
+  </div>
+</section>
+
+<section class="section" style="background: var(--paper); border-block: 1px solid var(--line);">
+  <div class="wrap-wide">
+    <div class="section-head">
+      <div class="section-kicker">Framework · 02</div>
+      <h2>신뢰의 사다리 — 단가·마진의 계단식 상승</h2>
+      <p class="section-sub">
+        실전 검증(Cash Cow) → 양산 전환(Growth) → 플랫폼 통합(Alpha). 각 단계마다
+        단위당 판가·OPM·레퍼런스 가치가 구조적으로 점프합니다.
+      </p>
+    </div>
+    <div class="ladder" id="ladder"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap-wide">
+    <div class="section-head">
+      <div class="section-kicker">Map · 수직 레이어 구조</div>
+      <h2>L1 리트머스 → L2 모듈 → L3 청바지 → L4 파이프라인</h2>
+      <p class="section-sub">
+        L1의 수주 공시는 L2의 개수, L3의 단가 × 수량으로 정확히 전환됩니다.
+        L1 조정 구간이 L3 청바지 기업의 최적 진입점인 이유.
+      </p>
+    </div>
+    <div id="layers"></div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap-wide">
+    <div class="foot-grid">
+      <div>
+        <b>Korea Industry Map — Defense</b><br>
+        면도기–면도날 모델 × 신뢰의 사다리 × 4계층 레이어로 읽는 한국 방산.
+      </div>
+      <div>
+        <b>Related</b><br>
+        <a href="semiconductor.html">반도체 산업지도 →</a><br>
+        <a href="K컬쳐 밸류체인.html">K컬처 밸류체인 →</a><br>
+        <a href="index.html">전체 허브 →</a>
+      </div>
+      <div>
+        <b>Structure</b><br>
+        L1 · Platform &amp; Litmus<br>
+        L2 · Sub-Systems<br>
+        L3 · Blue Jeans (Parts)<br>
+        L4 · Growth Pipeline
+      </div>
+    </div>
+    <p class="foot-disc">
+      본 자료는 산업 구조 이해를 돕기 위한 교육·분석 목적의 시각화이며,
+      특정 종목에 대한 투자자문 또는 매수·매도 권유가 아닙니다.
+      모든 투자 판단과 그에 따른 결과의 책임은 투자자 본인에게 있습니다.
+    </p>
+  </div>
+</footer>
+
+<script src="data/defense.js"></script>
+<script>window.INDUSTRY_DATA = window.DEFENSE_DATA;</script>
+<script src="shared/render.js"></script>
+</body>
+</html>

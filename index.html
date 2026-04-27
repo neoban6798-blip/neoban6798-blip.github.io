@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Korea Industry Map · 한국 반도체 &amp; 방산 산업지도</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css">
+<link rel="stylesheet" href="shared/base.css">
+<style>
+  :root {
+    --accent: oklch(58% 0.14 250);
+    --accent-2: oklch(62% 0.14 180);
+  }
+
+  /* Hub-specific */
+  .hero-hub {
+    padding: 120px 0 96px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-hub::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 700px 380px at 85% 15%, color-mix(in oklch, oklch(58% 0.14 250) 7%, transparent), transparent 70%),
+      radial-gradient(ellipse 600px 400px at 10% 90%, color-mix(in oklch, oklch(52% 0.14 35) 5%, transparent), transparent 70%),
+      radial-gradient(ellipse 500px 350px at 50% 50%, color-mix(in oklch, oklch(58% 0.16 15) 4%, transparent), transparent 70%);
+    pointer-events: none;
+  }
+  .hero-hub > .wrap-wide { position: relative; z-index: 1; }
+  .hero-hub h1 {
+    font-size: clamp(48px, 6.5vw, 92px);
+    font-weight: 800; letter-spacing: -.035em; line-height: 1.02;
+    margin: 24px 0 20px; max-width: 18ch;
+  }
+  .hero-hub h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, oklch(58% 0.14 250), oklch(52% 0.14 35));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero-hub .hero-lead { font-size: 20px; max-width: 62ch; }
+
+  /* Map cards */
+  .maps {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    margin: 48px 0;
+  }
+  .mapcard {
+    border: 1px solid var(--line); border-radius: var(--radius-lg);
+    background: var(--paper); padding: 40px;
+    display: flex; flex-direction: column; gap: 20px;
+    transition: all .2s ease;
+    position: relative; overflow: hidden;
+  }
+  .mapcard:hover { border-color: var(--ink-2); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .mapcard::after {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: var(--card-accent);
+  }
+  .mapcard.semi { --card-accent: linear-gradient(90deg, oklch(58% 0.14 250), oklch(62% 0.14 180)); }
+  .mapcard.def  { --card-accent: linear-gradient(90deg, oklch(52% 0.14 35), oklch(45% 0.08 260)); }
+  .mapcard.culture { --card-accent: linear-gradient(90deg, oklch(58% 0.16 15), oklch(60% 0.12 340)); }
+  .mapcard.power  { --card-accent: linear-gradient(90deg, oklch(55% 0.16 65), oklch(58% 0.14 95)); }
+  .mapcard-eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--ink-4);
+  }
+  .mapcard h3 {
+    font-size: 32px; font-weight: 800; letter-spacing: -.02em; line-height: 1.1;
+    margin: 0;
+  }
+  .mapcard h3 em {
+    font-style: normal; color: var(--card-ink);
+  }
+  .mapcard.semi h3 em { color: oklch(58% 0.14 250); }
+  .mapcard.def h3 em { color: oklch(52% 0.14 35); }
+  .mapcard.culture h3 em { color: oklch(58% 0.16 15); }
+  .mapcard.power h3 em  { color: oklch(55% 0.16 65); }
+  .mapcard-desc { font-size: 15px; color: var(--ink-3); line-height: 1.6; margin: 0; }
+  .mapcard-layers {
+    display: grid; grid-template-columns: auto 1fr; gap: 8px 14px;
+    padding: 20px 0; border-top: 1px dashed var(--line); border-bottom: 1px dashed var(--line);
+    font-size: 13px;
+  }
+  .mapcard-layers dt {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px; font-weight: 700; color: var(--ink-4); letter-spacing: .05em;
+    padding-top: 2px;
+  }
+  .mapcard-layers dd { margin: 0; color: var(--ink-2); }
+  .mapcard-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 14px; font-weight: 600; color: var(--ink);
+    padding: 10px 0; border-bottom: 1px solid var(--ink);
+    width: fit-content;
+    transition: gap .15s ease;
+  }
+  .mapcard:hover .mapcard-cta { gap: 14px; }
+
+  /* Principles */
+  .principles {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+    margin-top: 40px;
+  }
+  .principle {
+    padding-top: 20px; border-top: 2px solid var(--ink);
+  }
+  .principle-num {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px; font-weight: 700; letter-spacing: .1em;
+    color: var(--ink-4); margin-bottom: 12px;
+  }
+  .principle h4 {
+    font-size: 16px; font-weight: 700; letter-spacing: -.01em;
+    margin: 0 0 8px;
+  }
+  .principle p { font-size: 13.5px; color: var(--ink-3); margin: 0; line-height: 1.55; }
+
+  /* Stats */
+  .stats {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+    border: 1px solid var(--line); border-radius: var(--radius-lg);
+    background: var(--paper); overflow: hidden;
+    margin: 40px 0;
+  }
+  .stat {
+    padding: 32px; border-right: 1px solid var(--line-soft);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-value { font-size: 44px; font-weight: 800; letter-spacing: -.03em; line-height: 1; margin-bottom: 8px; }
+  .stat-value em { font-style: normal; color: var(--accent); }
+  .stat-label { font-size: 13px; color: var(--ink-3); font-weight: 500; }
+
+  @media (max-width: 1100px) {
+    .maps { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 900px) {
+    .maps, .principles, .stats { grid-template-columns: 1fr; }
+    .stat { border-right: none; border-bottom: 1px solid var(--line-soft); }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap-wide topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">K</span>
+      <span>Korea Industry Map</span>
+    </a>
+    <nav class="topnav" style="display:flex;gap:2px;flex-shrink:0;flex-wrap:nowrap;">
+      <a style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;color:inherit;background:#111418;color:#fff;" href="index.html">Overview</a>
+      <a style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;color:#6b7280;" href="semiconductor.html">반도체</a>
+      <a style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;color:#6b7280;" href="defense.html">방산</a>
+      <a style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;color:#6b7280;" href="K컬쳐 밸류체인.html">K컬처</a>
+      <a style="white-space:nowrap;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:500;text-decoration:none;color:#6b7280;" href="power.html">전력인프라</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero-hub">
+  <div class="wrap-wide">
+    <span class="hero-eyebrow" style="color: var(--ink-3); border-color: var(--line);">Korea Industry Map · 2025</span>
+    <h1>한국 산업의 <em>돈이 흐르는 길</em>을<br>한 장의 지도로.</h1>
+    <p class="hero-lead">
+      두 개의 초대형 내러티브 — AI 컴퓨팅과 지정학 — 아래에서
+      한국 기업들이 이익을 쌓는 지점, 표준을 쥔 기업, 그리고 다가올 패러다임 전환의 수혜자를
+      수직적 레이어 구조로 정리했습니다.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap-wide">
+    <div class="section-head">
+      <div class="section-kicker">Maps · 산업지도 2종</div>
+      <h2>선택하세요</h2>
+      <p class="section-sub">
+        각 산업은 서로 다른 지배 원리를 따릅니다. 반도체는 '공정 표준'과 'Pathfinder-Follower'를,
+        방산은 '면도기-면도날'과 '신뢰의 사다리'를 축으로 읽습니다.
+      </p>
+    </div>
+
+    <div class="maps" style="grid-template-columns:repeat(2,1fr);">
+      <a class="mapcard semi" href="semiconductor.html">
+        <div class="mapcard-eyebrow">Map 01 · Semiconductor</div>
+        <h3>AI 컴퓨팅 <em>5단계</em> 진화,<br>한국의 이익 지점</h3>
+        <p class="mapcard-desc">
+          HBM·CXL·유리기판·온디바이스 AI — 공급망을 수직적 레이어(L1–L3)와
+          수평적 진화단계(1–5)로 교차 매핑한 산업지도.
+        </p>
+        <dl class="mapcard-layers">
+          <dt>L1</dt><dd>The Standard Bearers · 메모리 · 디자인솔루션 · 독점 장비/소재</dd>
+          <dt>L2</dt><dd>The Enablers · HBM 본더 · 공정 소재 · 팹 인프라</dd>
+          <dt>L3</dt><dd>The Paradigm Shifters · CXL · 유리기판 · NPU IP</dd>
+        </dl>
+        <span class="mapcard-cta">지도 열기 <span aria-hidden="true">→</span></span>
+      </a>
+
+      <a class="mapcard def" href="defense.html">
+        <div class="mapcard-eyebrow">Map 02 · Defense</div>
+        <h3>면도기–면도날,<br><em>낙수의 시차</em> 읽기</h3>
+        <p class="mapcard-desc">
+          천궁·L-SAM·KF-21·KSS-III — 플랫폼·유도무기·청바지 기업의
+          이익 흐름을 4계층 레이어로 재구성한 한국 방산 산업지도.
+        </p>
+        <dl class="mapcard-layers">
+          <dt>L1</dt><dd>Platform &amp; Litmus · 리트머스 수주 · 지상/공중/해상 플랫폼</dd>
+          <dt>L2</dt><dd>Sub-Systems · 전투체계 · 추진 · 탄체/탄두</dd>
+          <dt>L3</dt><dd>Blue Jeans · 센서 · 구동 · 신경 · 지능</dd>
+          <dt>L4</dt><dd>Growth Pipeline · L-SAM II · 천룡 국산무장</dd>
+        </dl>
+        <span class="mapcard-cta">지도 열기 <span aria-hidden="true">→</span></span>
+      </a>
+
+      <a class="mapcard culture" href="K컬쳐 밸류체인.html">
+        <div class="mapcard-eyebrow">Map 03 · K-Culture</div>
+        <h3>콘텐츠가 끌고,<br><em>인프라·소비재</em>가 확장</h3>
+        <p class="mapcard-desc">
+          K팝·드라마·영화가 만든 글로벌 팬덤이 플랫폼·화장품·F&amp;B·여행으로
+          확산되는 구조. 수평 밸류체인 + 수직 레이어로 읽는 한류 산업지도.
+        </p>
+        <dl class="mapcard-layers">
+          <dt>L1</dt><dd>콘텐츠 IP · 엔터 4사 · 드라마/영화 제작사</dd>
+          <dt>L2</dt><dd>플랫폼 · 유통 · 네이버/카카오 · 글로벌 OTT</dd>
+          <dt>L3</dt><dd>확장 소비재 · 뷰티 · F&amp;B · 인바운드 관광</dd>
+        </dl>
+        <span class="mapcard-cta">지도 열기 <span aria-hidden="true">→</span></span>
+      </a>
+
+      <a class="mapcard power" href="power.html">
+        <div class="mapcard-eyebrow">Map 04 · Power Infrastructure</div>
+        <h3>AI·로봇·전기차가<br><em>강제하는</em> 전력망 교체</h3>
+        <p class="mapcard-desc">
+          3중 독립 트리거 × 시장의 분류 오류 × 지정학 필터 — 서방 진영의
+          전력 인프라 공급망을 독점하는 한국 기업들을 수요처 기준 3레이어로 정리.
+        </p>
+        <dl class="mapcard-layers">
+          <dt>L1</dt><dd>AI 데이터센터 · 초고압 변압기 · 부품·소재 (알파 집중)</dd>
+          <dt>L2</dt><dd>★ 핵심 알파 · 케이블 · EMS/SCADA · ESS · 피지컬AI 인프라</dd>
+          <dt>L3</dt><dd>신규 아키텍처 · HVDC · 마이크로그리드</dd>
+        </dl>
+        <span class="mapcard-cta">지도 열기 <span aria-hidden="true">→</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background: var(--paper); border-block: 1px solid var(--line);">
+  <div class="wrap-wide">
+    <div class="section-head">
+      <div class="section-kicker">Principles · 지도를 읽는 네 가지 원칙</div>
+      <h2>모든 산업은 같은 질문으로 읽습니다</h2>
+      <p class="section-sub">
+        "누가 표준을 쥐고 있는가 · 누가 물량을 받는가 · 무엇이 규칙을 다시 쓰는가 · 시차는 어디에서 생기는가"
+      </p>
+    </div>
+
+    <div class="principles">
+      <div class="principle">
+        <div class="principle-num">01</div>
+        <h4>표준 지배</h4>
+        <p>Moat의 원천은 '가격결정권'. 독점 공정·독점 장비·독점 소재가 이익의 정점.</p>
+      </div>
+      <div class="principle">
+        <div class="principle-num">02</div>
+        <h4>낙수의 방향</h4>
+        <p>L1의 금액이 L2의 개수로, L3의 단가×수량으로 전환되는 구조적 흐름.</p>
+      </div>
+      <div class="principle">
+        <div class="principle-num">03</div>
+        <h4>패러다임 전환</h4>
+        <p>기존 규칙을 다시 쓰는 섹터에서 10배 가능성이 열림 — 한국이 First Mover가 될 구간.</p>
+      </div>
+      <div class="principle">
+        <div class="principle-num">04</div>
+        <h4>시차 전략</h4>
+        <p>리트머스 기업의 수주 공시 → 하부 청바지 기업 실적 반영까지의 6~12개월 시차 활용.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap-wide">
+    <div class="section-head">
+      <div class="section-kicker">At a glance</div>
+      <h2>이 지도가 다루는 범위</h2>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-value"><em>4</em></div>
+        <div class="stat-label">산업지도 · 반도체 · 방산 · K컬처 · 전력인프라</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value"><em>10</em></div>
+        <div class="stat-label">수직 레이어 · L1–L3 (반도체/K컬처) · L1–L4 (방산)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value"><em>50+</em></div>
+        <div class="stat-label">분석 기업 · 모트·테제·리스크 3요소로 정리</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap-wide">
+    <div class="foot-grid">
+      <div>
+        <b>Korea Industry Map</b><br>
+        한국의 네 핵심 산업 — 반도체 · 방산 · K컬처 · 전력인프라 — 를 동일한 레이어 구조로 읽는 산업지도 프로젝트.
+      </div>
+      <div>
+        <b>Maps</b><br>
+        <a href="semiconductor.html">→ 반도체 산업지도</a><br>
+        <a href="defense.html">→ 방산 산업지도</a><br>
+        <a href="K컬쳐 밸류체인.html">→ K컬처 밸류체인</a><br>
+        <a href="power.html">→ 전력 인프라 산업지도</a>
+      </div>
+      <div>
+        <b>Method</b><br>
+        수직 레이어 × 수평 프레임워크<br>
+        L1 지배자 · L2 공급망 · L3 패러다임
+      </div>
+    </div>
+    <p class="foot-disc">
+      본 자료는 산업 구조 이해를 돕기 위한 교육·분석 목적의 시각화이며,
+      특정 종목에 대한 투자자문 또는 매수·매도 권유가 아닙니다.
+      모든 투자 판단과 그에 따른 결과의 책임은 투자자 본인에게 있습니다.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
