@@ -117,7 +117,7 @@
   }
   .section-desc { font-size: 15px; color: var(--ink-3); max-width: 58ch; margin-bottom: 36px; }
 
-  /* 카드 그리드 */
+  /* 카드 그리드 (밸류체인 등 다른 곳에서 사용) */
   .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
   .card-grid.col3 { grid-template-columns: repeat(3, 1fr); }
   .card-grid.col2 { grid-template-columns: repeat(2, 1fr); }
@@ -158,6 +158,56 @@
     background: var(--line); color: var(--ink-4);
   }
 
+  /* ── 기업분석 캐러셀 (회전초밥) ── */
+  #analysis .card-carousel {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    padding: 20px 0 30px;
+  }
+
+  #analysis .card-track {
+    display: flex;
+    gap: 16px;
+    padding-bottom: 12px;
+    width: max-content;
+    animation: autoScrollReports 30s linear infinite;
+  }
+
+  /* 마우스 올리면 흐름 멈춤 */
+  #analysis .card-carousel:hover .card-track {
+    animation-play-state: paused;
+  }
+
+  /* 캐러셀 안의 개별 카드 */
+  #analysis .card {
+    flex-shrink: 0;
+    width: 220px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+
+  /* 카드에 직접 마우스를 올렸을 때 */
+  #analysis .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(18,20,24,0.12);
+    border-color: var(--ink-4);
+  }
+
+  /* 중앙 하이라이트 (JS로 제어) */
+  #analysis .card.highlight {
+    transform: scale(1.1) !important;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.15) !important;
+    border-color: var(--accent) !important;
+    z-index: 10;
+    position: relative;
+    background-color: #ffffff;
+  }
+
+  @keyframes autoScrollReports {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
   /* ── 푸터 ── */
   .footer {
     border-top: 1px solid var(--line); background: var(--paper);
@@ -192,9 +242,9 @@
 <header class="topbar">
   <div class="topbar-inner">
     <a class="logo" href="index.html">
-  <span class="logo-mark">I</span>
-  <span>Investment Research</span>
-</a>
+      <span class="logo-mark">I</span>
+      <span>Investment Research</span>
+    </a>
     <nav class="mainnav" id="mainnav">
       <a href="dist/index.html">산업지도 허브</a>
       <a href="#analysis" onclick="scrollTo(event,'analysis')">기업분석</a>
@@ -266,75 +316,122 @@
   </div>
 </section>
 
-<!-- ── 기업분석 ── -->
+<!-- ── 기업분석 (캐러셀) ── -->
 <section class="section" id="analysis" style="background: var(--bg);">
   <div class="wrap">
     <div class="section-label">기업분석</div>
     <div class="section-title">세밀한 분석 보고서</div>
     <p class="section-desc">밸류체인 지도에서 선별한 핵심 기업들의 심층 분석. 재무 구조 · 해자 검증 · 시나리오별 밸류에이션.</p>
-   <div class="card-grid col3">
 
-  <!-- ═══════════════════════════════════════════════ -->
-  <!-- 📌 기업분석 카드 — 새 보고서를 맨 위에 복사·추가 -->
-  <!-- 형식: 기업명 / KRX코드 / 섹터 / 블로그URL -->
-  <!-- ═══════════════════════════════════════════════ -->
+    <div class="card-carousel">
+      <div class="card-track">
 
-  <!-- 🔹 GST -->
-  <a class="card" href="https://blog.naver.com/assetplus5060/224260502950" target="_blank" rel="noopener noreferrer">
-    <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
-    <div class="card-eyebrow">GST</div>
-    <div class="card-title">KRX083450</div>
-    <div class="card-desc">반도체 장비</div>
-    <div class="card-link">보고서 읽기 →</div>
-  </a>
+        <!-- ═══════════════════════════════════════════════ -->
+        <!-- 📌 카드 템플릿 (새 보고서를 맨 위에 복사)        -->
+        <!-- 형식: 기업명 / KRX코드 / 섹터 / 블로그URL       -->
+        <!-- ═══════════════════════════════════════════════ -->
 
-  <!-- 🔹 HPSP -->
-  <a class="card" href="https://blog.naver.com/assetplus5060/224261244896" target="_blank" rel="noopener noreferrer">
-    <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
-    <div class="card-eyebrow">HPSP</div>
-    <div class="card-title">KRX403870</div>
-    <div class="card-desc">반도체 장비</div>
-    <div class="card-link">보고서 읽기 →</div>
-  </a>
+        <!-- 🔹 GST -->
+        <a class="card" href="https://blog.naver.com/assetplus5060/224260502950" target="_blank" rel="noopener noreferrer">
+          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
+          <div class="card-eyebrow">GST</div>
+          <div class="card-title">KRX083450</div>
+          <div class="card-desc">반도체 장비</div>
+          <div class="card-link">보고서 읽기 →</div>
+        </a>
 
-  <!-- 🔹 한화오션 -->
-  <a class="card" href="https://blog.naver.com/assetplus5060/224261814382" target="_blank" rel="noopener noreferrer">
-    <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
-    <div class="card-eyebrow">한화오션</div>
-    <div class="card-title">KRX042660</div>
-    <div class="card-desc">방산·조선</div>
-    <div class="card-link">보고서 읽기 →</div>
-  </a>
+        <!-- 🔹 HPSP -->
+        <a class="card" href="https://blog.naver.com/assetplus5060/224261244896" target="_blank" rel="noopener noreferrer">
+          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
+          <div class="card-eyebrow">HPSP</div>
+          <div class="card-title">KRX403870</div>
+          <div class="card-desc">반도체 장비</div>
+          <div class="card-link">보고서 읽기 →</div>
+        </a>
 
-  <!-- 🔹 현대백화점 -->
-  <a class="card" href="https://blog.naver.com/assetplus5060/224261839673" target="_blank" rel="noopener noreferrer">
-    <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
-    <div class="card-eyebrow">현대백화점</div>
-    <div class="card-title">KRX069960</div>
-    <div class="card-desc">유통</div>
-    <div class="card-link">보고서 읽기 →</div>
-  </a>
+        <!-- 🔹 한화오션 -->
+        <a class="card" href="https://blog.naver.com/assetplus5060/224261814382" target="_blank" rel="noopener noreferrer">
+          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
+          <div class="card-eyebrow">한화오션</div>
+          <div class="card-title">KRX042660</div>
+          <div class="card-desc">방산·조선</div>
+          <div class="card-link">보고서 읽기 →</div>
+        </a>
 
-  <!-- 🔹 네이버 -->
-  <a class="card" href="https://blog.naver.com/assetplus5060/224261995105" target="_blank" rel="noopener noreferrer">
-    <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
-    <div class="card-eyebrow">네이버</div>
-    <div class="card-title">KRX035420</div>
-    <div class="card-desc">플랫폼</div>
-    <div class="card-link">보고서 읽기 →</div>
-  </a>
+        <!-- 🔹 현대백화점 -->
+        <a class="card" href="https://blog.naver.com/assetplus5060/224261839673" target="_blank" rel="noopener noreferrer">
+          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
+          <div class="card-eyebrow">현대백화점</div>
+          <div class="card-title">KRX069960</div>
+          <div class="card-desc">유통</div>
+          <div class="card-link">보고서 읽기 →</div>
+        </a>
 
-  <!-- 🔹 준비중 -->
-  <div class="card soon">
-    <span class="soon-badge">준비중</span>
-    <div class="card-eyebrow">Upcoming</div>
-    <div class="card-title">다음 분석</div>
-    <div class="card-desc">새 종목 업데이트 예정</div>
-    <div class="card-link">Coming Soon</div>
+        <!-- 🔹 네이버 -->
+        <a class="card" href="https://blog.naver.com/assetplus5060/224261995105" target="_blank" rel="noopener noreferrer">
+          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
+          <div class="card-eyebrow">네이버</div>
+          <div class="card-title">KRX035420</div>
+          <div class="card-desc">플랫폼</div>
+          <div class="card-link">보고서 읽기 →</div>
+        </a>
+
+        <!-- 🔹 준비중 -->
+        <div class="card soon">
+          <span class="soon-badge">준비중</span>
+          <div class="card-eyebrow">Upcoming</div>
+          <div class="card-title">다음 분석</div>
+          <div class="card-desc">새 종목 업데이트 예정</div>
+          <div class="card-link">Coming Soon</div>
+        </div>
+
+        <!-- ★ 무한 루프를 위한 복제 세트 (aria-hidden) -->
+        <a class="card" href="https://blog.naver.com/assetplus5060/224260502950" target="_blank" rel="noopener noreferrer" aria-hidden="true">
+          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
+          <div class="card-eyebrow">GST</div>
+          <div class="card-title">KRX083450</div>
+          <div class="card-desc">반도체 장비</div>
+          <div class="card-link">보고서 읽기 →</div>
+        </a>
+        <a class="card" href="https://blog.naver.com/assetplus5060/224261244896" target="_blank" rel="noopener noreferrer" aria-hidden="true">
+          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
+          <div class="card-eyebrow">HPSP</div>
+          <div class="card-title">KRX403870</div>
+          <div class="card-desc">반도체 장비</div>
+          <div class="card-link">보고서 읽기 →</div>
+        </a>
+        <a class="card" href="https://blog.naver.com/assetplus5060/224261814382" target="_blank" rel="noopener noreferrer" aria-hidden="true">
+          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
+          <div class="card-eyebrow">한화오션</div>
+          <div class="card-title">KRX042660</div>
+          <div class="card-desc">방산·조선</div>
+          <div class="card-link">보고서 읽기 →</div>
+        </a>
+        <a class="card" href="https://blog.naver.com/assetplus5060/224261839673" target="_blank" rel="noopener noreferrer" aria-hidden="true">
+          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
+          <div class="card-eyebrow">현대백화점</div>
+          <div class="card-title">KRX069960</div>
+          <div class="card-desc">유통</div>
+          <div class="card-link">보고서 읽기 →</div>
+        </a>
+        <a class="card" href="https://blog.naver.com/assetplus5060/224261995105" target="_blank" rel="noopener noreferrer" aria-hidden="true">
+          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
+          <div class="card-eyebrow">네이버</div>
+          <div class="card-title">KRX035420</div>
+          <div class="card-desc">플랫폼</div>
+          <div class="card-link">보고서 읽기 →</div>
+        </a>
+        <div class="card soon" aria-hidden="true">
+          <span class="soon-badge">준비중</span>
+          <div class="card-eyebrow">Upcoming</div>
+          <div class="card-title">다음 분석</div>
+          <div class="card-desc">새 종목 업데이트 예정</div>
+          <div class="card-link">Coming Soon</div>
+        </div>
+
+      </div>
+    </div>
   </div>
-
-</div>
-
 </section>
 
 <!-- ── 투자코드개발 ── -->
@@ -428,6 +525,40 @@ sections.forEach(id => {
   const el = document.getElementById(id);
   if (el) observer.observe(el);
 });
+
+// ── 기업분석 캐러셀: 중앙 카드 하이라이트 ──
+(function() {
+  const track = document.querySelector('#analysis .card-track');
+  if (!track) return;
+
+  const cards = track.querySelectorAll('.card');
+
+  function highlightCenterCard() {
+    const windowCenter = window.innerWidth / 2;
+    let closestCard = null;
+    let minDistance = Infinity;
+
+    cards.forEach(card => {
+      const rect = card.getBoundingClientRect();
+      const cardCenter = rect.left + (rect.width / 2);
+      const distance = Math.abs(windowCenter - cardCenter);
+
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestCard = card;
+      }
+    });
+
+    cards.forEach(card => card.classList.remove('highlight'));
+    if (closestCard) {
+      closestCard.classList.add('highlight');
+    }
+
+    requestAnimationFrame(highlightCenterCard);
+  }
+
+  highlightCenterCard();
+})();
 </script>
 
 </body>
