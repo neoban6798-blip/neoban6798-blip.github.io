@@ -117,7 +117,7 @@
   }
   .section-desc { font-size: 15px; color: var(--ink-3); max-width: 58ch; margin-bottom: 36px; }
 
-  /* 카드 그리드 (밸류체인 등 다른 곳에서 사용) */
+  /* 카드 그리드 */
   .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
   .card-grid.col3 { grid-template-columns: repeat(3, 1fr); }
   .card-grid.col2 { grid-template-columns: repeat(2, 1fr); }
@@ -158,7 +158,9 @@
     background: var(--line); color: var(--ink-4);
   }
 
-  /* ── 기업분석 캐러셀 (회전초밥) ── */
+  /* ═══════════════════════════════
+     기업분석 캐러셀 (회전초밥)
+     ═══════════════════════════════ */
   #analysis .card-carousel {
     overflow: hidden;
     position: relative;
@@ -385,54 +387,10 @@
           <div class="card-link">Coming Soon</div>
         </div>
 
-        <!-- ★ 무한 루프를 위한 복제 세트 (aria-hidden) -->
-        <a class="card" href="https://blog.naver.com/assetplus5060/224260502950" target="_blank" rel="noopener noreferrer" aria-hidden="true">
-          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
-          <div class="card-eyebrow">GST</div>
-          <div class="card-title">KRX083450</div>
-          <div class="card-desc">반도체 장비</div>
-          <div class="card-link">보고서 읽기 →</div>
-        </a>
-        <a class="card" href="https://blog.naver.com/assetplus5060/224261244896" target="_blank" rel="noopener noreferrer" aria-hidden="true">
-          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
-          <div class="card-eyebrow">HPSP</div>
-          <div class="card-title">KRX403870</div>
-          <div class="card-desc">반도체 장비</div>
-          <div class="card-link">보고서 읽기 →</div>
-        </a>
-        <a class="card" href="https://blog.naver.com/assetplus5060/224261814382" target="_blank" rel="noopener noreferrer" aria-hidden="true">
-          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
-          <div class="card-eyebrow">한화오션</div>
-          <div class="card-title">KRX042660</div>
-          <div class="card-desc">방산·조선</div>
-          <div class="card-link">보고서 읽기 →</div>
-        </a>
-        <a class="card" href="https://blog.naver.com/assetplus5060/224261839673" target="_blank" rel="noopener noreferrer" aria-hidden="true">
-          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
-          <div class="card-eyebrow">현대백화점</div>
-          <div class="card-title">KRX069960</div>
-          <div class="card-desc">유통</div>
-          <div class="card-link">보고서 읽기 →</div>
-        </a>
-        <a class="card" href="https://blog.naver.com/assetplus5060/224261995105" target="_blank" rel="noopener noreferrer" aria-hidden="true">
-          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
-          <div class="card-eyebrow">네이버</div>
-          <div class="card-title">KRX035420</div>
-          <div class="card-desc">플랫폼</div>
-          <div class="card-link">보고서 읽기 →</div>
-        </a>
-        <div class="card soon" aria-hidden="true">
-          <span class="soon-badge">준비중</span>
-          <div class="card-eyebrow">Upcoming</div>
-          <div class="card-title">다음 분석</div>
-          <div class="card-desc">새 종목 업데이트 예정</div>
-          <div class="card-link">Coming Soon</div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</section>
+      </div> <!-- .card-track 종료 -->
+    </div> <!-- .card-carousel 종료 -->
+  </div> <!-- .wrap 종료 -->
+</section> <!-- #analysis 종료 -->
 
 <!-- ── 투자코드개발 ── -->
 <section class="section" id="code" style="background: var(--paper);">
@@ -526,6 +484,20 @@ sections.forEach(id => {
   if (el) observer.observe(el);
 });
 
+// ── 캐러셀 카드 자동 복제 (무한 루프) ──
+(function() {
+  const track = document.querySelector('#analysis .card-track');
+  if (!track) return;
+
+  // 원본 카드들을 한 번 더 복제해서 뒤에 붙임
+  const cards = track.querySelectorAll('.card');
+  cards.forEach(card => {
+    const clone = card.cloneNode(true);  // 깊은 복사
+    clone.setAttribute('aria-hidden', 'true');
+    track.appendChild(clone);
+  });
+})();
+
 // ── 기업분석 캐러셀: 중앙 카드 하이라이트 ──
 (function() {
   const track = document.querySelector('#analysis .card-track');
@@ -549,6 +521,7 @@ sections.forEach(id => {
       }
     });
 
+    // 모든 카드에서 highlight 클래스 제거 후, 가장 가까운 카드에만 추가
     cards.forEach(card => card.classList.remove('highlight'));
     if (closestCard) {
       closestCard.classList.add('highlight');
