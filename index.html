@@ -215,36 +215,30 @@
     100% { transform: translateX(-50%); }
   }
 
-  /* ── 더보기 버튼 ── */
+  /* ── 전체보기 링크 (accent 배경 + 흰색 글씨) ── */
   .more-link {
-    border: 1px solid var(--line);
+    background: var(--accent);
+    color: #ffffff;
     border-radius: 12px;
     padding: 28px 40px;
     text-decoration: none;
-    color: var(--ink);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
     font-size: 15px;
     font-weight: 700;
-    background: var(--paper);
     transition: all .2s;
-    border-style: dashed;
+    border: none;
   }
   .more-link:hover {
-    border-color: var(--accent);
-    color: var(--accent);
+    filter: brightness(1.05);
     font-weight: 800;
+    color: #ffffff;
   }
 
-  /* ── 투자코드개발 소개 카드 (2열) ── */
-  .two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
-  .two-col .intro-card {
+  /* ── 투자코드개발 / 아이템준비중 소개 카드 (1열) ── */
+  .intro-card {
     border: 1px solid var(--line);
     border-radius: 12px;
     padding: 36px;
@@ -256,8 +250,9 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    width: 100%;
   }
-  .two-col .intro-card:hover {
+  .intro-card:hover {
     border-color: var(--accent);
     box-shadow: 0 12px 30px rgba(0,0,0,0.08);
     transform: translateY(-3px);
@@ -284,6 +279,9 @@
     gap: 8px; margin-bottom: 20px; width: 100%;
     padding-top: 16px; border-top: 1px dashed var(--line);
   }
+  .intro-features.one-col {
+    grid-template-columns: 1fr;
+  }
   .intro-feature {
     font-size: 12px; color: var(--ink-3);
     padding: 6px 10px; background: var(--bg);
@@ -295,6 +293,33 @@
     padding: 8px 0; border-bottom: 1px solid var(--ink);
   }
   .intro-cta:hover { gap: 12px; }
+
+  /* ── 아이템 준비중 카드 (공사중) ── */
+  .coming-soon-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    cursor: default;
+  }
+  .coming-soon-icon {
+    font-size: 48px;
+    opacity: 0.6;
+  }
+  .coming-soon-title {
+    font-size: 22px; font-weight: 800;
+    letter-spacing: -.02em; color: var(--ink);
+  }
+  .coming-soon-desc {
+    font-size: 14px; color: var(--ink-3);
+    max-width: 48ch; line-height: 1.7;
+  }
 
   /* ── 푸터 ── */
   .footer {
@@ -313,14 +338,14 @@
 
   /* ── 반응형 ── */
   @media (max-width: 1000px) {
-    .two-col { grid-template-columns: 1fr; }
+    .intro-features { grid-template-columns: 1fr; }
     .card-grid { grid-template-columns: repeat(2, 1fr); }
     .card-grid.col3 { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 640px) {
     .topbar-inner { padding: 0 20px; }
     .wrap { padding: 0 20px; }
-    .card-grid, .card-grid.col3, .card-grid.col2, .two-col { grid-template-columns: 1fr; }
+    .card-grid, .card-grid.col3, .card-grid.col2 { grid-template-columns: 1fr; }
     .hero-stats { gap: 28px; }
     .mainnav a { padding: 6px 10px; font-size: 12.5px; }
     .hero { height: auto; flex-direction: column; }
@@ -343,7 +368,7 @@
       <a href="dist/index.html">산업지도 허브</a>
       <a href="analysis.html">기업분석</a>
       <a href="code.html">투자코드개발</a>
-      <a href="#portfolio">투자포트폴리오</a>
+      <a href="item.html">아이템 준비중</a>
     </nav>
   </div>
 </header>
@@ -523,51 +548,42 @@
   </div>
 </section>
 
-<!-- ── 투자코드개발 (소개 카드) ── -->
+<!-- ── 투자코드개발 (1열 전체폭 소개 카드) ── -->
 <section class="section" id="code" style="background: var(--paper);">
   <div class="wrap">
     <div class="section-label">투자코드개발</div>
     <div class="section-title">체계화된 투자 프로세스</div>
     <p class="section-desc">산업 구조 분석에서 종목 선정까지 — 반복 가능하고 검증된 방법론.</p>
-    <div class="two-col">
-      <a class="intro-card" href="code.html">
-        <div class="intro-icon">⚙️</div>
-        <div class="intro-title">투자코드개발</div>
-        <div class="intro-desc">
-          산업 구조 분석에서 종목 선정까지,<br>
-          반복 가능하고 검증된 투자 방법론입니다.
-        </div>
-        <div class="intro-features one-col">
-          <div class="intro-feature">🏗️ 레이어 분석 프레임워크</div>
-          <div class="intro-feature">📐 밸류에이션 코드</div>
-          <div class="intro-feature">📋 ss-code 프로토콜</div>
-        </div>
-        <div class="intro-cta">방법론 보기 →</div>
-      </a>
-    </div>
+
+    <a class="intro-card" href="code.html">
+      <div class="intro-icon">⚙️</div>
+      <div class="intro-title">3-Layer 코드 시스템</div>
+      <div class="intro-desc">
+        시황 분석부터 종목 선정까지, 정량적 알고리즘과 AI 분석 데이터를 결합한 투자 코드 시스템입니다.
+      </div>
+      <div class="intro-features one-col">
+        <div class="intro-feature">① 3-Layer 시황분석 코드: 레짐엔진 + 적정지수 산출엔진 + 한국시장 특성 보정코드</div>
+        <div class="intro-feature">② SS코드: 시황분석 코드 + AI분석 데이터 기반 목표주가 산출엔진</div>
+        <div class="intro-feature">③ 밸류체인 산업지도 모니터링 및 분석코드</div>
+      </div>
+      <div class="intro-cta">방법론 자세히 보기 →</div>
+    </a>
   </div>
 </section>
 
-<!-- ── 투자포트폴리오 (준비중) ── -->
+<!-- ── 아이템 준비중 ── -->
 <section class="section" id="portfolio" style="background: var(--bg);">
   <div class="wrap">
-    <div class="section-label">투자포트폴리오</div>
-    <div class="section-title">실전 포트폴리오</div>
-    <p class="section-desc">분석을 기반으로 구성한 실제 포트폴리오 현황 · thesis 점검 · 업데이트 기록.</p>
-    <div class="card-grid col2">
-      <div class="card soon" style="--card-color: var(--line);">
-        <span class="soon-badge">준비중</span>
-        <div class="card-eyebrow">Direct</div>
-        <div class="card-title">직접투자 포트폴리오</div>
-        <div class="card-desc">보유 종목 · 레이어 분포 · 투자 thesis · EPS 추정.</div>
-        <div class="card-link">곧 공개</div>
-      </div>
-      <div class="card soon" style="--card-color: var(--line);">
-        <span class="soon-badge">준비중</span>
-        <div class="card-eyebrow">Monitor</div>
-        <div class="card-title">모니터링 종목</div>
-        <div class="card-desc">진입 조건 대기 중인 관심 종목 · 트리거 체크리스트.</div>
-        <div class="card-link">곧 공개</div>
+    <div class="section-label">실전포트폴리오</div>
+    <div class="section-title">아이템 준비중</div>
+    <p class="section-desc">보다 체계적인 투자 도구를 위해 열심히 개발하고 있습니다.</p>
+
+    <div class="coming-soon-card">
+      <div class="coming-soon-icon">🚧</div>
+      <div class="coming-soon-title">공사중</div>
+      <div class="coming-soon-desc">
+        실전 포트폴리오와 모니터링 시스템을 준비하고 있습니다.<br>
+        조금만 기다려 주세요.
       </div>
     </div>
   </div>
@@ -581,7 +597,7 @@
       <a href="#valuemap">밸류체인</a>
       <a href="analysis.html">기업분석</a>
       <a href="code.html">투자코드개발</a>
-      <a href="#portfolio">투자포트폴리오</a>
+      <a href="item.html">아이템 준비중</a>
     </nav>
   </div>
 </footer>
