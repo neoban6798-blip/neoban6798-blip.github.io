@@ -61,17 +61,11 @@
   }
   .mainnav a:hover { background: var(--line-soft); color: var(--ink); }
   .mainnav a.active { background: var(--ink); color: white; }
-  .mainnav a .badge {
-    display: inline-block; margin-left: 6px;
-    font-size: 9px; font-weight: 700; letter-spacing: .06em;
-    padding: 2px 5px; border-radius: 3px;
-    background: var(--accent); color: white; vertical-align: middle;
-  }
 
   /* ── 콘텐츠 영역 ── */
   .wrap { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
 
-  /* ── 히어로 (비대칭 + 오른쪽 페이드아웃 이미지) ── */
+  /* ── 히어로 ── */
   .hero {
     position: relative;
     height: 540px;
@@ -80,7 +74,6 @@
     align-items: center;
     background: var(--paper);
   }
-
   .hero-bg {
     position: absolute;
     right: 0; top: 0;
@@ -89,7 +82,6 @@
     background: url('image/main3.jpg') center/cover no-repeat;
     opacity: 0.55; filter: blur(3px);
   }
-
   .hero-bg::after {
     content: '';
     position: absolute;
@@ -98,18 +90,14 @@
     height: 100%;
     background: linear-gradient(to left, transparent, var(--paper));
   }
-
   .hero-content {
-    position: relative;
-    z-index: 2;
+    position: relative; z-index: 2;
     width: 45%;
     padding-left: calc((100% - 1280px) / 2 + 40px);
   }
-
   @media (max-width: 1280px) {
     .hero-content { padding-left: 40px; }
   }
-
   .hero-label {
     display: inline-block; font-size: 11px; font-weight: 700;
     letter-spacing: .1em; text-transform: uppercase;
@@ -149,7 +137,6 @@
   }
   .section-desc { font-size: 15px; color: var(--ink-3); max-width: 58ch; margin-bottom: 36px; }
 
-  /* 카드 그리드 */
   .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
   .card-grid.col3 { grid-template-columns: repeat(3, 1fr); }
   .card-grid.col2 { grid-template-columns: repeat(2, 1fr); }
@@ -181,8 +168,77 @@
   .card.soon { opacity: .55; cursor: default; }
   .card.soon:hover { transform: none; box-shadow: none; border-color: var(--line); }
   .card.soon .card-link { color: var(--ink-4); }
+  .soon-badge {
+    position: absolute; top: 14px; right: 14px;
+    font-size: 9px; font-weight: 700; letter-spacing: .08em;
+    padding: 3px 7px; border-radius: 4px;
+    background: var(--line); color: var(--ink-4);
+  }
 
-  /* ── 기업분석 / 투자코드개발 소개 카드 (2열) ── */
+  /* ── 기업분석 캐러셀 (회전초밥) ── */
+  #analysis .card-carousel {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    padding: 20px 0 30px;
+  }
+  #analysis .card-track {
+    display: flex;
+    gap: 16px;
+    padding-bottom: 12px;
+    width: max-content;
+    animation: autoScrollReports 30s linear infinite;
+  }
+  #analysis .card-carousel:hover .card-track {
+    animation-play-state: paused;
+  }
+  #analysis .card {
+    flex-shrink: 0;
+    width: 220px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+  #analysis .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(18,20,24,0.12);
+    border-color: var(--ink-4);
+  }
+  #analysis .card.highlight {
+    transform: scale(1.1) !important;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.15) !important;
+    border-color: var(--accent) !important;
+    z-index: 10;
+    position: relative;
+    background-color: #ffffff;
+  }
+  @keyframes autoScrollReports {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ── 더보기 버튼 ── */
+  .more-link {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 28px 40px;
+    text-decoration: none;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    background: var(--paper);
+    transition: all .2s;
+    border-style: dashed;
+  }
+  .more-link:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    font-weight: 800;
+  }
+
+  /* ── 투자코드개발 소개 카드 (2열) ── */
   .two-col {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -212,85 +268,33 @@
     background: var(--ink);
     color: white;
     display: grid; place-items: center;
-    font-size: 20px;
-    font-weight: 800;
+    font-size: 20px; font-weight: 800;
     margin-bottom: 16px;
   }
   .intro-title {
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: -.02em;
-    margin-bottom: 12px;
-    color: var(--ink);
+    font-size: 22px; font-weight: 800;
+    letter-spacing: -.02em; margin-bottom: 12px; color: var(--ink);
   }
   .intro-desc {
-    font-size: 14px;
-    color: var(--ink-3);
-    line-height: 1.7;
-    margin-bottom: 24px;
-    flex: 1;
+    font-size: 14px; color: var(--ink-3); line-height: 1.7;
+    margin-bottom: 24px; flex: 1;
   }
   .intro-features {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-bottom: 20px;
-    width: 100%;
-    padding-top: 16px;
-    border-top: 1px dashed var(--line);
-  }
-  .intro-features.one-col {
-    grid-template-columns: 1fr;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 8px; margin-bottom: 20px; width: 100%;
+    padding-top: 16px; border-top: 1px dashed var(--line);
   }
   .intro-feature {
-    font-size: 12px;
-    color: var(--ink-3);
-    padding: 6px 10px;
-    background: var(--bg);
-    border-radius: 6px;
-    text-align: center;
-    font-weight: 500;
+    font-size: 12px; color: var(--ink-3);
+    padding: 6px 10px; background: var(--bg);
+    border-radius: 6px; text-align: center; font-weight: 500;
   }
   .intro-cta {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--ink);
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--ink);
+    font-size: 13px; font-weight: 600; color: var(--ink);
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 0; border-bottom: 1px solid var(--ink);
   }
   .intro-cta:hover { gap: 12px; }
-
-  /* ── 밸류체인 미리보기 그리드 ── */
-  .valuemap-preview {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-bottom: 20px;
-  }
-  .valuemap-more {
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 28px 40px;
-    text-decoration: none;
-    color: var(--ink);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    font-size: 15px;
-    font-weight: 700;
-    background: var(--paper);
-    transition: all .2s;
-    border-style: dashed;
-  }
-  .valuemap-more:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    font-weight: 800;
-  }
 
   /* ── 푸터 ── */
   .footer {
@@ -309,35 +313,20 @@
 
   /* ── 반응형 ── */
   @media (max-width: 1000px) {
-    .two-col, .valuemap-preview { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; }
     .card-grid { grid-template-columns: repeat(2, 1fr); }
     .card-grid.col3 { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 640px) {
     .topbar-inner { padding: 0 20px; }
     .wrap { padding: 0 20px; }
-    .card-grid, .card-grid.col3, .card-grid.col2 { grid-template-columns: 1fr; }
+    .card-grid, .card-grid.col3, .card-grid.col2, .two-col { grid-template-columns: 1fr; }
     .hero-stats { gap: 28px; }
     .mainnav a { padding: 6px 10px; font-size: 12.5px; }
-    .hero {
-      height: auto;
-      flex-direction: column;
-    }
-    .hero-bg {
-      position: relative;
-      width: 100%;
-      height: 220px;
-    }
-    .hero-bg::after {
-      background: linear-gradient(to bottom, transparent, var(--paper));
-    }
-    .hero-content {
-      width: 100%;
-      padding: 32px 20px 48px;
-    }
-    .two-col .intro-features {
-      grid-template-columns: 1fr;
-    }
+    .hero { height: auto; flex-direction: column; }
+    .hero-bg { position: relative; width: 100%; height: 220px; }
+    .hero-bg::after { background: linear-gradient(to bottom, transparent, var(--paper)); }
+    .hero-content { width: 100%; padding: 32px 20px 48px; }
   }
 </style>
 </head>
@@ -387,35 +376,266 @@
   </div>
 </section>
 
-<!-- ── 밸류체인 (최근 4개 미리보기 + 더보기) ── -->
+<!-- ── 밸류체인 (4개 미리보기 + 더보기) ── -->
 <section class="section" id="valuemap" style="background: var(--paper);">
   <div class="wrap">
     <div class="section-label">밸류체인 산업지도</div>
     <div class="section-title">이익이 흐르는 구조를 한 장으로</div>
     <p class="section-desc">수요처 기준 레이어 분류 × 크로스오버 기업 발굴 × 시장 분류 오류 알파.</p>
-    <div class="valuemap-preview">
+    <div class="card-grid">
       <a class="card" href="dist/semiconductor.html" style="--card-color: oklch(58% 0.14 250);">
         <div class="card-eyebrow">Map 01 · Semiconductor</div>
         <div class="card-title">AI 컴퓨팅 5단계 진화</div>
-        <div class="card-desc">HBM · CXL · 유리기판 · NPU IP — L1 지배자부터 L3 패러다임 전환까지.</div>
+        <div class="card-desc">HBM · CXL · 유리기판 · NPU IP</div>
         <div class="card-link">지도 열기 →</div>
       </a>
       <a class="card" href="dist/defense.html" style="--card-color: oklch(52% 0.14 35);">
         <div class="card-eyebrow">Map 02 · Defense</div>
         <div class="card-title">면도기–면도날, 낙수의 시차</div>
-        <div class="card-desc">천궁·L-SAM·KF-21 · L1 리트머스 → L3 청바지 기업 낙수 전략.</div>
+        <div class="card-desc">천궁·L-SAM·KF-21 · 청바지 기업 낙수</div>
         <div class="card-link">지도 열기 →</div>
       </a>
       <a class="card" href="dist/kculture.html" style="--card-color: oklch(58% 0.16 15);">
         <div class="card-eyebrow">Map 03 · K-Culture</div>
         <div class="card-title">문화 확산 5단계 프레임</div>
-        <div class="card-desc">콘텐츠 소비 → 프리미엄 지불까지 · L1 직접수혜 / L2 인프라 / L3 신산업.</div>
+        <div class="card-desc">콘텐츠 소비 → 프리미엄 지불까지</div>
+        <div class="card-link">지도 열기 →</div>
+      </a>
+      <a class="card" href="dist/power.html" style="--card-color: oklch(55% 0.16 65);">
+        <div class="card-eyebrow">Map 04 · Power Infrastructure</div>
+        <div class="card-title">AI·로봇·EV가 강제하는 전력망</div>
+        <div class="card-desc">3중 독립 트리거 × 분류 오류 알파</div>
         <div class="card-link">지도 열기 →</div>
       </a>
     </div>
-    <a class="valuemap-more" href="dist/index.html">
+    <a class="more-link" href="dist/index.html">
       <span>전체 산업지도 보기</span>
       <span aria-hidden="true">→</span>
     </a>
   </div>
 </section>
+
+<!-- ── 기업분석 (캐러셀 + 전체보기) ── -->
+<section class="section" id="analysis" style="background: var(--bg);">
+  <div class="wrap">
+    <div class="section-label">기업분석</div>
+    <div class="section-title">세밀한 분석 보고서</div>
+    <p class="section-desc">밸류체인 지도에서 선별한 핵심 기업들의 심층 분석.</p>
+
+    <div class="card-carousel">
+      <div class="card-track">
+        <!-- 🔹Tiger 리츠부동산인프라ETF -->
+        <a class="card" href="https://blog.naver.com/assetplus5060/224275074697" target="_blank" rel="noopener noreferrer">
+          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
+          <div class="card-eyebrow">KRX139250</div>
+          <div class="card-title">Tiger 리츠부동산인프라ETF</div>
+          <div class="card-desc">리츠ETF</div>
+          <div class="card-link">보고서 읽기 →</div>
+        </a>
+
+        <!-- 🔹DN오토모티브 -->
+        <a class="card" href="https://blog.naver.com/assetplus5060/224271832642" target="_blank" rel="noopener noreferrer">
+          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
+          <div class="card-eyebrow">KRX007340</div>
+          <div class="card-title">DN오토모티브</div>
+          <div class="card-desc">자동차/기계</div>
+          <div class="card-link">보고서 읽기 →</div>
+        </a>
+
+        <!-- 🔹더블유게임즈 -->
+        <a class="card" href="https://blog.naver.com/assetplus5060/224269895594" target="_blank" rel="noopener noreferrer">
+          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
+          <div class="card-eyebrow">KRX192080</div>
+          <div class="card-title">더블유게임즈</div>
+          <div class="card-desc">게임/IT</div>
+          <div class="card-link">보고서 읽기 →</div>
+        </a>
+
+        <!-- 🔹 원텍 -->
+        <a class="card" href="https://blog.naver.com/assetplus5060/224268556102" target="_blank" rel="noopener noreferrer">
+          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
+          <div class="card-eyebrow">KOSDAQ336570</div>
+          <div class="card-title">원텍</div>
+          <div class="card-desc">미용기기</div>
+          <div class="card-link">보고서 읽기 →</div>
+        </a>
+
+        <!-- 🔹 GST -->
+        <a class="card" href="https://blog.naver.com/assetplus5060/224260502950" target="_blank" rel="noopener noreferrer">
+          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
+          <div class="card-eyebrow">KRX083450</div>
+          <div class="card-title">GST</div>
+          <div class="card-desc">반도체 장비</div>
+          <div class="card-link">보고서 읽기 →</div>
+        </a>
+
+        <!-- 🔹 HPSP -->
+        <a class="card" href="https://blog.naver.com/assetplus5060/224261244896" target="_blank" rel="noopener noreferrer">
+          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
+          <div class="card-eyebrow">KRX403870</div>
+          <div class="card-title">HPSP</div>
+          <div class="card-desc">반도체 장비</div>
+          <div class="card-link">보고서 읽기 →</div>
+        </a>
+
+        <!-- 🔹 한화오션 -->
+        <a class="card" href="https://blog.naver.com/assetplus5060/224261814382" target="_blank" rel="noopener noreferrer">
+          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
+          <div class="card-eyebrow">KRX042660</div>
+          <div class="card-title">한화오션</div>
+          <div class="card-desc">방산·조선</div>
+          <div class="card-link">보고서 읽기 →</div>
+        </a>
+
+        <!-- 🔹 현대백화점 -->
+        <a class="card" href="https://blog.naver.com/assetplus5060/224261839673" target="_blank" rel="noopener noreferrer">
+          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
+          <div class="card-eyebrow">KRX069960</div>
+          <div class="card-title">현대백화점</div>
+          <div class="card-desc">유통</div>
+          <div class="card-link">보고서 읽기 →</div>
+        </a>
+
+        <!-- 🔹 네이버 -->
+        <a class="card" href="https://blog.naver.com/assetplus5060/224261995105" target="_blank" rel="noopener noreferrer">
+          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
+          <div class="card-eyebrow">KRX035420</div>
+          <div class="card-title">네이버</div>
+          <div class="card-desc">플랫폼</div>
+          <div class="card-link">보고서 읽기 →</div>
+        </a>
+
+        <!-- 🔹 준비중 -->
+        <div class="card soon">
+          <span class="soon-badge">준비중</span>
+          <div class="card-eyebrow">Upcoming</div>
+          <div class="card-title">다음 분석</div>
+          <div class="card-desc">새 종목 업데이트 예정</div>
+          <div class="card-link">Coming Soon</div>
+        </div>
+      </div>
+    </div>
+
+    <a class="more-link" href="analysis.html">
+      <span>전체 분석 보기</span>
+      <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</section>
+
+<!-- ── 투자코드개발 (소개 카드) ── -->
+<section class="section" id="code" style="background: var(--paper);">
+  <div class="wrap">
+    <div class="section-label">투자코드개발</div>
+    <div class="section-title">체계화된 투자 프로세스</div>
+    <p class="section-desc">산업 구조 분석에서 종목 선정까지 — 반복 가능하고 검증된 방법론.</p>
+    <div class="two-col">
+      <a class="intro-card" href="code.html">
+        <div class="intro-icon">⚙️</div>
+        <div class="intro-title">투자코드개발</div>
+        <div class="intro-desc">
+          산업 구조 분석에서 종목 선정까지,<br>
+          반복 가능하고 검증된 투자 방법론입니다.
+        </div>
+        <div class="intro-features one-col">
+          <div class="intro-feature">🏗️ 레이어 분석 프레임워크</div>
+          <div class="intro-feature">📐 밸류에이션 코드</div>
+          <div class="intro-feature">📋 ss-code 프로토콜</div>
+        </div>
+        <div class="intro-cta">방법론 보기 →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── 투자포트폴리오 (준비중) ── -->
+<section class="section" id="portfolio" style="background: var(--bg);">
+  <div class="wrap">
+    <div class="section-label">투자포트폴리오</div>
+    <div class="section-title">실전 포트폴리오</div>
+    <p class="section-desc">분석을 기반으로 구성한 실제 포트폴리오 현황 · thesis 점검 · 업데이트 기록.</p>
+    <div class="card-grid col2">
+      <div class="card soon" style="--card-color: var(--line);">
+        <span class="soon-badge">준비중</span>
+        <div class="card-eyebrow">Direct</div>
+        <div class="card-title">직접투자 포트폴리오</div>
+        <div class="card-desc">보유 종목 · 레이어 분포 · 투자 thesis · EPS 추정.</div>
+        <div class="card-link">곧 공개</div>
+      </div>
+      <div class="card soon" style="--card-color: var(--line);">
+        <span class="soon-badge">준비중</span>
+        <div class="card-eyebrow">Monitor</div>
+        <div class="card-title">모니터링 종목</div>
+        <div class="card-desc">진입 조건 대기 중인 관심 종목 · 트리거 체크리스트.</div>
+        <div class="card-link">곧 공개</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 푸터 ── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-copy">© 2026 Investment Research · 본 자료는 투자자문이 아닙니다.</div>
+    <nav class="footer-nav">
+      <a href="#valuemap">밸류체인</a>
+      <a href="analysis.html">기업분석</a>
+      <a href="code.html">투자코드개발</a>
+      <a href="#portfolio">투자포트폴리오</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+// 캐러셀 복제 + 하이라이트
+(function() {
+  const track = document.querySelector('#analysis .card-track');
+  if (!track) return;
+  const cards = track.querySelectorAll('.card');
+  cards.forEach(card => {
+    const clone = card.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    track.appendChild(clone);
+  });
+
+  function highlightCenterCard() {
+    const windowCenter = window.innerWidth / 2;
+    let closestCard = null;
+    let minDistance = Infinity;
+    track.querySelectorAll('.card').forEach(card => {
+      const rect = card.getBoundingClientRect();
+      const cardCenter = rect.left + (rect.width / 2);
+      const distance = Math.abs(windowCenter - cardCenter);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestCard = card;
+      }
+    });
+    track.querySelectorAll('.card').forEach(c => c.classList.remove('highlight'));
+    if (closestCard) closestCard.classList.add('highlight');
+    requestAnimationFrame(highlightCenterCard);
+  }
+  highlightCenterCard();
+})();
+
+// 기존 네비게이션 스크롤
+const sections = ['valuemap','analysis','code','portfolio'];
+const navLinks = document.querySelectorAll('.mainnav a');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === `#${id}`);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+sections.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) observer.observe(el);
+});
+</script>
+
+</body>
+</html>
