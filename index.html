@@ -81,7 +81,6 @@
     background: var(--paper);
   }
 
-  /* 오른쪽 이미지 */
   .hero-bg {
     position: absolute;
     right: 0; top: 0;
@@ -91,7 +90,6 @@
     opacity: 0.55; filter: blur(3px);
   }
 
-  /* 왼쪽으로 페이드아웃 */
   .hero-bg::after {
     content: '';
     position: absolute;
@@ -101,7 +99,6 @@
     background: linear-gradient(to left, transparent, var(--paper));
   }
 
-  /* 텍스트 영역 */
   .hero-content {
     position: relative;
     z-index: 2;
@@ -110,9 +107,7 @@
   }
 
   @media (max-width: 1280px) {
-    .hero-content {
-      padding-left: 40px;
-    }
+    .hero-content { padding-left: 40px; }
   }
 
   .hero-label {
@@ -134,7 +129,6 @@
     display: flex; gap: 40px; flex-wrap: wrap;
     padding-top: 32px; border-top: 1px dashed var(--line);
   }
-  .hero-stat { }
   .hero-stat .val {
     font-size: 32px; font-weight: 800; letter-spacing: -.02em; line-height: 1;
     margin-bottom: 4px;
@@ -155,7 +149,7 @@
   }
   .section-desc { font-size: 15px; color: var(--ink-3); max-width: 58ch; margin-bottom: 36px; }
 
-  /* 카드 그리드 (밸류체인 등 다른 섹션용) */
+  /* 카드 그리드 */
   .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
   .card-grid.col3 { grid-template-columns: repeat(3, 1fr); }
   .card-grid.col2 { grid-template-columns: repeat(2, 1fr); }
@@ -188,44 +182,114 @@
   .card.soon:hover { transform: none; box-shadow: none; border-color: var(--line); }
   .card.soon .card-link { color: var(--ink-4); }
 
-  /* 준비중 배지 */
-  .soon-badge {
-    position: absolute; top: 14px; right: 14px;
-    font-size: 9px; font-weight: 700; letter-spacing: .08em;
-    padding: 3px 7px; border-radius: 4px;
-    background: var(--line); color: var(--ink-4);
-  }
-
-  /* ═══════════════════════════════
-     기업분석 그리드 (7열, 자동 줄바꿈)
-     ═══════════════════════════════ */
-  #analysis .card-carousel {
-    overflow: visible;
-    padding: 20px 0 30px;
-  }
-
-  #analysis .card-track {
+  /* ── 기업분석 / 투자코드개발 소개 카드 (2열) ── */
+  .two-col {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 16px;
-    justify-content: center;
-    align-items: stretch;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .two-col .intro-card {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 36px;
+    text-decoration: none;
+    color: inherit;
+    background: var(--paper);
+    transition: all .2s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .two-col .intro-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    transform: translateY(-3px);
+  }
+  .intro-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: var(--ink);
+    color: white;
+    display: grid; place-items: center;
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 16px;
+  }
+  .intro-title {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -.02em;
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+  .intro-desc {
+    font-size: 14px;
+    color: var(--ink-3);
+    line-height: 1.7;
+    margin-bottom: 24px;
+    flex: 1;
+  }
+  .intro-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 20px;
     width: 100%;
-    animation: none !important;
-    padding-bottom: 0;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line);
   }
-
-  #analysis .card {
-    flex-shrink: unset;
-    width: auto;
-    height: 100%;
-    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  .intro-features.one-col {
+    grid-template-columns: 1fr;
   }
+  .intro-feature {
+    font-size: 12px;
+    color: var(--ink-3);
+    padding: 6px 10px;
+    background: var(--bg);
+    border-radius: 6px;
+    text-align: center;
+    font-weight: 500;
+  }
+  .intro-cta {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--ink);
+  }
+  .intro-cta:hover { gap: 12px; }
 
-  #analysis .card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(18,20,24,0.12);
-    border-color: var(--ink-4);
+  /* ── 밸류체인 미리보기 그리드 ── */
+  .valuemap-preview {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .valuemap-more {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 28px 40px;
+    text-decoration: none;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    background: var(--paper);
+    transition: all .2s;
+    border-style: dashed;
+  }
+  .valuemap-more:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    font-weight: 800;
   }
 
   /* ── 푸터 ── */
@@ -234,6 +298,7 @@
     padding: 40px 0;
   }
   .footer-inner {
+    max-width: 1280px; margin: 0 auto; padding: 0 40px;
     display: flex; justify-content: space-between; align-items: center; gap: 24px;
     flex-wrap: wrap;
   }
@@ -244,9 +309,9 @@
 
   /* ── 반응형 ── */
   @media (max-width: 1000px) {
+    .two-col, .valuemap-preview { grid-template-columns: 1fr; }
     .card-grid { grid-template-columns: repeat(2, 1fr); }
     .card-grid.col3 { grid-template-columns: repeat(2, 1fr); }
-    #analysis .card-track { grid-template-columns: repeat(3, 1fr); }
   }
   @media (max-width: 640px) {
     .topbar-inner { padding: 0 20px; }
@@ -254,7 +319,6 @@
     .card-grid, .card-grid.col3, .card-grid.col2 { grid-template-columns: 1fr; }
     .hero-stats { gap: 28px; }
     .mainnav a { padding: 6px 10px; font-size: 12.5px; }
-
     .hero {
       height: auto;
       flex-direction: column;
@@ -271,7 +335,9 @@
       width: 100%;
       padding: 32px 20px 48px;
     }
-    #analysis .card-track { grid-template-columns: 1fr; }
+    .two-col .intro-features {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
 </head>
@@ -286,14 +352,14 @@
     </a>
     <nav class="mainnav" id="mainnav">
       <a href="dist/index.html">산업지도 허브</a>
-      <a href="#analysis" onclick="scrollTo(event,'analysis')">기업분석</a>
-      <a href="#code" onclick="scrollTo(event,'code')">투자코드개발</a>
-      <a href="#portfolio" onclick="scrollTo(event,'portfolio')">투자포트폴리오</a>
+      <a href="analysis.html">기업분석</a>
+      <a href="code.html">투자코드개발</a>
+      <a href="#portfolio">투자포트폴리오</a>
     </nav>
   </div>
 </header>
 
-<!-- ── 히어로 (오른쪽 페이드아웃 이미지) ── -->
+<!-- ── 히어로 ── -->
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-content">
@@ -321,13 +387,13 @@
   </div>
 </section>
 
-<!-- ── 밸류체인 ── -->
+<!-- ── 밸류체인 (최근 4개 미리보기 + 더보기) ── -->
 <section class="section" id="valuemap" style="background: var(--paper);">
   <div class="wrap">
     <div class="section-label">밸류체인 산업지도</div>
     <div class="section-title">이익이 흐르는 구조를 한 장으로</div>
     <p class="section-desc">수요처 기준 레이어 분류 × 크로스오버 기업 발굴 × 시장 분류 오류 알파.</p>
-    <div class="card-grid">
+    <div class="valuemap-preview">
       <a class="card" href="dist/semiconductor.html" style="--card-color: oklch(58% 0.14 250);">
         <div class="card-eyebrow">Map 01 · Semiconductor</div>
         <div class="card-title">AI 컴퓨팅 5단계 진화</div>
@@ -346,223 +412,10 @@
         <div class="card-desc">콘텐츠 소비 → 프리미엄 지불까지 · L1 직접수혜 / L2 인프라 / L3 신산업.</div>
         <div class="card-link">지도 열기 →</div>
       </a>
-      <a class="card" href="dist/power.html" style="--card-color: oklch(55% 0.16 65);">
-        <div class="card-eyebrow">Map 04 · Power Infrastructure</div>
-        <div class="card-title">AI·로봇·EV가 강제하는 전력망</div>
-        <div class="card-desc">3중 독립 트리거 × 분류 오류 알파 · ★ 크로스오버 기업 심층 분석.</div>
-        <div class="card-link">지도 열기 →</div>
-      </a>
     </div>
+    <a class="valuemap-more" href="dist/index.html">
+      <span>전체 산업지도 보기</span>
+      <span aria-hidden="true">→</span>
+    </a>
   </div>
 </section>
-
-<!-- ── 기업분석 (그리드) ── -->
-<section class="section" id="analysis" style="background: var(--bg);">
-  <div class="wrap">
-    <div class="section-label">기업분석</div>
-    <div class="section-title">세밀한 분석 보고서</div>
-    <p class="section-desc">밸류체인 지도에서 선별한 핵심 기업들의 심층 분석. 재무 구조 · 해자 검증 · 시나리오별 밸류에이션.</p>
-
-    <div class="card-carousel">
-      <div class="card-track">
-
-        <!-- ═══════════════════════════════════════════════ -->
-        <!-- 📌 카드 템플릿 (새 보고서는 맨 위에 복사)        -->
-        <!-- 형식: KRX코드 / 기업명 / 섹터 / 블로그URL       -->
-        <!-- ═══════════════════════════════════════════════ -->
-
-        <!-- 🔹Tiger 리츠부동산인프라ETF -->
-        <a class="card" href="https://blog.naver.com/assetplus5060/224275074697" target="_blank" rel="noopener noreferrer">
-          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
-          <div class="card-eyebrow">KRX139250</div>
-          <div class="card-title">Tiger 리츠부동산인프라ETF</div>
-          <div class="card-desc">리츠ETF</div>
-          <div class="card-link">보고서 읽기 →</div>
-        </a>
-        
-        <!-- 🔹DN오토모티브 -->
-        <a class="card" href="https://blog.naver.com/assetplus5060/224271832642" target="_blank" rel="noopener noreferrer">
-          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
-          <div class="card-eyebrow">KRX007340</div>
-          <div class="card-title">DN오토모티브</div>
-          <div class="card-desc">자동차/기계</div>
-          <div class="card-link">보고서 읽기 →</div>
-        </a>
-        
-        <!-- 🔹더블유게임즈 -->
-        <a class="card" href="https://blog.naver.com/assetplus5060/224269895594" target="_blank" rel="noopener noreferrer">
-          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
-          <div class="card-eyebrow">KRX192080</div>
-          <div class="card-title">더블유게임즈</div>
-          <div class="card-desc">게임/IT</div>
-          <div class="card-link">보고서 읽기 →</div>
-        </a>
-        
-        <!-- 🔹 원텍 -->
-        <a class="card" href="https://blog.naver.com/assetplus5060/224268556102" target="_blank" rel="noopener noreferrer">
-          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
-          <div class="card-eyebrow">KOSDAQ336570</div>
-          <div class="card-title">원텍</div>
-          <div class="card-desc">미용기기</div>
-          <div class="card-link">보고서 읽기 →</div>
-        </a>
-        
-        <!-- 🔹 GST -->
-        <a class="card" href="https://blog.naver.com/assetplus5060/224260502950" target="_blank" rel="noopener noreferrer">
-          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
-          <div class="card-eyebrow">KRX083450</div>
-          <div class="card-title">GST</div>
-          <div class="card-desc">반도체 장비</div>
-          <div class="card-link">보고서 읽기 →</div>
-        </a>
-
-        <!-- 🔹 HPSP -->
-        <a class="card" href="https://blog.naver.com/assetplus5060/224261244896" target="_blank" rel="noopener noreferrer">
-          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
-          <div class="card-eyebrow">KRX403870</div>
-          <div class="card-title">HPSP</div>
-          <div class="card-desc">반도체 장비</div>
-          <div class="card-link">보고서 읽기 →</div>
-        </a>
-
-        <!-- 🔹 한화오션 -->
-        <a class="card" href="https://blog.naver.com/assetplus5060/224261814382" target="_blank" rel="noopener noreferrer">
-          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
-          <div class="card-eyebrow">KRX042660</div>
-          <div class="card-title">한화오션</div>
-          <div class="card-desc">방산·조선</div>
-          <div class="card-link">보고서 읽기 →</div>
-        </a>
-
-        <!-- 🔹 현대백화점 -->
-        <a class="card" href="https://blog.naver.com/assetplus5060/224261839673" target="_blank" rel="noopener noreferrer">
-          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
-          <div class="card-eyebrow">KRX069960</div>
-          <div class="card-title">현대백화점</div>
-          <div class="card-desc">유통</div>
-          <div class="card-link">보고서 읽기 →</div>
-        </a>
-
-        <!-- 🔹 네이버 -->
-        <a class="card" href="https://blog.naver.com/assetplus5060/224261995105" target="_blank" rel="noopener noreferrer">
-          <span class="soon-badge" style="background:var(--accent);color:white;">New</span>
-          <div class="card-eyebrow">KRX035420</div>
-          <div class="card-title">네이버</div>
-          <div class="card-desc">플랫폼</div>
-          <div class="card-link">보고서 읽기 →</div>
-        </a>
-
-        <!-- 🔹 준비중 -->
-        <div class="card soon">
-          <span class="soon-badge">준비중</span>
-          <div class="card-eyebrow">Upcoming</div>
-          <div class="card-title">다음 분석</div>
-          <div class="card-desc">새 종목 업데이트 예정</div>
-          <div class="card-link">Coming Soon</div>
-        </div>
-
-      </div> <!-- .card-track 종료 -->
-    </div> <!-- .card-carousel 종료 -->
-  </div> <!-- .wrap 종료 -->
-</section> <!-- #analysis 종료 -->
-
-<!-- ── 투자코드개발 ── -->
-<section class="section" id="code" style="background: var(--paper);">
-  <div class="wrap">
-    <div class="section-label">투자코드개발</div>
-    <div class="section-title">체계화된 투자 프로세스</div>
-    <p class="section-desc">산업 구조 분석에서 종목 선정까지 — 반복 가능하고 검증된 투자 방법론.</p>
-    <div class="card-grid col2">
-      <div class="card soon" style="--card-color: var(--line);">
-        <span class="soon-badge">준비중</span>
-        <div class="card-eyebrow">Framework</div>
-        <div class="card-title">레이어 분석 프레임워크</div>
-        <div class="card-desc">L1·L2·L3 수요처 기준 분류 · 크로스오버 기업 발굴 방법론 · 분류 오류 알파 포착.</div>
-        <div class="card-link">곧 공개</div>
-      </div>
-      <div class="card soon" style="--card-color: var(--line);">
-        <span class="soon-badge">준비중</span>
-        <div class="card-eyebrow">Valuation</div>
-        <div class="card-title">밸류에이션 코드</div>
-        <div class="card-desc">EPS 추정 · 멀티플 적용 · 시나리오 시뮬레이션 · ss-code 프로토콜.</div>
-        <div class="card-link">곧 공개</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── 투자포트폴리오 ── -->
-<section class="section" id="portfolio" style="background: var(--bg);">
-  <div class="wrap">
-    <div class="section-label">투자포트폴리오</div>
-    <div class="section-title">실전 포트폴리오</div>
-    <p class="section-desc">분석을 기반으로 구성한 실제 포트폴리오 현황 · thesis 점검 · 업데이트 기록.</p>
-    <div class="card-grid col2">
-      <div class="card soon" style="--card-color: var(--line);">
-        <span class="soon-badge">준비중</span>
-        <div class="card-eyebrow">Direct</div>
-        <div class="card-title">직접투자 포트폴리오</div>
-        <div class="card-desc">보유 종목 · 레이어 분포 · 투자 thesis · EPS 추정.</div>
-        <div class="card-link">곧 공개</div>
-      </div>
-      <div class="card soon" style="--card-color: var(--line);">
-        <span class="soon-badge">준비중</span>
-        <div class="card-eyebrow">Monitor</div>
-        <div class="card-title">모니터링 종목</div>
-        <div class="card-desc">진입 조건 대기 중인 관심 종목 · 트리거 체크리스트.</div>
-        <div class="card-link">곧 공개</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── 푸터 ── -->
-<footer class="footer">
-  <div class="wrap">
-    <div class="footer-inner">
-      <div class="footer-copy">© 2026 Investment Research · 본 자료는 투자자문이 아닙니다.</div>
-      <nav class="footer-nav">
-        <a href="#valuemap">밸류체인</a>
-        <a href="#analysis">기업분석</a>
-        <a href="#code">투자코드개발</a>
-        <a href="#portfolio">투자포트폴리오</a>
-      </nav>
-    </div>
-  </div>
-</footer>
-
-<script>
-// 스크롤 네비게이션
-function scrollTo(e, id) {
-  e.preventDefault();
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-// 스크롤 위치에 따라 active 탭 업데이트
-const sections = ['valuemap','analysis','code','portfolio'];
-const navLinks = document.querySelectorAll('.mainnav a');
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const id = entry.target.id;
-      navLinks.forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === `#${id}`);
-      });
-    }
-  });
-}, { threshold: 0.3 });
-
-sections.forEach(id => {
-  const el = document.getElementById(id);
-  if (el) observer.observe(el);
-});
-
-// ── 중앙 하이라이트 효과 제거 (정적 그리드에서는 불필요) ──
-// 이제 더 이상 자동 스크롤과 하이라이트는 필요 없으므로,
-// 아래 코드는 모두 삭제했습니다.
-
-</script>
-
-</body>
-</html>
